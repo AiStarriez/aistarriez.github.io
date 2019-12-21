@@ -1,0 +1,36 @@
+#inputLand {
+  margin-left: 30px;
+  margin-bottom: 15px;
+}
+
+#landInfo {
+  font-size: 30px;
+  color: gray;
+}
+
+#line {
+  color: gray;
+}
+
+.landinfo-input {
+  border-radius: 10px;
+  font-size: 30px;
+}
+
+#button-div {
+  float: right;
+  display: inline-block;
+}
+
+#cancelBtn {
+  font-size: 30px;
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  margin-right: 15px;
+}
+
+#saveBtn {
+  font-size: 30px;
+}
+

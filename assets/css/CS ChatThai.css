@@ -1,0 +1,7 @@
+@font-face {
+	font-family: 'CS ChatThai';
+	src: url(../../assets/fonts/CSChatThai.woff2) format('woff2'),
+	url(../../assets/fonts/CSChatThai.woff) format('woff');
+	font-weight: normal;
+	font-style: normal;
+}

@@ -1,0 +1,74 @@
+#navbar {
+  left: 0px;
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  background-color: #EFEFEF;
+}
+
+#title-navbar {
+  width: initial;
+  /*position: absolute;*/
+  font-size: 50px;
+  margin-left: 15px;
+  /*margin-top: 100px;*/
+  /*text-align: center;*/
+  color: #206B34;
+}
+
+#icon-navbar {
+  width: 120px;
+  height: 120px;
+  /*margin-top: 10px;*/
+}
+
+#button-navbar {
+  text-align: left;
+}
+
+#button-nav {
+  margin-left: 20px;
+  margin-top: 15px;
+  font-size: 30px;
+  margin-right: 50px;
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  display: inline-block;
+  width: 90%;
+  text-align: left;
+}
+
+#filter-mainpage {
+  margin-right: 15px;
+  float: right;
+  /*position: fixed;*/
+  /*width: 100px;*/
+  margin-top: 15px;
+}
+
+#dropdown-main {
+  display: inline-block;
+}
+
+#dd-button {
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  font-size: 30px;
+  /*margin: -100px;*/
+}
+
+#button-div {
+  margin-left: 22%;
+  float: left;
+  /*font-size: 30px;*/
+  margin-top: 45%;
+}
+
+#addLandBtn {
+  background-color: #FF7E9D;
+  border-color: #FF7E9D;
+  font-size: 30px;
+}
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>proplante_ui</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/CS%20ChatThai.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/addLandPage.css">
+    <link rel="stylesheet" href="assets/css/MainLoginPage.css">
+    <link rel="stylesheet" href="assets/css/MainPage.css">
+    <link rel="stylesheet" href="assets/css/ManagerLoginPage.css">
+    <link rel="stylesheet" href="assets/css/OwnerLoginPage.css">
+</head>
+
+<body>
+    <div id="navbar">
+        <div id="titile-div" class="titile">
+            <p id="title-navbar"><img id="icon-navbar" src="assets/img/icon.png"><strong>&nbsp;PROPLANTE</strong></p>
+            <p id="line"><strong>&nbsp; ____________________________________________________________________</strong></p>
+        </div>
+        <div id="button-navbar"><button class="btn btn-primary" id="button-nav" type="button"><i class="fas fa-map-marked-alt"></i>&nbsp; &nbsp; ที่ดิน</button><button class="btn btn-primary" id="button-nav" type="button"><i class="fas fa-calendar-alt"></i>&nbsp; &nbsp; &nbsp;ตารางงาน</button>
+            <button
+                class="btn btn-primary" id="button-nav" type="button"><i class="fas fa-list-alt"></i>&nbsp; &nbsp; &nbsp;กิจกรรมทั้งหมด</button><button class="btn btn-primary" id="button-nav" type="button"><i class="fas fa-chart-bar"></i>&nbsp; &nbsp; &nbsp;รายงานผล</button><button class="btn btn-primary" id="button-nav"
+                    type="button"><i class="icon ion-android-contact"></i>&nbsp; &nbsp; &nbsp; ผู้ดูแล</button><button class="btn btn-primary" id="button-nav" type="button"><i class="fas fa-leaf"></i>&nbsp; &nbsp; จัดการพืช</button></div>
+    </div>
+    <div id="filter-mainpage">
+        <div class="dropdown" id="dropdown-main"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button" type="button">จังหวัด</button>
+            <div class="dropdown-menu" role="menu" id="provice-dropdown"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+        </div>
+        <div class="dropdown" id="dropdown-main"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button" type="button">อำเภอ</button>
+            <div class="dropdown-menu" role="menu" id="district-dropdown"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+        </div>
+        <div class="dropdown" id="dropdown-main"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button" type="button">ที่ดิน</button>
+            <div class="dropdown-menu" role="menu" id="land-dropdown"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+        </div>
+        <div class="dropdown" id="dropdown-main"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button" type="button">พืช</button>
+            <div class="dropdown-menu" role="menu" id="plant-dropdown"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+        </div>
+    </div>
+    <div id="button-div"><button class="btn btn-primary" id="addLandBtn" type="button">เพิ่มที่ดิน</button></div>
+    <div id="map"></div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
