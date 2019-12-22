@@ -29,7 +29,7 @@
 #button-nav {
   margin-left: 20px;
   margin-top: 15px;
-  font-size: 30px;
+  font-size: 25px;
   margin-right: 50px;
   background-color: #EFEFEF;
   border-color: #EFEFEF;
@@ -70,5 +70,11 @@
   background-color: #FF7E9D;
   border-color: #FF7E9D;
   font-size: 30px;
+}
+
+#map {
+  height: 800px;
+  width: 100%;
+  margin: auto;
 }
 
