@@ -51,7 +51,7 @@
   display: inline-block;
 }
 
-#dd-button {
+#dd-button,#land-name-filter {
   background-color: #EFEFEF;
   border-color: #EFEFEF;
   color: gray;

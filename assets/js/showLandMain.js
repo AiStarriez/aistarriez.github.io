@@ -1,4 +1,4 @@
-var kku = {
+var defultLocation = {
   lat: 14.9780154,
   lng: 102.1029185
 };
@@ -11,78 +11,96 @@ var geocoder;
 var infowindow;
 var map;
 
+var ownerId = "5dfcabe6666c642250d2ec59";
+
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: kku,
+    center: defultLocation,
     zoom: 16,
     mapTypeControl: false,
     fullscreenControl: false,
     streetViewControl: false,
-    mapTypeId: google.maps.MapTypeId.HYBRID
+    mapTypeId: "satellite"
   });
 
-  getLatLngDB();
-
-
-}
-
-function getAllLandsAPI(ownerId) {
-  var url = "https://rocky-gorge-34614.herokuapp.com/lands/" + ownerId;
-  return Promise.resolve(
-    $.ajax({
-      url: url,
-      type: "GET",
-      dataType: "json",
-      contentType: "application/json"
-    })
-  );
+  var cacheLands = localStorage["lands"] || undefined;
+  if (cacheLands != undefined) {
+    getPolygonLands(JSON.parse(cacheLands));
+  } else {
+    getLatLngDB();
+  }
 }
 
 function getLatLngDB() {
-  var ownerId = "5dfcabe6666c642250d2ec59";
-  var getAllLands = getAllLandsAPI(ownerId);
+  var url = "/lands/" + ownerId;
+  var body = "";
+  var getAllLands = connectToServer(url, body, "GET");
   getAllLands.then(
     docs => {
-      var centerLat = 0;
-      var centerLng = 0;
-      var countPoint = 0;
-      var polygonLands = [];
-      for (let i = 0; i < docs.length; i++) {
-        var latlngArr = [];
-        var points = docs[i].land.points;
-        for (let j = 0; j < points.length; j++) {
-          var obj = {
-            lat: points[j].lat,
-            lng: points[j].lng
-          };
-          centerLat += points[j].lat;
-          centerLng += points[j].lng;
-          countPoint++;
-          latlngArr.push(obj);
-        }
-        polygonLands.push(latlngArr);
-      }
-      centerLat = centerLat / countPoint;
-      centerLng = centerLng / countPoint;
-
-      for (let i = 0; i < polygonLands.length; i++) {
-        new google.maps.Polygon({
-          paths: polygonLands[i],
-          strokeColor: "#FF0000",
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: "#FF0000",
-          fillOpacity: 0.35
-        }).setMap(map);
-      }
-
-      map.setCenter({ lat: centerLat, lng: centerLng });
-     // test[0].setMap(map);
-      // drawArea1.setMap(map);
-      // drawArea2.setMap(map);
+      getPolygonLands(docs);
+      setLandSession("lands", docs);
     },
     function(e) {
+      // 404 owner not found
       console.log(e.responseText);
     }
   );
+}
+
+function getPolygonLands(docs) {
+  // var cachePoly = localStorage["poly-lands-main"] || undefined;
+
+  // if (cachePoly != undefined) {
+  //   drawingPolygonLands(JSON.parse(cachePoly));
+  //   for(let i = 0; i < docs.length; i++) {
+      
+  //   }
+
+  // } else {
+    var url = "/sec/lands/polygon/main";
+    var body = JSON.stringify(docs);
+    var polygonMain = connectToServer(url, body, "POST");
+    polygonMain.then(poly => {
+      drawingPolygonLands(poly);
+     // setLandSession("poly-lands-main", poly);
+    }),
+      function(e) {
+        console.log(e);
+      };
+ // }
+}
+
+function drawingPolygonLands(poly) {
+  var polygonLands = poly.polygonLands;
+  var bounds = new google.maps.LatLngBounds();
+
+  for (let i = 0; i < polygonLands.length; i++) {
+    var latlngInLand = polygonLands[i].lat_lng;
+    new google.maps.Polygon({
+      paths: latlngInLand,
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35
+    }).setMap(map);
+    if (i == 0) {
+      for (let j = 0; j < latlngInLand.length; j++) {
+        bounds.extend(latlngInLand[j]);
+      }
+    }
+  }
+  map.fitBounds(bounds);
+  map.setZoom(17.5);
+}
+
+function setLandSession(name, data) {
+  //session
+  //sessionStorage.lands = JSON.stringify(data);
+
+  //cache
+
+  localStorage[name] = JSON.stringify(data);
+
+  //window.location.href = "detailland.html";
 }
