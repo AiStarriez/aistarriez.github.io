@@ -20,18 +20,45 @@
     <div id="navbar">
         <div id="titile-div" class="titile">
             <p id="title-navbar"><img id="icon-navbar" src="assets/img/icon.png"><strong>&nbsp;PROPLANTE</strong></p>
-            <p id="line"><strong>&nbsp; ____________________________________________________________________</strong></p>
+            <hr>
+            <!-- <strong id="line"><strong>&nbsp; ____________________________________________________________________</strong></p> -->
+
         </div>
         <div id="inputLand">
             <p id="landInfo">ชื่อที่ดิน</p><input type="text" id="landName-input" class="landinfo-input">
-            <p id="landInfo">ขนาดของที่ดิน (ตารางเมตร)</p><input type="text" id="landArea-input" class="landinfo-input"></div>
-        <p id="line"><strong>&nbsp; ____________________________________________________________________</strong></p>
+            <p id="landInfo">ขนาดของที่ดิน (ตารางเมตร)</p><input type="text" id="landArea-input" class="landinfo-input">
+        </div>
+        <hr>
+        <!-- <p id="line"><strong>&nbsp; ____________________________________________________________________</strong></p> -->
+    <div id="latlngResult"></div>
     </div>
-    <div id="button-div"><button class="btn btn-primary" id="cancelBtn" type="button">&nbsp; ยกเลิก &nbsp;</button><button class="btn btn-primary" id="saveBtn" type="button">&nbsp; บันทึก &nbsp;</button></div>
+    <div id="button-div"><button class="btn btn-primary" id="cancelBtn" type="button">&nbsp; ยกเลิก
+            &nbsp;</button><button class="btn btn-primary" id="saveBtn" type="button">&nbsp; บันทึก &nbsp;</button>
+    </div>
     <div id="calculated-point"></div>
+    <div class="row">
+        <div class="col-sm-3" >
+            <label for="map_search">ค้นหาบนแผนที่</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" id="map_search" name="map_search"
+                placeholder="สถานที่ใกล้เคียงหรือชื่อสถานที่ ex.สวนสัตว์โคราช"></td>
+        </div>
+        <div class="col-sm-3" >
+            <button id="mapSearchBt" class="search-bt">ค้นหา</button>
+            <button id="mapCleanBt" >ล้าง</button>
+        
+        </div>
+    </div>
     <div id="map"></div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/connectServer.js"></script>
+    <script src="assets/js/addLandMap.js"></script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
+    async defer></script>
+
 </body>
 
 </html>
