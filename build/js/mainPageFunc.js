@@ -2,15 +2,23 @@ var landNameDropdown = document.getElementById("land-dropdown");
 var landNameFilter = document.getElementById("land-name-filter");
 
 $(window, document).ready(function() {
-  var url = "/plants/" + ownerId;
-  var body = "";
-  var getAllPlant = connectToServer(url, body, "GET");
-  getAllPlant.then(docs => {
-    sessionStorage.plants = JSON.stringify(docs);
-  });
-
-  filterLands();
+  apiGetPlant();
 });
+
+function apiGetPlant() {
+  var cachePlant = localStorage["plants"] || undefined;
+  if (cachePlant != undefined) {
+    filterLands();
+  } else {
+    var url = "/plants/" + ownerId;
+    var body = "";
+    var getAllPlant = connectToServer(url, body, "GET");
+    getAllPlant.then(docs => {
+      setCacheData("plants", JSON.stringify(docs));
+      filterLands();
+    });
+  }
+}
 
 function filterLands() {
   var url = "/lands/filter/" + ownerId;
@@ -60,7 +68,8 @@ function setFilterValueOnclick(value) {
 function findLands(province, district, landName, plant) {
   //var landsData = JSON.parse(sessionStorage.lands);
   var landsData = JSON.parse(localStorage["lands"]) || undefined;
-  var plantData = JSON.parse(sessionStorage.plants);
+  var plantData = JSON.parse(localStorage["plants"]) || undefined;
+  
   var url =
     "/sec/lands/filter?province=" +
     province +
