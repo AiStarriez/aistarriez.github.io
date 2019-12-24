@@ -1,0 +1,77 @@
+/* body {
+  font-family: 'CS ChatThai';
+  background-size: cover;
+}
+
+#navbar {
+  left: 0px;
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  background-color: #EFEFEF;
+}
+
+#title-navbar {
+  width: initial;
+  font-size: 50px;
+  margin-left: 15px;
+  color: #206B34;
+}
+
+#icon-navbar {
+  width: 120px;
+  height: 120px;
+}
+
+#button-navbar {
+  text-align: left;
+}
+
+#button-nav {
+  margin-left: 20px;
+  margin-top: 15px;
+  font-size: 25px;
+  margin-right: 50px;
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  display: inline-block;
+  width: 90%;
+  text-align: left;
+} */
+
+#filter-mainpage {
+  margin-right: 15px;
+  float: right;
+  margin-top: 15px;
+}
+
+#dropdown-main {
+  display: inline-block;
+}
+
+#dd-button,#land-name-filter {
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  font-size: 2.0em;
+}
+
+#button-div {
+  margin-left: 22%;
+  float: left;
+  margin-top: 45%;
+}
+
+#addLandBtn {
+  background-color: #FF7E9D;
+  border-color: #FF7E9D;
+  font-size: 2.0em;
+}
+
+/* #map {
+  height: 800px;
+  width: 100%;
+  margin: auto;
+} */
+

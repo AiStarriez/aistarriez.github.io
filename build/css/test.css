@@ -1,0 +1,114 @@
+#navbar {
+    left: 0px;
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    background-color: #EFEFEF;
+  }
+
+#title-navbar {
+    width: initial;
+    /*position: absolute;*/
+    font-size: 3.0em;
+    margin-left: 15px;
+    /*margin-top: 100px;*/
+    /*text-align: center;*/
+    color: #206B34;
+  }
+  
+#icon-navbar {
+    width: 25%;
+    height: 25%;
+    /*margin-top: 10px;*/
+  }
+  
+#button-navbar {
+    text-align: left;
+    width: 90%;
+    margin-left: 0;
+  }
+  
+#button-nav {
+    margin-left: 20px;
+    margin-top: 15px;
+    font-size: 2.0em;
+    margin-right: 50px;
+    background-color: #EFEFEF;
+    border-color: #EFEFEF;
+    color: gray;
+    display: inline-block;
+    width: 90%;
+    text-align: left;
+  }
+
+
+/*My experimental*/
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  #hamburger {
+      display: none;
+  }
+
+  #page-content-wrapper {
+    width: 100%;
+    position: absolute;
+  }
+  #sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 0;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    display: none;
+    top: 0;
+    margin: 0;
+    padding: 0;
+}
+
+  @media screen and (max-width: 768px) {
+    #navbar{
+        display: none;
+      }
+      #button-div{
+        display: none;
+      }
+      #sidebar-wrapper {
+          display: inline;
+          width: 50%;
+      }
+      
+      #hamburger {
+        display: table-header-group;
+        color: black;
+        text-align: left;
+        font-size: 2.0em;
+    }
+      #title-topnav {
+        color:#EFEFEF;
+        text-align: center;
+        width: auto;
+        display: inline-block;
+    }
+    #icon-topnav {
+        width: 10%;
+        height: 10%;
+    }
+    #wrapper.toggled {
+        padding-left: 250px;
+      }
+
+  }

@@ -1,0 +1,24 @@
+#managerRegister {
+  text-align: center;
+}
+
+#phoneNo {
+  margin-bottom: 20px;
+  font-size: 1.6em;
+  border-radius: 10px;
+  width: max-content;
+}
+
+#genCode {
+  margin-bottom: 20px;
+  font-size: 1.6em;
+  border-radius: 10px;
+  width: max-content;
+}
+
+#address {
+  margin-bottom: 20px;
+  font-size: 1.6em;
+  border-radius: 10px;
+  width: max-content;
+}

@@ -1,0 +1,12 @@
+body {
+    font-family: 'CS ChatThai';
+    background-size: cover;
+    font-size: 62.5%;
+    overflow-x: hidden;
+  }
+
+  #map {
+    height: 800px;
+    width: 100%;
+    margin: auto;
+  }
