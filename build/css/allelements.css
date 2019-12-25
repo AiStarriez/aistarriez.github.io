@@ -1,12 +1,94 @@
+ /* html {
+  font-size: 62.5%;
+}  */
+
 body {
     font-family: 'CS ChatThai';
     background-size: cover;
-    font-size: 62.5%;
     overflow-x: hidden;
+     font-size: 1.6rem;
   }
 
   #map {
-    height: 800px;
+    height: 100vh;
     width: 100%;
     margin: auto;
   }
+   span {
+    font-size: 2.0rem;
+  }
+
+#hamburger {
+  display: none;
+}
+#filterButton {
+  display: none;
+}
+
+#filterMainPageDiv {
+  margin-right: 15px;
+  float: right;
+  margin-top: 15px;
+}
+
+#filterContainerDiv {
+  display: none;
+}
+
+.dropdown {
+  display: inline;
+
+}
+
+#dd-button,#land-name-filter {
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  font-size: 1.6rem;
+}
+#button-div {
+  margin-left: 5%;
+  float: left;
+  bottom: 0;
+  margin-bottom: 5vh;
+  position: absolute;
+}
+#signOutBtn {
+  background-color: red;
+
+}
+.signout{
+  bottom: 0;
+  margin-bottom: 5vh;
+  margin-left: 5%;
+  float: left;
+}
+
+@media screen and (max-width: 768px) {
+  #hamburger {
+    display: inline;
+  }
+  #filterMainPageDiv {
+    display: none;
+  }
+  #filterButton {
+    display: inline;
+  }
+  #filterContainerDiv {
+    display: block;
+    width: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+  #dd-button,#land-name-filter{
+    width: 100%;
+    margin-top: 5%;
+    font-size: 1.0rem;
+  }
+
+  #button-div{
+    display: none;
+  }
+}
