@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Proplante</title>
+  <title>ยินดีต้อนรับ Proplante</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -74,7 +74,7 @@
         <h4 class="login-box-msg">เข้าสู่ระบบ</h4>
         <!--!OWNER LOGIN UI  -->
         <div id="owner-login-ui">
-          <form action="">
+          <form>
             <div class="input-group mb-3">
               <input type="email" class="form-control" placeholder="อีเมล" id="email-input-owner">
               <div class="input-group-append">
@@ -122,7 +122,7 @@
         </div>
         <!--! MANAGER LOGIN UI -->
         <div id="manager-login-ui" style="display:none;">
-          <form id="manager-login-form" action="">
+          <form id="manager-login-form">
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์" id="phone-manager-input">
               <div class="input-group-append">
@@ -131,13 +131,13 @@
                 </div>
               </div>
             </div>
+            <span id="error-phone" style="color:red; display:none;">**ไม่พบผู้ใช้งาน</span>
             <div class="row">
               <div class="col-6">
                 <p class="mb-1">
                   <a id="manager-regis-bt" href="register.html">ลงทะเบียน</a>
                 </p>
               </div>
-
               <div class="col-6">
                 <button type="button" class="btn btn-primary btn-block" id="manager-login-bt">เข้าสู่ระบบ</button>
               </div>
@@ -163,7 +163,6 @@
             </div>
           </form>
 
-
         </div>
 
 
@@ -183,7 +182,7 @@
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-  <!-- <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
   <script src="build/js/connectServer.js"></script>
   <script src="build/js/firebaseAuthen.js"></script>
   <script src="build/js/authenSelect.js"></script>
