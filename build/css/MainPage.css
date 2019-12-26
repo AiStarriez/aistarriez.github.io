@@ -46,7 +46,7 @@
   margin-top: 15px;
 }
 
-#dropdown-main {
+.dropdown {
   display: inline-block;
 }
 
@@ -67,6 +67,12 @@
   background-color: #FF7E9D;
   border-color: #FF7E9D;
   font-size: 2.0em;
+}
+
+@media screen and (max-width: 768px) {
+  .dropdown {
+    width: 100%;
+  }
 }
 
 /* #map {

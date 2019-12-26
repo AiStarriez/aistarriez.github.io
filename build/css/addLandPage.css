@@ -4,7 +4,7 @@
 }
 
 #landInfo {
-  font-size: 30px;
+  font-size: 1.0em;
   color: gray;
 }
 
@@ -14,7 +14,7 @@
 
 .landinfo-input {
   border-radius: 10px;
-  font-size: 30px;
+
 }
 
 #button-div {
@@ -23,14 +23,26 @@
 }
 
 #cancelBtn {
-  font-size: 30px;
+
   background-color: #EFEFEF;
   border-color: #EFEFEF;
   color: gray;
   margin-right: 15px;
+  font-size: 1.6rem;
 }
 
 #saveBtn {
-  font-size: 30px;
+  font-size: 1.6rem;
 }
 
+.form-control{
+  font-size: 1.6rem;
+  width: 90%;
+  margin-top: 10%;
+  
+}
+
+#map_search, #mapSearchBt{
+  font-size: 1.3rem;
+  width: 100%;
+}
