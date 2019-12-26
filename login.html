@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Proplante</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  
+
+  <!-- PROPLANTE -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="build/css/CS%20ChatThai.css" />
+  <link rel="stylesheet" href="build/fonts/fontawesome-all.min.css" />
+  <link rel="stylesheet" href="build/fonts/ionicons.min.css" />
+  <link rel="stylesheet" href="build/css/MainLoginPage.css" />
+  <!-- PROPLANTE -->
+</head>
+
+<body class="hold-transition login-page">
+
+  <div id="slideshow">
+    <div class="carousel slide" data-ride="carousel" id="picSlide">
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
+          <img class="img-fluid w-100 d-block" id="pic" src="build/img/slide1.jpg" />
+        </div>
+
+        <div class="carousel-item">
+          <img class="w-100 d-block" id="pic" src="build/img/slide2.jpg" alt="Slide Image" />
+        </div>
+
+        <div class="carousel-item">
+          <img class="w-100 d-block" id="pic" src="build/img/slide3.jpg" alt="Slide Image" />
+        </div>
+
+        <div class="carousel-item">
+          <img class="w-100 d-block" id="pic" src="build/img/slide5.jpg" alt="Slide Image" />
+        </div>
+
+        <div class="carousel-item">
+          <img class="w-100 d-block" id="pic" src="build/img/slide7.jpg" alt="Slide Image" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-box">
+    <div class="card">
+      <div class="row">
+        <div class="col-6" id="owner-sel-role-bt">
+          <a href="#role-owner">
+            <p id="text-owner-role">เจ้าของสวน</p>
+          </a>
+        </div>
+        <div class="col-6" id="manager-sel-role-bt">
+          <a href="#role-manager" style="width: 100%;height: 100%;">
+            <p id="text-manager-role">ผู้ดูแลสวน</p>
+          </a>
+        </div>
+      </div>
+      <div class="card-body login-card-body">
+        <h4 class="login-box-msg">เข้าสู่ระบบ</h4>
+        <!--!OWNER LOGIN UI  -->
+        <div id="owner-login-ui">
+          <form action="">
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" placeholder="อีเมล" id="email-input-owner">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" placeholder="รหัสผ่าน" id="pass-input-owner">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <span id="wrong-pass-email" style="color: red; display:none; margin-bottom: 10px; ">**อีเมล หรือ
+              รหัสผ่านของท่านไม่ถูกต้อง</span>
+            <div class="row">
+              <div class="col-6">
+                <p class="mb-1">
+                  <a id="forget-password-bt" style="color: lightblue">ลืมรหัสผ่าน</a>
+                </p>
+              </div>
+              <!-- /.col -->
+              <div class="col-6">
+                <button type="button" class="btn btn-primary btn-block" id="owner-login-bt">เข้าสู่ระบบ</button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+
+          <div class="social-auth-links text-center mb-3">
+            <p>- หรือ -</p>
+            <a href="#" class="btn btn-block btn-danger" id="owner-gg-login-bt">
+              <i class="fab fa-google mr-2"></i> เข้าสู่ระบบด้วย Google
+            </a>
+          </div>
+          <!-- /.social-auth-links -->
+          <div class="row" id="register-bt">
+            <p class="mb-0" id="register-bt">
+              <a href="register.html" class="text-center" id="register-owner-bt">สมัครสมาชิก</a>
+            </p>
+          </div>
+        </div>
+        <!--! MANAGER LOGIN UI -->
+        <div id="manager-login-ui" style="display:none;">
+          <form id="manager-login-form" action="">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์" id="phone-manager-input">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-phone"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <p class="mb-1">
+                  <a id="manager-regis-bt" href="register.html">ลงทะเบียน</a>
+                </p>
+              </div>
+
+              <div class="col-6">
+                <button type="button" class="btn btn-primary btn-block" id="manager-login-bt">เข้าสู่ระบบ</button>
+              </div>
+            </div>
+          </form>
+
+          <form id="manager-verify-ui" style="display:none;">
+            <span>รหัสยืนยันที่ได้รับทางข้อความ</span>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="รหัสยืนยัน" id="verify-manager-input">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+              </div>
+              <div class="col-6">
+                <button type="button" class="btn btn-primary btn-block" id="manager-verify-bt">ยืนยัน</button>
+              </div>
+            </div>
+          </form>
+
+
+        </div>
+
+
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+  <!-- <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script> -->
+  <script src="build/js/connectServer.js"></script>
+  <script src="build/js/firebaseAuthen.js"></script>
+  <script src="build/js/authenSelect.js"></script>
+
+
+</body>
+
+</html>
