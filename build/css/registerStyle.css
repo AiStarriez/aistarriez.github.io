@@ -241,10 +241,6 @@ input[type=button] {
   border-radius: 5px 0px 0px 0px;
 }
 
-p {
-  color: #ffffff;
-}
-
 #owner-sel-role-bt:hover {
   background-color: rgb(53, 173, 87);
   border-color: rgb(53, 173, 87);
