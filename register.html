@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>AdminLTE 3 | Registration Page</title>
+  <title>ยินดีต้อนรับ | Proplante</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -19,11 +19,14 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
 
+  <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+
   <!-- PROPLANTE -->
   <link rel="stylesheet" href="build/css/CS%20ChatThai.css" />
   <link rel="stylesheet" href="build/fonts/fontawesome-all.min.css" />
   <link rel="stylesheet" href="build/fonts/ionicons.min.css" />
   <link rel="stylesheet" href="build/css/registerStyle.css" />
+  <link rel="stylesheet" href="build/css/circleImageProfile.css"/>
   <!-- PROPLANTE -->
 </head>
 
@@ -56,109 +59,155 @@
   <div class="register-box">
     <div class="card">
       <div class="card-body register-card-body">
-        <p class="login-box-msg">สมัครสมาชิก</p>
+        <div id="regis-form">
+          <p class="login-box-msg">สมัครสมาชิก</p>
+          <form>
+            <!--!owner regis  -->
+            <div id="owner-register-ui" style="display:none;">
+              <div class="input-group mb-3">
+                <input required id="name-owner-input" type="text" class="form-control" placeholder="ชื่อ" />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+              <div id="regis-from-email">
+                <div class="input-group mb-3">
+                  <input required id="email-owner-input" type="email" class="form-control" placeholder="อีเมล" />
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-envelope"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <input required id="pass-owner-input" type="password" class="form-control" placeholder="รหัสผ่าน" />
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span class="fas fa-lock"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <input required id="con-pass-owner-input" type="password" class="form-control"
+                    placeholder="ยืนยันรหัสผ่าน" />
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <span id="emoji-conpass" class="fas fa-lock"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-        <form>
-          <!--!owner regis  -->
-          <div id="owner-register-ui" style="display:none;">
-            <div class="input-group mb-3">
-              <input required id="name-owner-input" type="text" class="form-control" placeholder="ชื่อ" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-user"></span>
-                </div>
-              </div>
-            </div>
 
-            <div class="input-group mb-3">
-              <input required id="email-owner-input" type="email" class="form-control" placeholder="อีเมล" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-envelope"></span>
+            </div>
+            <!--! manager regis  -->
+            <div id="manager-register-ui" style="display:none;">
+              <div class="input-group mb-3">
+                  <div id="profile">
+                <div class="dashes"></div>
+                <label>คลิกเพื่อเลือกรูปภาพ หรือลากรูปภาพมาวางที่นี่</label>
+              </div>
+              <input type="file" id="mediaFile" />
+              </div>
+              <div class="input-group mb-3">
+                <input required id="code-manager-input" type="text" class="form-control" placeholder="รหัสผู้ดูแล" />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-tree"></span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="input-group mb-3">
-              <input required id="pass-owner-input" type="password" class="form-control" placeholder="รหัสผ่าน" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
+
+              <div class="input-group mb-3">
+                <input required id="name-manager-input" type="text" class="form-control" placeholder="ชื่อ" />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="input-group mb-3">
-              <input required id="con-pass-owner-input" type="password" class="form-control" placeholder="ยืนยันรหัสผ่าน" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
+              <div class="input-group mb-3">
+                <input required id="phone-manager-input" type="text" class="form-control" placeholder="เบอร์โทรศัพท์" />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-phone"></span>
+                  </div>
                 </div>
+              </div>
+              <div class="form-group mb-3">
+                <textarea id="addres-manager-input" class="form-control" rows="3" placeholder="ที่อยู่"></textarea>
+              </div>
+            </div>
+            <span id="error-regis"
+              style="color: red;display: none">**กรุณากรอกข้อมูลให้ครบถ้วนและยืนยันรหัสผ่านให้ถูกต้อง</span>
+            <span id="error-already-email" style="color: red;display: none">**อีเมลนี้เคยใช้ไปแล้ว</span>
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input required type="checkbox" id="agreeTerms" name="terms" value="agree" />
+                  <label for="agreeTerms">
+                    ฉันยอมรับ <a href="#">ข้อตกลง</a>
+                  </label>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button id="manager-login-bt" type="button" class="btn btn-primary btn-block">
+                  ลงทะเบียน
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+          <a href="login.html" class="text-center">ฉันเป็นสมาชิกอยู่แล้ว</a>
+        </div>
+        <!-- regis form -->
+        <div id="regis-success" style="display:none">
+          <div class="input-group mb-3">
+            <div class="input-group-append"></div>
+            <h3 style="margin-top:auto;margin-bottom:auto">ลงทะเบียนสำเร็จ &nbsp;</h3>
+            <span class="fas fa-check-circle" style="margin-top:auto;margin-bottom:auto;color:green;"></span>
+          </div>
+          <p>คลิกที่นี่<a href="login.html">เพื่อเข้าสู่ระบบ</a></p>
+        </div>
+        
+        <form id="manager-verify-ui" style="display:none;">
+          <span>รหัสยืนยันที่ได้รับทางข้อความ</span>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="รหัสยืนยัน" id="verify-manager-input">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
-          <!--! manager regis  -->
-          <div id="manager-register-ui" style="display:none;" >
-            <div class="input-group mb-3">
-              <input required id="code-manager-input" type="text" class="form-control" placeholder="รหัสผู้ดูแล" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-tree"></span>
-                </div>
-              </div>
-            </div>
-
-            <div class="input-group mb-3">
-              <input required id="name-manager-input" type="text" class="form-control" placeholder="ชื่อ" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-user"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input required id="phone-manager-input" type="text" class="form-control" placeholder="เบอร์โทรศัพท์" />
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-phone"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <textarea id="addres-manager-input" cols="25" rows="3" class="form-control" placeholder="ที่อยู่">
-                
-              </textarea>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-home"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <span id="error-regis" style="color: red;display: none">**กรุณากรอกข้อมูลให้ครบถ้วน</span>
-
           <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input required type="checkbox" id="agreeTerms" name="terms" value="agree" />
-                <label for="agreeTerms">
-                  ฉันยอมรับ <a href="#">ข้อตกลง</a>
-                </label>
-              </div>
+            <div class="col-6">
             </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <button id="register-bt" type="button" class="btn btn-primary btn-block">
-                ลงทะเบียน
-              </button>
+            <div class="col-6">
+              <button type="button" class="btn btn-primary btn-block" id="manager-verify-bt">ยืนยัน</button>
             </div>
-            <!-- /.col -->
           </div>
         </form>
-        <a href="login.html" class="text-center">ฉันเป็นสมาชิกอยู่แล้ว</a>
+
+        <div id="regis-manager-success" style="display:none">
+          <div class="input-group mb-3">
+            <div class="input-group-append"></div>
+            <h3 style="margin-top:auto;margin-bottom:auto">ลงทะเบียนสำเร็จ &nbsp;</h3>
+            <span class="fas fa-check-circle" style="margin-top:auto;margin-bottom:auto;color:green;"></span>
+          </div>
+          <p>คลิกที่นี่<a href="index.html">เพื่อเข้าสู่ระบบ</a></p>
+        </div>
+
       </div>
-      <!-- /.form-box -->
     </div>
-    <!-- /.card -->
+    <!-- /.form-box -->
   </div>
+  <!-- /.card -->
+  </div>
+  
   <!-- /.register-box -->
 
   <!-- jQuery -->
@@ -168,8 +217,13 @@
   <!-- AdminLTE App -->
   <script src="../../dist/js/adminlte.min.js"></script>
 
+  <script src="../../plugins/toastr/toastr.min.js"></script>
+
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="build/js/connectServer.js"></script>
   <script src="build/js/firebaseAuthen.js"></script>
   <script src="build/js/registerFunc.js"></script>
 </body>

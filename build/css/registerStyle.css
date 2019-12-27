@@ -264,3 +264,14 @@ input[type=button] {
   color: #ffffff;
   border-color: rgb(53, 173, 87);
 }
+
+#blah {
+  max-width: 180px;
+  margin-bottom: 18px;
+}
+
+input[type=file] {
+  display: none
+}
+
+
