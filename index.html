@@ -26,12 +26,11 @@
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../build/css/allelements.css" />
   
-  <link rel="stylesheet"  href="build/css/allelements.css">
+
   <!-- PROPLANTE -->
+  <link rel="stylesheet"  href="build/css/allelements.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="../build/js/connectBackend.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -238,7 +237,7 @@
     
     </div>
     <div id="button-div">
-      <button class="btn btn-primary" id="addLandBtn" type="button">
+      <button class="btn btn-primary" id="addLandBtn" type="button" onclick="window.location.href = 'addland.html';">
         เพิ่มที่ดิน
       </button>
     </div>
@@ -259,9 +258,10 @@
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
     async defer></script>
-    <script src="../build/js/connectServer.js"></script>
-    <script src="../build/js/showLandMain.js"></script>
-    <script src="../build/js/mainPageFunc.js"></script>
+    <script src="build/js/connectServer.js"></script>
+    <script src="build/js/showLandMain.js"></script>
+    <script src="build/js/mainPageFunc.js"></script>
+    <script src="build/js/CalculatedMapArea.js"></script>
 
   
 <!-- jQuery -->

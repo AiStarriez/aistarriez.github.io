@@ -1,10 +1,19 @@
 var map = document.getElementById("map");
 var navbar = document.getElementById("topnav");
 
-$(function () {
+$(window, document).ready(function() {
+
   var navbarHeigth = navbar.offsetHeight;
-  var mapHeigth;
-  var screenHeigth = screen.height;
-  mapHeigth = screenHeigth - navbarHeigth;
-  map.style.height = mapHeigth;
+  var screenHeigth = $(window).height();
+  // mapHeigth = screenH1eigth - navbarHeigth;
+
+  // map.style.height = mapHeigth;
+
+    var mapHeigth = screenHeigth - navbarHeigth;
+    $("#map").height(mapHeigth);
+
+    console.log(navbarHeigth);
+     console.log(mapHeigth);
+     console.log(screenHeigth);
+
 });

@@ -10,7 +10,6 @@ body {
   }
 
   #map {
-    height: 100vh;
     width: 100%;
     margin: auto;
   }
@@ -62,6 +61,11 @@ body {
   margin-bottom: 5vh;
   margin-left: 5%;
   float: left;
+}
+#addLandBtn{
+  font-size: 1.6rem;
+  background-color: darksalmon;
+  border-color: darksalmon;
 }
 
 @media screen and (max-width: 768px) {
