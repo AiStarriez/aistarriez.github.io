@@ -106,8 +106,10 @@ function setMapAfFilter(afFilters) {
     $("#wrapper").toggleClass("toggled");
 });
 
-  $("#addLandBtn").click(function(e) {
-    e.preventDefault();
-    $("#addLandBtn").setAttribute('href', 'addLand.html');
-  })
+  // $("#addLandBtn").click(function(e) {
+  //   e.preventDefault();
+  //   addLandBtn = document.getElementById("addLandBtn");
+  //   addLandBtn.window.location.href = 'addland.html';
+  //   console.log("hello");
+  // })
 
