@@ -9,6 +9,7 @@ var codeManage = document.getElementById("code-manager-input");
 var nameManage = document.getElementById("name-manager-input");
 var phoneManage = document.getElementById("phone-manager-input");
 var addressManage = document.getElementById("addres-manager-input");
+var managerImage;
 selectRoleUI();
 
 $("#manager-login-bt").click(function() {
@@ -49,6 +50,7 @@ function checkValidation(role) {
     }
   } else if (role == "owner-gg") {
     if (nameOwner.checkValidity()) {
+      console.log("check pass");
       errorMessage.style.display = "none";
       registerOwnerDB(sessionStorage.email, nameOwner.value);
       sessionStorage.email = "";
@@ -65,7 +67,41 @@ function checkValidation(role) {
     ) {
       sessionStorage.authenEvent = "manager-register";
       errorMessage.style.display = "none";
+      var managerID = codeManage.value;
+      var getOwner = connectToServer(
+        "/managers/findowner/" + managerID,
+        "",
+        "GET"
+      );
+      getOwner.then(owner => {
+        var ownerID = owner.owner_id;
+        var url = "/aws/image?m=" + managerID + "&o=" + ownerID;
+        var formdata = new FormData();
+        formdata.append("busboy", managerImage);
+        var typ = "POST";
+        var uploadImageAWS = uploadToAWS(url, formdata, typ);
+        uploadImageAWS.then(
+          docs => {
+            var managerDetail = {
+              name: nameManage.value,
+              image: docs,
+              contact_info: {
+                address: addressManage.value,
+                phone: phoneManage.value
+              }
+            };
+            sessionStorage.mDetail = JSON.stringify(managerDetail);
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      },err =>{
+        errorMessage.innerHTML = "**รหัสผู้ดูแลไม่ถูกต้อง"
+        errorMessage.style.display = "block";
+      });
     } else {
+      errorMessage.innerHTML = "**กรุณากรอกข้อมูลให้ครบถ้วนและยืนยันรหัสผ่านให้ถูกต้อง"
       errorMessage.style.display = "block";
     }
   }
@@ -198,7 +234,20 @@ function resizeImage(e) {
     $("#profile")
       .css("background-image", "url(" + oc.toDataURL() + ")")
       .addClass("hasImage");
+    urltoFile(oc.toDataURL(), "manager.png", "image/png").then(function(file) {
+      managerImage = file;
+    });
     window.managerimg = true;
   };
   img.src = e.target.result;
+}
+
+function urltoFile(url, filename, mimeType) {
+  return fetch(url)
+    .then(function(res) {
+      return res.arrayBuffer();
+    })
+    .then(function(buf) {
+      return new File([buf], filename, { type: mimeType });
+    });
 }

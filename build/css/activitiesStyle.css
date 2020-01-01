@@ -1,0 +1,94 @@
+html {
+  background-color: #F4F6F9;
+}
+
+body {
+  font-family: 'CS ChatThai';
+  background-size: cover;
+  overflow-x: hidden;
+  font-size: 1.2rem;
+}
+
+.content-wrapper {
+  overflow-y: scroll;
+}
+
+.timeline {
+  margin-right: 0px;
+}
+
+.timeline>div>.timeline-item {
+  margin-right: 0px;
+}
+
+.table-header {
+  width: 98%;
+  margin-bottom: 1vw;
+  margin-top: 1vw;
+}
+
+#header-mobile {
+  display: none;
+}
+
+.tr-bt-add-ac {
+  text-align: right;
+  display: block;
+}
+
+#table-filter {
+  position: relative;
+}
+
+#table-filter table {
+  float: right;
+}
+
+#bt-progress-nav {
+  display: none;
+  margin-right: 2vw;
+}
+
+
+.timeline>div>.timeline-item {
+  margin-left: 50px;
+}
+
+.table-header {
+  display: block;
+}
+
+.activities-mobile {
+  display: none;
+}
+
+.activities-mobile td {
+  width: 100%
+}
+
+@media screen and (max-width: 600px) {
+  #bt-progress-container {
+    display: none;
+  }
+
+  #bt-progress-nav {
+    display: block;
+  }
+
+  #header-mobile {
+    display: block;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .activities-browser {
+    display: none;
+  }
+
+  .activities-mobile {
+    display: block;
+    width: 100%;
+  }
+}

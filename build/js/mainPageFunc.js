@@ -69,7 +69,7 @@ function findLands(province, district, landName, plant) {
   //var landsData = JSON.parse(sessionStorage.lands);
   var landsData = JSON.parse(localStorage["lands"]) || undefined;
   var plantData = JSON.parse(localStorage["plants"]) || undefined;
-  
+
   var url =
     "/sec/lands/filter?province=" +
     province +
@@ -101,15 +101,14 @@ function setMapAfFilter(afFilters) {
   getPolygonLands(afFilters);
 }
 
-  $("#hamburger").click(function(e) {
-    e.preventDefault();
-    $("#wrapper").toggleClass("toggled");
+$("#hamburger").click(function(e) {
+  e.preventDefault();
+  $("#wrapper").toggleClass("toggled");
 });
 
-  // $("#addLandBtn").click(function(e) {
-  //   e.preventDefault();
-  //   addLandBtn = document.getElementById("addLandBtn");
-  //   addLandBtn.window.location.href = 'addland.html';
-  //   console.log("hello");
-  // })
-
+// $("#addLandBtn").click(function(e) {
+//   e.preventDefault();
+//   addLandBtn = document.getElementById("addLandBtn");
+//   addLandBtn.window.location.href = 'addland.html';
+//   console.log("hello");
+// })

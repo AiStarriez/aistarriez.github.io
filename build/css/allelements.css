@@ -6,7 +6,7 @@ body {
     font-family: 'CS ChatThai';
     background-size: cover;
     overflow-x: hidden;
-     font-size: 1.6rem;
+     font-size: 1.2rem;
   }
 
   #map {
@@ -14,12 +14,12 @@ body {
     margin: auto;
   }
    span {
-    font-size: 2.0rem;
+    font-size: 1.0rem;
   }
 
-#hamburger {
+/* #hamburger {
   display: none;
-}
+} */
 #filterButton {
   display: none;
 }
@@ -43,7 +43,7 @@ body {
   background-color: #EFEFEF;
   border-color: #EFEFEF;
   color: gray;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
 }
 #button-div {
   margin-left: 5%;

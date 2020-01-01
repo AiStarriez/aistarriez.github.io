@@ -99,7 +99,7 @@ function drawingPolygonLands(poly) {
           var context =
             "<div><p>" +
             polygonLands[i].land_id +
-            '</p><a href="addLandPage.html">แก้ไข</a></div>';
+            '</p><a href="addland.html">แก้ไข</a></div>';
           infowindow.setContent(context);
           infowindow.open(map, marker);
           sessionStorage.polygonEditLand = JSON.stringify(marker.description);
