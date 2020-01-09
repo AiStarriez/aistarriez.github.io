@@ -13,6 +13,7 @@ function connectToServer(u, body, typ) {
   );
 }
 
+
 function setCacheData(name, data) {
   //cache
   localStorage[name] = JSON.stringify(data);

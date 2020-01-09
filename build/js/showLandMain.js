@@ -85,7 +85,7 @@ function drawingPolygonLands(poly) {
 
     var marker = new google.maps.Marker({
       position: polygonLands[i].center,
-      title: "Hello World!",
+      title: polygonLands[i].land_id,
       description: polygonLands[i],
       icon: createMarker(25, 25, 4),
       map: map
@@ -99,10 +99,11 @@ function drawingPolygonLands(poly) {
           var context =
             "<div><p>" +
             polygonLands[i].land_id +
-            '</p><a href="addLandPage.html">แก้ไข</a></div>';
+            '</p><a href="addLandPage.html">แก้ไข</a> <a href="landDetail.html">ดูรายละเอียด</a></div>';
           infowindow.setContent(context);
           infowindow.open(map, marker);
           sessionStorage.polygonEditLand = JSON.stringify(marker.description);
+          sessionStorage.currentLandId = marker.title;
         };
       })(marker, i)
     );

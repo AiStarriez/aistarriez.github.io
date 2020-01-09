@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -30,6 +30,7 @@
 
   <!-- PROPLANTE -->
   <link rel="stylesheet"  href="build/css/allelements.css">
+  <link rel="stylesheet"  href="build/css/addActivityPage.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
@@ -44,97 +45,6 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
 
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" id="filterButton"><i
-            class="fa fa-filter"></i></a>
-      </li>
-      <div id = "filterMainPageDiv">
-      
-      <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button"
-        type="button">
-        จังหวัด
-      </button>
-      <div class="dropdown-menu" role="menu" id="provice-dropdown">
-        <a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation"
-          href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a>
-      </div>
-    </div>
-    <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button"
-        type="button">
-        อำเภอ
-      </button>
-      <div class="dropdown-menu" role="menu" id="district-dropdown">
-        <a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation"
-          href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a>
-      </div>
-    </div>
-    <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="land-name-filter"
-        type="button">
-        ที่ดิน
-      </button>
-      <div class="dropdown-menu" role="menu" id="land-dropdown">
-        <a class="dropdown-item" role="presentation" href="#" onClick="setFilterValueOnclick('ทั้งหมด')">ทั้งหมด</a>
-      </div>
-    </div>
-    <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button"
-        type="button">
-        พืช
-      </button>
-      <div class="dropdown-menu" role="menu" id="plant-dropdown">
-        <a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation"
-          href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a>
-      </div>
-    </div>
-
-    <div id = "filterContainerDiv" class="row">
-      
-      <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button"
-        type="button">
-        จังหวัด
-      </button>
-      <div class="dropdown-menu" role="menu" id="provice-dropdown">
-        <a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation"
-          href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a>
-      </div>
-    </div>
-    <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button"
-        type="button">
-        อำเภอ
-      </button>
-      <div class="dropdown-menu" role="menu" id="district-dropdown">
-        <a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation"
-          href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a>
-      </div>
-    </div>
-    <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="land-name-filter"
-        type="button">
-        ที่ดิน
-      </button>
-      <div class="dropdown-menu" role="menu" id="land-dropdown">
-        <a class="dropdown-item" role="presentation" href="#" onClick="setFilterValueOnclick('ทั้งหมด')">ทั้งหมด</a>
-      </div>
-    </div>
-    <div class="dropdown" id="dropdown-main">
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button"
-        type="button">
-        พืช
-      </button>
-      <div class="dropdown-menu" role="menu" id="plant-dropdown">
-        <a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation"
-          href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a>
-      </div>
-    </div>
-
-      </div>
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -233,15 +143,59 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div id="map">
-    
+    <div id="topHeader">
+      <div id="titleDiv">
+        <a href="" id="activityPage" style="display:inline">กิจกรรมทั้งหมด</a> 
+        <p style="display:inline"> 	&nbsp;&nbsp; > &nbsp;&nbsp; </p>
+        <p id="activityNameTitle" style="display:inline"> </p>
+        <div id="buttonDiv">
+          <button class="btn btn-primary" type="button" id="cancelBtn">ยกเลิก</button>
+          <button class="btn btn-primary" type="button" id="saveBtn">บันทึก</button>
+        </div>
+      </div>
+    </div> 
+    <hr>
+    <br>
+    <div id="showLandInfo">
+      <div id="landInfo">
+        <p style="display:inline">ชื่อที่ดิน &nbsp;&nbsp;&nbsp;</p><p id="landName" style="display:inline">1</p>
+        <br>
+        <p style="display:inline">พืช &nbsp;&nbsp;&nbsp;&nbsp;</p><p id="plant" style="display:inline">1</p>
+        <br>
+        <p style="display:inline">ผลผลิตที่คาดหวัง &nbsp;&nbsp;&nbsp;</p><p id="expProduct"style="display:inline" >1</p>
+      </div>
+      <br>
+      <div id="activityProgress">
+        <p id="activityTitle">กิจกรรม</p>
+        <a id="viewAllActivities" href="#">ดูทั้งหมด</a>
+        <hr>
+        <div id="showActivity">
+          <p id="allActivity"></p>
+          <p id="notDoneActivity"></p>
+          <p id="inProgressActivity"></p>
+          <p id="doneActivity"></p>
+        </div>
+      </div>
+      <div id="weatherForecast">
+        <div id = "weatherTitle">
+          <p id = "weather">พยากรณ์อากาศ</p>
+        </div>
+        <div id="weatherFilterDate">
+          <div class="dropdown" id="dropdown-main">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dd-button"
+              type="button">
+              เวลา
+            </button>
+            <div class="dropdown-menu" role="menu" id="time-dropdown">
+              <a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation"
+                href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a>
+            </div>
+          </div>
+        </div>
+        <div id="weatherForecastInfo">
+        </div>
+      </div>
     </div>
-    <div id="button-div">
-      <button class="btn btn-primary" id="addLandBtn" type="button" onclick="window.location.href = 'addland.html';">
-        เพิ่มที่ดิน
-      </button>
-    </div>
-
   </div>
   <!-- /.content-wrapper -->
   
@@ -259,9 +213,6 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
     async defer></script>
     <script src="build/js/connectServer.js"></script>
-    <script src="build/js/showLandMain.js"></script>
-    <script src="build/js/mainPageFunc.js"></script>
-    <script src="build/js/CalculatedMapArea.js"></script>
 
   
 <!-- jQuery -->

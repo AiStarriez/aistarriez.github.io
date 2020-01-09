@@ -58,3 +58,8 @@
   margin: auto;
 }
 
+#latlngResult{
+  width: auto;
+  margin-top: 5%;
+}
+
