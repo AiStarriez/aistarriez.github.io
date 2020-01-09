@@ -12,8 +12,4 @@ $(window, document).ready(function() {
     var mapHeigth = screenHeigth - navbarHeigth;
     $("#map").height(mapHeigth);
 
-    console.log(navbarHeigth);
-     console.log(mapHeigth);
-     console.log(screenHeigth);
-
 });
