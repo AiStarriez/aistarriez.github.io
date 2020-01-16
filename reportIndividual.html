@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -26,23 +26,11 @@
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-    <!-- daterange picker -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">    
-  <!-- Theme style -->
-      <!-- Select2 -->
-  <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
   
 
   <!-- PROPLANTE -->
   <link rel="stylesheet"  href="build/css/allelements.css">
-  <link rel="stylesheet"  href="build/css/addActivityPage.css">
+  <link rel="stylesheet"  href="build/css/reportIndividual.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
@@ -57,9 +45,8 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item" id = "forButton">
-        <div class="button">
-          <button class="btn btn-primary" type="button" id="cancelBtn">ยกเลิก</button>
-          <button class="btn btn-primary" type="button" id="saveBtn">บันทึก</button>
+        <div id="exportReportMobile">
+          <button class="btn btn-primary" type="button" id="exportCSVBtn">ส่งออกรายงาน .csv</button>
         </div>
       </li>
 
@@ -163,70 +150,83 @@
   <div class="content-wrapper">
     <div id="topHeader">
       <div id="titleDiv">
-        <a href="" id="activityPage" style="display:inline">กิจกรรมทั้งหมด</a> 
+        <a href="" id="mainReportPage" style="display:inline">รายงานที่ดิน</a> 
         <p style="display:inline"> 	&nbsp;&nbsp; > &nbsp;&nbsp; </p>
-        <p id="newActivity" style="display:inline"> กิจกรรมใหม่ </p>
-        <div class="button" id="buttonDivFull">
-          <button class="btn btn-primary" type="button" id="cancelBtn" onclick="clearField()">ยกเลิก</button>
-          <button class="btn btn-primary" type="button" id="saveBtn" onclick="getActivityInputValue()">บันทึก</button>
+        <a id="landNameTitle" style="display:inline"> </a>
+        <p style="display:inline"> 	&nbsp;&nbsp; > &nbsp;&nbsp; </p>
+        <p id="reportLengthDate" style="display:inline"> </p>
+        <div id="exportReportFull">
+          <button class="btn btn-primary" type="button" id="exportCSVBtn">ส่งออกรายงาน .csv</button>
         </div>
       </div>
     </div> 
     <hr>
     <br>
-    <div id="addActivity">
-      <form role="form">
-        <div class="form-group">
-          <label for ="inputActivityName">กิจกรรม</label>
-          <input type="text" class="form-control" id="activityName" placeholder="ชื่อกิจกรรม Ex. รดน้ำ">
-        </div>
+    <div id ="mainReportDiv">
+      <div id="productDiv">
         
-          
-
-          <div class="form-group">
-                  <label>Date range:</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="far fa-calendar-alt"></i>
-                      </span>
-                    </div>
-                    <input type="text" class="form-control float-right" id="reservation">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-        
-          <div class="form-group">
-            <label for ="inputActivityName">สถานะ</label>
-            <select id="activityStatus" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
-              <option selected="selected" data-select2-id="doneStatus">เสร็จแล้ว</option>
-              <option data-select2-id="inProgressStatus">กำลังดำเนินการ</option>
-              <option data-select2-id="notDoneStatus">ยังไม่เสร็จ</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>บันทึกเพิ่มเติม</label>
-            <textarea id="additionNote" class="form-control" rows="3" placeholder="Enter ..."></textarea>
-          </div>
-        </div>
-        
-        <div id="addAdditionActivity">
-          <form role="form"><div class="form-group">
-            <label for="exampleInputFile">อัปโหลดรูปภาพ</label>
-            <div class="input-group">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="activityPicUpload">
-                <label class="custom-file-label" for="exampleInputFile">เลือกไฟล์รูปเพื่ออัปโหลด</label>
-              </div>
-              <div class="input-group-append">
-                <span class="input-group-text" id="">อัปโหลด</span>
-              </div>
-            </div>
-          </div></form>
-        </div>
-      </form>
+        <table class="reportTable">
+          <tr>
+            <td>
+              <p id = "reportPlant">Something</p>
+            </td>
+            <td>
+              <p id="showExpectedProduct">0</p>
+              <br>
+              <p>ผลผลิตที่คาดหวัง</p>
+            </td>
+            <td>
+              <p id="showHarvestedProduct">0</p>
+              <br>
+              <p>ผลผลิตที่เก็บเกี่ยวได้</p>
+            </td>
+            <td>
+              <p id="showPerformance">0</p>
+              <br>
+              <p>ประสิทธิภาพ</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <hr>
+      <div id="activityReportDiv">
+        <table class="reportTable" id ="activityTable">
+          <tr>
+            <td>
+              <p>กิจกรรม</p>
+            </td>
+            <td>
+              <p id = "showAllActivity">0</p>
+              <br>
+              <a id = "allActivityLink">ทั้งหมด</a>
+            </td>
+            <td class="text-secondary">
+              <p id = "showNotDoneActivity">0</p>
+              <br>
+              <a id = "notDoneActivityLink">ยังไม่เสร็จ</a>
+            </td>
+            <td class="text-warning">
+              <p id = "shoInProgressActivity">0</p>
+              <br>
+              <a id = "inProgressActivityLink">กำลังดำเนินการ</a>
+            </td>
+            <td class="text-success">
+              <p id = "showDoneActivity">0</p>
+              <br>
+              <a id = "doneActivityLink">เสร็จแล้ว</a>
+            </td>
+            <td class="text-danger">
+              <p id = "showLateActivity">0</p>
+              <br>
+              <a id = "lateActivityLink">เลยกำหนด</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <hr>
+      <div id="showAllActivityInDetail"></div>
     </div>
+   
   </div>
   <!-- /.content-wrapper -->
   
@@ -244,7 +244,7 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
     async defer></script>
     <script src="build/js/connectServer.js"></script>
-    <script src="build/js/addActivity.js"></script>
+
 
   
 <!-- jQuery -->
@@ -281,69 +281,12 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- date-range-picker -->
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Select2 -->
-<script src="../../plugins/select2/js/select2.full.min.js"></script>
-<!-- Bootstrap4 Duallistbox -->
-<script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-<!-- InputMask -->
-<script src="../../plugins/moment/moment.min.js"></script>
-<script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <!-- firebase -->
 <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="build/js/firebaseAuthen.js"></script>
 
 
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-
-
-    //Date range picker
-    $('#reservation').datepicker({
-      autoclose: true
-    })
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({
-      timePicker: true,
-      timePickerIncrement: 30,
-      locale: {
-        format: 'MM/DD/YYYY hh:mm A'
-      }
-    })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
-
-    
-
-  })
-</script>
 
 </body>
 </html>

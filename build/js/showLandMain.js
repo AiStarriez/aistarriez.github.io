@@ -30,9 +30,9 @@ function initMap() {
     content: contentString
   });
 
-  var cacheLands = localStorage["lands"] || undefined;
+  var cacheLands = JSON.parse(localStorage["lands"]) || undefined;
   if (cacheLands != undefined) {
-    getPolygonLands(JSON.parse(cacheLands));
+    getPolygonLands(cacheLands);
   } else {
     getLatLngDB();
   }

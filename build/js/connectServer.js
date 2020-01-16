@@ -1,5 +1,5 @@
 var ownerId = "5dfcabe6666c642250d2ec59";
-
+var managerId = "eV5F9JZB"
 function connectToServer(u, body, typ) {
   var url = "https://rocky-gorge-34614.herokuapp.com" + u;
   return Promise.resolve(

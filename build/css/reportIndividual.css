@@ -1,0 +1,55 @@
+.content-wrapper{
+  background-color: white;
+}
+
+#topnav{
+  display: none;
+}
+
+#exportCSVBtn{
+
+  font-size:1.2rem;
+  background-color: #408214;
+  
+}
+#exportReportFull{
+  display: inline-block;
+  right: 5%;
+  vertical-align: middle;
+  float: right;
+}
+
+#topHeader{
+  padding-top: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.reportTable{
+  text-align: center;
+  margin-left: 5%;
+  border-collapse: separate;
+  border-spacing: 50px 0;
+}
+@media screen and (max-width: 768px) {
+  #topnav {
+    display: block;
+  }
+  #exportReportFull{
+    display: none;
+  }
+  #forButton{
+    float: right;
+    width: max-content;
+    right: 5%;
+    vertical-align: middle;
+    position: absolute;
+  }
+  .reportTable{
+    
+      font-size: 1.3rem;
+      border-collapse: none;
+      border-spacing: 10px 0;
+    
+  }
+}

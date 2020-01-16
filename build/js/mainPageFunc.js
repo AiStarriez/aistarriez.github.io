@@ -6,7 +6,7 @@ $(window, document).ready(function() {
 });
 
 function apiGetPlant() {
-  var cachePlant = localStorage["plants"] || undefined;
+  var cachePlant = JSON.parse(localStorage["plants"]) || undefined;
   if (cachePlant != undefined) {
     filterLands();
   } else {
@@ -14,7 +14,7 @@ function apiGetPlant() {
     var body = "";
     var getAllPlant = connectToServer(url, body, "GET");
     getAllPlant.then(docs => {
-      setCacheData("plants", JSON.stringify(docs));
+      setCacheData("plants", docs);
       filterLands();
     });
   }

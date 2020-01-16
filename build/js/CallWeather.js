@@ -9,19 +9,21 @@ var getFiveDayForcastAPI
 var lastTwentyFourAPI
 var weatherDropDown = document.getElementById("weather-button");
 
-var fiveDaysWeather
+//var fiveDaysWeather
 var currentWeather
 /*parse map object to find land id*/
 
 /* get land's latitude and longitude*/
 function getallLands() {
   var allLands = JSON.parse(localStorage["lands"])
-  //console.log(sessionStorage.currentLandId)
-  var currentLand = allLands.find(x => x._id === sessionStorage.currentLand)
-  //console.log(currentLand)
-  var currentPoints = currentLand.land.points[0]
-  landlat = currentPoints.lat
-  landlng = currentPoints.lng 
+  console.log(typeof(allLands))
+
+    var currentLand = allLands.find(x => x.land._id === sessionStorage.currentLandId)
+    console.log(allLands)
+    console.log(currentLand)
+    var currentPoints = currentLand.land.points[0]
+    landlat = currentPoints.lat
+    landlng = currentPoints.lng 
  
 } 
 var getLatLng = getallLands();
@@ -56,8 +58,9 @@ var cityIdApi = new XMLHttpRequest();
         callCurrentCondition();
     }
     else if (value == "สภาพอากาศล่วงหน้า 5 วัน") {
+      
       callFiveDaysWeather();
-      //displayFivesDayWeather(fiveDaysWeather);
+      displayFivesDayWeather();
     }
     else if (value == "สภาพอากาศ 24 ชั่วโมงก่อนหน้า") {
       callLastTwentyFour();
@@ -73,22 +76,22 @@ function callFiveDaysWeather() {
       fiveDaysWeatherApi.onload = function() {
         // Begin accessing JSON data here
         var response = JSON.parse(fiveDaysWeatherApi.response)
-        fiveDaysWeather = response;
-        displayFivesDayWeather();
+        //fiveDaysWeather = response;
+        
       //console.log(fiveDaysWeather)
-      //   if(fiveDaysWeather != null){
-      //     setCacheData("fiveDaysWeather", JSON.stringify(fiveDaysWeather))
-      //     console.log(localStorage["fiveDaysWeather"])
-      //   } else {
-      //     console.log(fiveDaysWeatherApi.responseText)
-      //   }
+         if(response != null){
+           setCacheData("fiveDaysWeather", response)
+           //console.log(localStorage["fiveDaysWeather"])
+         } else {
+           console.log(fiveDaysWeatherApi.responseText)
+       }
       
      }
       // Send request
       //console.log(fiveDaysWeather)
       fiveDaysWeatherApi.send()
-      //console.log(fiveDaysWeather)
       
+      //console.log(fiveDaysWeather)
 }
 
 function callCurrentCondition() {
@@ -126,10 +129,15 @@ var weatherDay = [], minTemperature = [], maxTemperature= [], weatherText= [], w
     weatherWindDirection = [], sunRiseHours = [], sunSetHours = [], hoursOfSun = [];
 var celsius = '&#8451;';//celsius symbol
 var forecastLengthInDays = 5;//forecast for 5 days based on API
+var fiveDaysWeather = JSON.parse(localStorage["fiveDaysWeather"])
 
-function displayFivesDayWeather (){
-  //console.log("hello")
+/*function displayFivesDayWeather() {
   console.log(fiveDaysWeather)
+
+}*/
+function displayFivesDayWeather (){
+  console.log(fiveDaysWeather)
+ 
   //looping through the days and storing them in a specific arrays
   for (var i = 0; i < forecastLengthInDays; i++) {
     weatherDay[i] = fiveDaysWeather.DailyForecasts[i].Date;
@@ -140,6 +148,7 @@ function displayFivesDayWeather (){
     weatherWindSpeedKmPerHour[i] = fiveDaysWeather.DailyForecasts[i].Day.Wind.Speed.Value;
     weatherWindDirection[i] = fiveDaysWeather.DailyForecasts[i].Day.Wind.Direction.Degrees;
     hoursOfSun[i] = fiveDaysWeather.DailyForecasts[i].HoursOfSun;
+    //console.log(weatherDay[i])
   }
   //date formatting based on week days and months
   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -201,7 +210,7 @@ function displayFivesDayWeather (){
 
       $('#weatherForecastDiv').append(nextDay);
   }
-
+  console.log(fiveDaysWeather)
 }
 
 var weatherDay, weatherText, weatherIcon, temperature, weatherWindSpeedKmPerHour, weatherWindDirection, weatherPressure, weatherHumidity, weatherCloudCover;

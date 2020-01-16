@@ -45,6 +45,11 @@
       <li class="nav-item" id = "hamburger">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
+      <li class="nav-item" id = "forButton">
+        <div id="harvestMobile">
+          <button class="btn btn-primary" type="button" id="harvestBtn">เก็บเกี่ยว</button>
+        </div>
+      </li>
 
     </ul>
   </nav>
@@ -149,7 +154,9 @@
         <a href="" id="landPage" style="display:inline">ที่ดิน</a> 
         <p style="display:inline"> 	&nbsp;&nbsp; > &nbsp;&nbsp; </p>
         <p id="landNameTitle" style="display:inline"> </p>
-        <button class="btn btn-primary" type="button" id="harvestBtn">เก็บเกี่ยว</button>
+        <div id="harvestFull">
+          <button class="btn btn-primary" type="button" id="harvestBtn">เก็บเกี่ยว</button>
+        </div>
       </div>
     </div> 
     <hr>
@@ -184,28 +191,35 @@
           <table id ="activityTable">
             <tr>
               <td>
-                <p id = "showAllActivity">0</p>
-                <br>
+                <p id = "showAllActivity"></p>
+              </td>
+              <td class="text-secondary">
+                <p id = "showNotDoneActivity"></p>
+                </td>
+              <td class="text-warning">
+                <p id = "showInProgressActivity"></p>
+                </td>
+              <td class="text-success">
+                <p id = "showDoneActivity"></p>
+                </td>
+              <td class="text-danger">
+                <p id = "showLateActivity"></p>
+                </td>
+            </tr>
+            <tr>
+              <td>
                 <a id = "allActivityLink">ทั้งหมด</a>
               </td>
               <td class="text-secondary">
-                <p id = "showNotDoneActivity">0</p>
-                <br>
                 <a id = "notDoneActivityLink">ยังไม่เสร็จ</a>
               </td>
               <td class="text-warning">
-                <p id = "shoInProgressActivity">0</p>
-                <br>
                 <a id = "inProgressActivityLink">กำลังดำเนินการ</a>
               </td>
               <td class="text-success">
-                <p id = "showDoneActivity">0</p>
-                <br>
                 <a id = "doneActivityLink">เสร็จแล้ว</a>
               </td>
               <td class="text-danger">
-                <p id = "showLateActivity">0</p>
-                <br>
                 <a id = "lateActivityLink">เลยกำหนด</a>
               </td>
             </tr>
@@ -257,7 +271,6 @@
     <script src="build/js/connectServer.js"></script>
     <script src="build/js/CallWeather.js"></script>
     <script src="build/js/callLandDetailInfo.js"></script>
-    <script src="build/js/weatherAnimatedIcon.js"></script>
 
   
 <!-- jQuery -->
