@@ -20,7 +20,6 @@ var landNameInput = document.getElementById("landName-input");
 $("#mapSearchBt").click(function() {
   initSearchMap(document.getElementById("map_search").value);
   //console.log(initSearchMap($("#map_search").val()));
-
 });
 $("#mapCleanBt").click(function() {
   initMap();
@@ -121,7 +120,7 @@ function editSetPolygon(polygonEditLand) {
     bounds.extend(polygonEditLand.lat_lng[j]);
   }
   map.fitBounds(bounds);
-  map.setZoom(17.5);
+  map.setZoom(18.5);
 
   for (let i = 0; i < cacheLands.length; i++) {
     if (cacheLands[i].land._id == polygonEditLand.land_id) {
@@ -133,7 +132,6 @@ function editSetPolygon(polygonEditLand) {
 }
 
 function initSearchMap(inputQuery) {
-  console.log(inputQuery);
   infowindow = new google.maps.InfoWindow();
   geocoder = new google.maps.Geocoder();
   var request = {
@@ -150,7 +148,7 @@ function initSearchMap(inputQuery) {
         map: map
       });
       defultLocation = results[0].geometry.location;
-     // console.log(results[0].geometry.location)
+      // console.log(results[0].geometry.location)
 
       initMap();
       //   map.setCenter(results[0].geometry.location);

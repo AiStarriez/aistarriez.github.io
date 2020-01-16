@@ -9,22 +9,35 @@ var config = {
   measurementId: "G-J760F0W3ZF"
 };
 
+$(window).bind("hashchange", function() {
+  checkHash();
+});
+
 firebase.initializeApp(config);
 firebase.auth().onAuthStateChanged(function(user) {
   var role = sessionStorage.role;
   window.user = user;
-  if (role == "manager") {
-    checkManagerDB(user.phoneNumber);
-  }else if (sessionStorage.email != null || sessionStorage.email != undefined) {
-    
 
-  } 
-  else {
-    console.log(user.email);
-    checkUserDB(user.email);
+  if (
+    window.user == null &&
+    !window.location.href.includes("login.html") &&
+    !window.location.href.includes("register.html")
+  ) {
+    window.location = "login.html";
+  } else {
+    if (role == "manager") {
+      console.log(user.phoneNumber);
+      checkManagerDB(user.phoneNumber);
+    } else if (
+      sessionStorage.email != null ||
+      sessionStorage.email != undefined
+    ) {
+    } else {
+      console.log(user.email);
+      checkUserDB(user.email);
+    }
   }
 });
-
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
   "manager-login-bt",
   {
@@ -39,6 +52,7 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
     }
   }
 );
+
 recaptchaVerifier.render().then(function(widgetId) {
   window.recaptchaWidgetId = widgetId;
   //updateSignInButtonUI();
@@ -54,13 +68,19 @@ $("#owner-gg-login-bt").click(function() {
 
 $("#forget-password-bt").click(function() {});
 
-$("#nav-signout").click(function() {
-  signOut();
-  window.location = "login.html";
-});
 $("#manager-verify-bt").click(function() {
   onVerifyCodeSubmit();
 });
+
+function checkHash() {
+  var hashchange = window.location.hash;
+  console.log("hash", hashchange);
+  if (hashchange == "#logout") {
+    console.log("signout");
+    signOut();
+    window.location = "login.html";
+  }
+}
 
 //login with email
 function firebaseAuthenByEmail() {
@@ -119,6 +139,7 @@ function checkUserDB(email) {
   var loginDB = connectToServer(u, JSON.stringify(body), typ);
   loginDB.then(
     docs => {
+      setCacheData("role" , "owner")
       currentURL = window.location.href;
       if (currentURL.includes("login.html")) {
         window.location = "index.html";
@@ -126,7 +147,7 @@ function checkUserDB(email) {
     },
     function(e) {
       if (sessionStorage.authenEvent == "loginGoogle") {
-        sessionStorage.email = window.user;
+        sessionStorage.email = window.user.email;
         window.location = "register.html";
       } else {
         signOut();
@@ -145,11 +166,13 @@ function checkManagerDB(managerId) {
   managerLogin.then(
     docs => {
       $("#error-phone").css("display", "none");
-      window.user = true;
+      window.user = docs;
+      setCacheData("role" , "manager")
       onSignInSubmit();
     },
     function(e) {
       $("#error-phone").css("display", "block");
+      console.log(window.user);
       window.user = false;
     }
   );
@@ -184,17 +207,11 @@ function registerManagerDB() {
   var phone = document.getElementById("phone-manager-input");
   var addrress = document.getElementById("addres-manager-input");
   var base64IMG = img.slice(4, -1).replace(/"/g, "");
-  var b =
-    '{    "name": "แดง",    "image": "5dA2h67N",    "contact_info": {      "address": "123/456 Moo.2",      "phone": "0123456789"    }  }';
-
   var url = "/managers/register/" + "eV5F9JZB";
-  var body = {
-    name: name.value,
-    image: base64IMG,
-    contact_info: { address: addrress.value, phone: phone.value }
-  };
+  var body = sessionStorage.mDetail;
+  console.log(body);
   var typ = "POST";
-  var managerRegis = connectToServer(url, b, typ);
+  var managerRegis = connectToServer(url, body, typ);
   managerRegis.then(
     docs => {
       $("#regis-manager-success").css("display", "block");
@@ -207,7 +224,6 @@ function registerManagerDB() {
 }
 
 // manager phone login
-
 function onSignInSubmit() {
   // console.log(isPhoneNumberValid());
   var phoneNumber = getPhoneNumberFromUserInput();
