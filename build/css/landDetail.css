@@ -1,0 +1,101 @@
+#topnav{
+  display: none;
+}
+
+#harvestBtn{
+
+  font-size:1.2rem;
+  background-color: #408214;
+  
+}
+#harvestFull{
+  display: inline-block;
+  right: 5%;
+  vertical-align: middle;
+  float: right;
+}
+
+#topHeader{
+  padding-top: 3%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#landInfo{
+  padding-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+#activityProgress{
+  padding-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+#activity{
+  width: max-content;
+  display: inline-block;
+}
+
+#showActivity{
+  text-align: center;
+  
+}
+
+#activityTable{
+  margin-left:auto;
+  margin-right:auto;
+  border-collapse: separate;
+  border-spacing: 5rem 0;
+}
+
+#viewAllActivities{
+  right: 5%;
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
+
+#weatherForecast{
+  padding-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+#weather{
+  width: max-content;
+  display: inline-block;
+}
+
+#weatherFilterDate{
+  right: 5%;
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
+
+.content-wrapper{
+  background-color: white;
+}
+
+@media screen and (max-width: 768px) {
+  #topnav {
+    display: block;
+  }
+  #activityTable{
+    font-size: 1.3rem;
+    border-collapse: none;
+    border-spacing: 10px 0;
+  }
+  #harvestFull{
+    display: none;
+  }
+  #forButton{
+    float: right;
+    width: max-content;
+    right: 5%;
+    vertical-align: middle;
+    position: absolute;
+  }
+}

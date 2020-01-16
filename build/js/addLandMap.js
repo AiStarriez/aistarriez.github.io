@@ -93,6 +93,8 @@ function onPolygonDrag(polygon) {
       lng +
       "</td></tr></table>";
     latLngTocalc.push(new google.maps.LatLng(lat, lng));
+    console.log(latLngTocalc);
+    console.log(lng);
   }
   defultLocation = polygonArr[0];
   var area = google.maps.geometry.spherical.computeArea(latLngTocalc);
