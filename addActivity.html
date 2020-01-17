@@ -212,18 +212,15 @@
         </div>
         
         <div id="addAdditionActivity">
-          <form role="form"><div class="form-group">
-            <label for="exampleInputFile">อัปโหลดรูปภาพ</label>
+          <form role="form">
+            <div class="form-group">
+            <label for="activityPicUpload">อัปโหลดรูปภาพ</label>
             <div class="input-group">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="activityPicUpload">
-                <label class="custom-file-label" for="exampleInputFile">เลือกไฟล์รูปเพื่ออัปโหลด</label>
-              </div>
-              <div class="input-group-append">
-                <span class="input-group-text" id="">อัปโหลด</span>
-              </div>
+              <input id="activityPicUpload" type="file" multiple/>
+              <output id="result"/>
             </div>
-          </div></form>
+          </div>
+        </form>
         </div>
       </form>
     </div>
@@ -340,7 +337,27 @@
       }
     )
 
+      //Timepicker
+      $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
     
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    $('.my-colorpicker2').on('colorpickerChange', function(event) {
+      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+    });
+
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    });
+
 
   })
 </script>
