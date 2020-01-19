@@ -28,7 +28,7 @@ $(function() {
   //Date for the calendar events (dummy data)
   var date = new Date();
   var d = date.getDate(),
-    m = (date.getMonth() +1),
+    m = date.getMonth() + 1,
     y = date.getFullYear();
 
   var Calendar = FullCalendar.Calendar;
@@ -71,7 +71,7 @@ $(function() {
   var body = { byDate: 1 };
   var typ = "GET";
   var events = [];
-  var activities;
+  var activities, defultDate;
 
   if (localStorage["acByDate"]) {
     activities = JSON.parse(localStorage["acByDate"]);
@@ -91,8 +91,15 @@ $(function() {
   function setCalendarDetails(docs) {
     sessionStorage.acByDate = docs;
     activityDetail(docs);
+
     for (let i = 0; i < docs.length; i++) {
-      var startDate = new Date(docs[i].start_date);
+      var getDate =
+        docs[i].end_date != null ? docs[i].end_date : docs[i].start_date;
+      var startDate = new Date(getDate);
+     var formatDate = startDate.toISOString().slice(0, 10);
+      if (i == 0) {
+        defultDate = formatDate;
+      }
       var color;
       switch (docs[i].status) {
         case "ยังไม่ทำ": {
@@ -115,11 +122,8 @@ $(function() {
 
       var obj = {
         title: docs[i].task,
-        start: new Date(
-          startDate.getFullYear(),
-          startDate.getMonth(),
-          startDate.getDate()
-        ),
+        start:formatDate,
+        url: 'activitydetails.html#' + docs[i].activity_id,
         backgroundColor: color,
         borderColor: color
       };
@@ -138,70 +142,27 @@ $(function() {
         // center: "title",
         // right: "dayGridMonth,timeGridWeek , listGridWeek"
       },
+      defaultDate: defultDate,
+      contentHeight: 600,
       locale: "th",
       timeZone: "local",
       //Random default events
       events: events,
-      //   events: [
-      //     {
-      //       title: "All Day Event",
-      //       start: new Date(y, m, 1),
-      //       backgroundColor: "#f56954", //red
-      //       borderColor: "#f56954" //red
-      //     },
-      //     {
-      //       title: "Long Event",
-      //       start: new Date(y, m, d - 5),
-      //       end: new Date(y, m, d - 2),
-      //       backgroundColor: "#f39c12", //yellow
-      //       borderColor: "#f39c12" //yellow
-      //     },
-      //     {
-      //       title: "Meeting",
-      //       start: new Date(y, m, d, 10, 30),
-      //       allDay: false,
-      //       backgroundColor: "#0073b7", //Blue
-      //       borderColor: "#0073b7" //Blue
-      //     },
-      //     {
-      //       title: "Lunch",
-      //       start: new Date(y, m, d, 12, 0),
-      //       end: new Date(y, m, d, 14, 0),
-      //       allDay: false,
-      //       backgroundColor: "#00c0ef", //Info (aqua)
-      //       borderColor: "#00c0ef" //Info (aqua)
-      //     },
-      //     {
-      //       title: "Birthday Party",
-      //       start: new Date(y, m, d + 1, 19, 0),
-      //       end: new Date(y, m, d + 1, 22, 30),
-      //       allDay: false,
-      //       backgroundColor: "#00a65a", //Success (green)
-      //       borderColor: "#00a65a" //Success (green)
-      //     },
-      //     {
-      //       title: "Click for Google",
-      //       start: new Date(y, m, 28),
-      //       end: new Date(y, m, 29),
-      //       url: "http://google.com/",
-      //       backgroundColor: "#3c8dbc", //Primary (light-blue)
-      //       borderColor: "#3c8dbc" //Primary (light-blue)
-      //     }
-      //   ],
       editable: false,
       droppable: false, // this allows things to be dropped onto the calendar !!!
-      drop: function(info) {
-        // is the "remove after drop" checkbox checked?
-        if (checkbox.checked) {
-          // if so, remove the element from the "Draggable Events" list
-          info.draggedEl.parentNode.removeChild(info.draggedEl);
+      eventClick: function(info) {
+        var eventObj = info.event;
+  
+        if (eventObj.url) {  
+          window.location = eventObj.url;
+          info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
+        } else {
+          alert('Clicked ' + eventObj.title);
         }
       }
     });
     calendar.render();
   }
-
-  // $('#calendar').fullCalendar()
 
   /* ADDING EVENTS */
   var currColor = "#3c8dbc"; //Red by default
@@ -247,101 +208,115 @@ $(function() {
   function activityDetail(docs) {
     var tBody = document.getElementById("activities-calendar");
     var activityTable = document.getElementById("activities-table");
-    var setBG;
+    var activitiesMobile = document.getElementById("activities-mobile");
+    var setBG, setText;
     var classColor = {
       done: "bg-success",
       over_due: "bg-danger",
       not_done: "bg-secondary",
       in_progress: "bg-warning"
     };
+    var classText = {
+      done: "text-success",
+      over_due: "text-danger",
+      not_done: "text-secondary",
+      in_progress: "text-warning"
+    };
+    var mobileCard = "";
+    var blank = "<tr><td></td><td></td><td></td><td></td><td></td></tr>";
+    var row = "";
+
     for (let i = 0; i < docs.length; i++) {
-      var toDetail = document.createElement("a");
-      toDetail.href = "activitydetails.html#" + docs[i].activity_id;
       var landName = docs[i].land_name;
-      var getDate = docs[i].end_date != null ? docs[i].end_date : docs[i].start_date;
+      var getDate =
+        docs[i].end_date != null ? docs[i].end_date : docs[i].start_date;
       var startDate = new Date(getDate);
-      var toDate =   startDate.getDate() +
-      "/" +
-      (startDate.getMonth()+1) +
-      "/" +
-      startDate.getFullYear();
+      var toDate =
+        startDate.getDate() +
+        "/" +
+        (startDate.getMonth() + 1) +
+        "/" +
+        startDate.getFullYear();
       var task = docs[i].task;
       var status = docs[i].status;
-      var activityID = docs[i].activity_id
-      var table = document.createElement('table');
+      var activityID = docs[i].activity_id;
+      var table = document.createElement("table");
       table.className += "table";
-      var row = document.createElement("tr");
-      if (localStorage["role"] == '"owner"') {
-       row.innerHTML = "<td>" +
-      landName +
-      "</td><td>" +
-      toDate +
-      "</td><td>" +
-      task +
-      "</td><td>" +
-      status +
-      '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li><a id="progress-drop" class="dropdown-item text-blue" href="activitydetails.html#' +
-      activityID +
-      '">ความก้าวหน้า</a></li><li><a class="dropdown-item text-danger" href="#">ลบ</a></li></ul></td>';
+      table.innerHTML +=
+        "<tr><th>ที่ดิน</th><th>วันที่</th><th>กิจกรรม</th><th>สถานะ</th><th></th></tr>";
 
-      }else{
-        row.innerHTML = "<td>" +
-      landName +
-      "</td><td>" +
-      toDate +
-      "</td><td>" +
-      task +
-      "</td><td>" +
-      status +
-      '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li><a id="progress-drop" class="dropdown-item text-blue" href="activitydetails.html#' +
-      activityID +
-      '">ความก้าวหน้า</a></li></ul></td>';
-
-      }
-     
-      // var nameCol = document.createElement("td");
-      // nameCol.innerHTML = landName;
-      // var optionCol = document.createElement("td");
-      // optionCol.innerHTML = ' <i class="fas fa-ellipsis-v"></i>';
-      // var dateCol = document.createElement("td");
-
-      
-      // var taskCol = document.createElement("td");
-      // taskCol.innerHTML = task;
-      // var statusCol = document.createElement("td");
-      // statusCol.innerHTML = status;
-
-      // row.appendChild(nameCol);
-      // row.appendChild(dateCol);
-      // row.appendChild(taskCol);
-      // row.appendChild(statusCol);
-      // row.appendChild(optionCol);
-
-      //tBody.appendChild(row);
-      table.appendChild(row);
-      toDetail.appendChild(table);
-      activityTable.appendChild(toDetail);
       switch (status) {
         case "ยังไม่ทำ": {
           setBG = classColor.not_done;
+          setText = classText.not_done;
+          break;
+        }
+        case "ยังไม่เสร็จ":{
+          setBG = classColor.not_done;
+          setText = classText.not_done;
           break;
         }
         case "กำลังดำเนินการ": {
           setBG = classColor.in_progress;
+          setText = classText.in_progress;
           break;
         }
         case "เสร็จแล้ว": {
           setBG = classColor.done;
+          setText = classText.done;
           break;
         }
         case "เลยกำหนด": {
           setBG = classColor.over_due;
+          setText = classText.over_due;
           break;
         }
       }
-      row.setAttribute("class", setBG);
 
-      activityTable.innerHTML = activityTable.innerHTML + "<br>"
+      if (localStorage["role"] == '"owner"') {
+        row += setActivityOwnerUI(
+          landName,
+          toDate,
+          task,
+          status,
+          activityID,
+          setBG
+        );
+        mobileCard =
+          mobileCard +
+          '<div class="card"><div class="card-body">' +
+          setactivityOwnerMobile(
+            "by-name",
+            landName,
+            toDate,
+            task,
+            status,
+            activityID,
+            setText
+          ) +
+          "</div></div>";
+      } else {
+        row += setActivityManagerUI(landName, toDate, task, status, activityID,setBG);
+        mobileCard =
+          mobileCard +
+          '<div class="card"><div class="card-body">' +
+          setactivityManagerMobile(
+            "by-name",
+            landName,
+            toDate,
+            task,
+            status,
+            activityID,
+            setText
+          ) +
+          "</div></div>";
+      }
+      if (i != docs.length - 1) {
+        row += blank;
+      }
     }
+    table.innerHTML = table.innerHTML + row;
+    activitiesMobile.innerHTML = activitiesMobile.innerHTML + mobileCard;
+    activityTable.appendChild(table);
   }
 });

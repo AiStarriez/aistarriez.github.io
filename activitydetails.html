@@ -16,7 +16,10 @@
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- PROPLANTE -->
   <link rel="stylesheet" href="build/css/activitiesStyle.css">
+  <link rel="stylesheet" href="build/css/loader-1.css">
+  <!-- PROPLANTE -->
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -134,10 +137,10 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
-          <table id="header-mobile" >
+          <table id="header-mobile">
             <tr class="text-success">
               <td>
-                <a href="activities.html" class="text-success">
+                <a onclick="window.history.back()" class="text-success" style="cursor:pointer">
                   <i class="fa fa-arrow-left"></i>
                   &nbsp;&nbsp;
                 </a>
@@ -148,7 +151,7 @@
               </td>
             </tr>
           </table>
-          <table  class="table-header">
+          <table class="table-header">
             <tr class="text-success">
               <td>
                 <table>
@@ -174,7 +177,7 @@
                 <button id="bt-progress-container" class="btn bg-olive">ความก้าวหน้า</button>
               </td>
             </tr>
-           
+
           </table>
           <hr>
         </div><!-- /.container-fluid -->
@@ -207,9 +210,6 @@
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
-
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
@@ -218,6 +218,11 @@
   </div>
   <!-- ./wrapper -->
 
+  <div id="bg-loading">
+    <div class="loader-wrapper" id="loader-1">
+      <div id="loader"></div>
+    </div>
+  </div>
   <!-- jQuery -->
   <script src="../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap -->

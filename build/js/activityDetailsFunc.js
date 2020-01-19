@@ -6,6 +6,8 @@ var landHeader = document.getElementById("land-header");
 var landHeaderMobile = document.getElementById("land-header-mobile");
 var activityDetails, toDate;
 $(window, document).ready(function() {
+  $("#bg-loading").css("display" , "block");
+  $(".wrapper").css("display" , "none");
   findLand(activityId);
 });
 
@@ -87,5 +89,8 @@ function setBodyCardDetails() {
     table.innerHTML =
       task + landName + date + plantName + notes + manager + status;
     detailsCard.appendChild(table);
+    $("#bg-loading").css("display" , "none");
+    $(".wrapper").css("display" , "block");
   });
+
 }

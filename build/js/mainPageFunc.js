@@ -1,12 +1,19 @@
 var landNameDropdown = document.getElementById("land-dropdown");
 var landNameFilter = document.getElementById("land-name-filter");
+var plantDropdown = document.getElementById("plant-dropdown");
+var plantFilter = document.getElementById("plant-filter");
+
+window.province = "all";
+window.district = "all";
+window.land = "all";
+window.plant = "all";
 
 $(window, document).ready(function() {
   apiGetPlant();
 });
 
 function apiGetPlant() {
-  var cachePlant = JSON.parse(localStorage["plants"]) || undefined;
+  var cachePlant = localStorage["plants"] || undefined;
   if (cachePlant != undefined) {
     filterLands();
   } else {
@@ -27,17 +34,8 @@ function filterLands() {
   var getFilters = connectToServer(url, body, "GET");
   getFilters.then(
     docs => {
-      //docs return => {
-      //     "land_id": [],
-      //     "land_name": [],
-      //     "address": [{
-      //             "province": "kk",
-      //             "district": [ "kk" ]}
-      //     ],
-      //     "plant": []
-      // }
       var landName = docs.land_name;
-
+      var plantName = docs.plant;
       for (let i = 0; i < landName.length; i++) {
         var fName = document.createElement("a");
         fName.innerHTML = landName[i];
@@ -46,9 +44,21 @@ function filterLands() {
         landNameDropdown.appendChild(fName);
         fName.onclick = (function(arg) {
           return function() {
-            setFilterValueOnclick(arg);
+            setFilterValueOnclick("ที่ดิน", arg);
           };
         })(landName[i]);
+      }
+      for (let i = 0; i < plantName.length; i++) {
+        var fName = document.createElement("a");
+        fName.innerHTML = plantName[i];
+        fName.setAttribute("class", "dropdown-item");
+        fName.setAttribute("role", "presentation");
+        plantDropdown.appendChild(fName);
+        fName.onclick = (function(arg) {
+          return function() {
+            setFilterValueOnclick("พืช", arg);
+          };
+        })(plantName[i]);
       }
     },
     function(e) {
@@ -57,12 +67,19 @@ function filterLands() {
   );
 }
 
-function setFilterValueOnclick(value) {
-  landNameFilter.innerHTML = value;
-  if (value == "ทั้งหมด") {
-    value = "all";
+function setFilterValueOnclick(type, value) {
+  console.log(value);
+  if (type == "ที่ดิน") {
+    window.land = value;
+    landNameFilter.innerHTML = value;
+  } else if (type == "พืช") {
+    window.plant = value;
+    plantFilter.innerHTML = value;
+  } else if (type == "จังหวัด") {
+  } else if (type == "อำเภอ") {
   }
-  findLands("all", "all", value, "all");
+
+  findLands(window.province, window.district, window.land, window.plant);
 }
 
 function findLands(province, district, landName, plant) {
@@ -82,7 +99,13 @@ function findLands(province, district, landName, plant) {
   var body = JSON.stringify({ lands: landsData, plants: plantData });
   var filterLand = connectToServer(url, body, "POST");
   filterLand.then(docs => {
-    setMapAfFilter(docs);
+
+    var landIdArr = [];
+    for (let i = 0; i < docs.length; i++) {
+      landIdArr.push(docs[0]);
+    }
+    console.log(landIdArr);
+    setMapAfFilter(landIdArr);
   }),
     function(e) {
       console.log(e);
@@ -106,9 +129,8 @@ $("#hamburger").click(function(e) {
   $("#wrapper").toggleClass("toggled");
 });
 
-// $("#addLandBtn").click(function(e) {
-//   e.preventDefault();
-//   addLandBtn = document.getElementById("addLandBtn");
-//   addLandBtn.window.location.href = 'addland.html';
-//   console.log("hello");
-// })
+$("#addLandBtn").click(function(e) {
+  e.preventDefault();
+  sessionStorage.removeItem("polygonEditLand");
+  window.location = "addland.html";
+});

@@ -4,6 +4,12 @@ body {
   height: 100vh;
   font-family: 'CS ChatThai';
   font-size: 1.1em;
+  overflow: hidden;
+}
+
+#text-owner-role,#text-manager-role{
+  margin-top: 1vh;
+margin-bottom: 1vh;
 }
 
 #bg-mobile {

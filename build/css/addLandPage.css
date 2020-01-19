@@ -4,8 +4,12 @@
 }
 
 #landInfo {
-  font-size: 1.0em;
+
   color: gray;
+}
+
+#saveBtn , #cancelBtn, #modalSaveBtn{
+  font-size: 1.4rem;
 }
 
 #line {
@@ -29,28 +33,23 @@
   border-color: #EFEFEF;
   color: gray;
   margin-right: 15px;
-  font-size: 1.6rem;
+
 }
 
-#saveBtn {
-  font-size: 1.6rem;
-}
 
-.form-control{
-  font-size: 1.6rem;
+
+.form-control {
+
   width: 90%;
   margin-top: 10%;
-  
+
 }
 
-#map_search{
-  font-size: 1.3rem;
-}
-#mapSearchBt{
-  font-size: 1rem;
+#mapSearchBt {
+
   width: 100%;
- height: 50%;
- text-align: center;
+  height: 50%;
+  text-align: center;
 }
 
 #map {
@@ -58,8 +57,10 @@
   margin: auto;
 }
 
-#latlngResult{
-  width: auto;
-  margin-top: 5%;
-}
 
+@media screen and (max-width: 1023px) {
+  #side-bar-addland {
+    display: none;
+
+  }
+}
