@@ -7,6 +7,7 @@ var filterByname = document.getElementById("by-name");
 var filterBydate = document.getElementById("by-date");
 var landNameArr = [];
 var activities;
+sessionStorage.removeItem("landEmergency");
 
 filterBydate.addEventListener("click", function(e) {
   window.sortBy = e.target.id;
@@ -69,6 +70,8 @@ function setActivityUI(docs, sortBy) {
     in_progress: "text-warning"
   };
   var keyLands = [];
+  var landIdArr = [];
+
   var newObj;
 
   if (sortBy == "by-name") {
@@ -87,6 +90,7 @@ function setActivityUI(docs, sortBy) {
         obj[docs[count - 1].land_name] = activityArr;
         acByName.push(obj);
         keyLands.push(docs[count - 1].land_name);
+        landIdArr.push(docs[count - 1].land_id);
         activityArr = [];
         activityArr.push(docs[count]);
       }
@@ -95,6 +99,7 @@ function setActivityUI(docs, sortBy) {
         obj[docs[count - 1].land_name] = activityArr;
         acByName.push(obj);
         keyLands.push(docs[count - 1].land_name);
+        landIdArr.push(docs[count - 1].land_id);
       }
       landName = docs[count].land_name;
       count++;
@@ -152,7 +157,7 @@ function setActivityUI(docs, sortBy) {
     newObj = JSON.parse(JSON.stringify(acByDate));
   }
   for (let i = 0; i < newObj.length; i++) {
-    landNameArr.push(keyLands[i]);
+    landNameArr.push({ name: keyLands[i], id: landIdArr[i] });
     var landHeader =
       '<div class="time-label"><span class="bg-blue">' +
       keyLands[i] +
@@ -277,14 +282,43 @@ function getLandName() {
   var landNameFilter = document.getElementById("land-name-filter");
   for (let i = 0; i < landNameArr.length; i++) {
     var fName = document.createElement("a");
-    fName.innerHTML = landNameArr[i];
+    fName.innerHTML = landNameArr[i].name;
     fName.setAttribute("class", "dropdown-item");
     fName.setAttribute("role", "presentation");
     landNameDropdown.appendChild(fName);
     fName.onclick = (function(arg) {
       return function() {
-        landNameFilter.innerHTML = arg;
+        $("#modal-error-text").css("display", "none");
+        landNameFilter.innerHTML = arg.name;
+        sessionStorage.landEmergency = arg.id;
       };
     })(landNameArr[i]);
   }
 }
+
+$("#emer-ac-btn").click(function() {
+  var landId = sessionStorage.landEmergency;
+  if (landId) {
+    window.location = "addActivity.html#" + landId;
+  } else {
+    $("#modal-error-text").css("display", "block");
+  }
+});
+
+// check modal visibility
+var $div = $("#modal-add-activity");
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.attributeName === "class") {
+      var attributeValue = $(mutation.target).prop(mutation.attributeName);
+      if(!attributeValue.includes('show')){
+        sessionStorage.removeItem("landEmergency");
+      } 
+    }
+  });
+});
+
+observer.observe($div[0], {
+  attributes: true
+});
+// check modal visibility

@@ -58,7 +58,6 @@
   font-size: 1.4rem;
 }
 
-
 #button-div {
   margin-left: 22%;
   float: left;
@@ -68,7 +67,7 @@
 #addLandBtn {
   background-color: #FF7E9D;
   border-color: #FF7E9D;
-  font-size: 2.0em;
+  font-size: 2.0rem;
 }
 
 @media screen and (max-width: 768px) {
