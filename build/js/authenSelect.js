@@ -34,17 +34,17 @@ function selLoginUI() {
     if (role == "owner") {
       $("#owner-login-ui").fadeIn();
       managerLoginUI.style.display = "none";
-      managerRoleBt.style.backgroundColor = "white";
-      ownerRoleBt.style.backgroundColor = "rgb(53, 173, 87)";
-      $("#text-manager-role").css("color", "black");
-      $("#text-owner-role").css("color", "white");
+      ownerRoleBt.style.backgroundColor = "white";
+      managerRoleBt.style.backgroundColor = "rgb(53, 173, 87)";
+      $("#text-manager-role").css("color", "white");
+      $("#text-owner-role").css("color", "black");
     } else {
       $("#manager-login-ui").fadeIn();
       ownerLoginUI.style.display = "none";
-      ownerRoleBt.style.backgroundColor = "white";
-      managerRoleBt.style.backgroundColor = "rgb(53, 173, 87)";
-      $("#text-owner-role").css("color", "black");
-      $("#text-manager-role").css("color", "white");
+      managerRoleBt.style.backgroundColor = "white";
+      ownerRoleBt.style.backgroundColor = "rgb(53, 173, 87)";
+      $("#text-owner-role").css("color", "white");
+      $("#text-manager-role").css("color", "black");
     }
   }
 }

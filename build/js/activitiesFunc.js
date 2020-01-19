@@ -5,7 +5,7 @@ $(window, document).ready(function() {
 
 var filterByname = document.getElementById("by-name");
 var filterBydate = document.getElementById("by-date");
-
+var landNameArr = [];
 var activities;
 
 filterBydate.addEventListener("click", function(e) {
@@ -55,7 +55,7 @@ function apiGetactivities(sortBy) {
 function setActivityUI(docs, sortBy) {
   var bodyContent = document.getElementById("activities-show");
   bodyContent.innerHTML = "";
-  var setBG , setText;
+  var setBG, setText;
   var classColor = {
     done: "bg-success",
     over_due: "bg-danger",
@@ -152,6 +152,7 @@ function setActivityUI(docs, sortBy) {
     newObj = JSON.parse(JSON.stringify(acByDate));
   }
   for (let i = 0; i < newObj.length; i++) {
+    landNameArr.push(keyLands[i]);
     var landHeader =
       '<div class="time-label"><span class="bg-blue">' +
       keyLands[i] +
@@ -159,6 +160,7 @@ function setActivityUI(docs, sortBy) {
     var timeline = document.createElement("div");
     var land = newObj[i];
     var card = document.createElement("div");
+    var blank = "<tr><td></td><td></td><td></td><td></td><td></td></tr>";
     card.setAttribute("class", "activities-browser timeline-item");
 
     var mobileCard = "";
@@ -166,14 +168,15 @@ function setActivityUI(docs, sortBy) {
     cardBody.setAttribute("class", "timeline-body");
     var responsiveTable = document.createElement("div");
     responsiveTable.className = "card-body table-responsive p-0";
+    var toDetail = document.createElement("a");
+    var table = document.createElement("table");
+    table.className += "activities-browser table";
+    toDetail.href = "activitydetails.html#" + obj.activity_id;
 
     for (let j = 0; j < land[keyLands[i]].length; j++) {
-      var toDetail = document.createElement("a");
-      var table = document.createElement("table");
-      table.className += "activities-browser table";
       var arr = land[keyLands[i]];
       var obj = arr[j];
-      toDetail.href = "activitydetails.html#" + obj.activity_id;
+
       var fullDate = obj.end_date != null ? obj.end_date : obj.start_date;
       var date = new Date(fullDate);
       date =
@@ -181,10 +184,15 @@ function setActivityUI(docs, sortBy) {
       var toDetails = document.createElement("a");
       toDetails.href = "activitydetails.html#" + obj.activity_id;
 
-      var rowActivity = document.createElement("tr");
+      var rowActivity = "";
 
       switch (obj.status) {
         case "ยังไม่ทำ": {
+          setBG = classColor.not_done;
+          setText = classText.not_done;
+          break;
+        }
+        case "ยังไม่เสร็จ": {
           setBG = classColor.not_done;
           setText = classText.not_done;
           break;
@@ -207,49 +215,54 @@ function setActivityUI(docs, sortBy) {
       }
 
       if (localStorage["role"] == '"owner"') {
-        rowActivity.innerHTML = setActivityOwnerUI(
-          obj.land_name,
-          date,
-          obj.task,
-          obj.status,
-          obj.activity_id
-        );
-        mobileCard =
-        mobileCard +
-        setactivityOwnerMobile(
-          sortBy,
+        rowActivity += setActivityOwnerUI(
           obj.land_name,
           date,
           obj.task,
           obj.status,
           obj.activity_id,
-          setText
+          setBG
         );
+        mobileCard =
+          mobileCard +
+          setactivityOwnerMobile(
+            sortBy,
+            obj.land_name,
+            date,
+            obj.task,
+            obj.status,
+            obj.activity_id,
+            setText
+          );
       } else {
-        rowActivity.innerHTML = setActivityManagerUI(
-          obj.land_name,
-          date,
-          obj.task,
-          obj.status,
-          obj.activity_id
-        );
-        mobileCard =
-        mobileCard +
-        setactivityManagerMobile(
-          sortBy,
+        rowActivity += setActivityManagerUI(
           obj.land_name,
           date,
           obj.task,
           obj.status,
           obj.activity_id,
-          setText
+          setBG
         );
+        mobileCard =
+          mobileCard +
+          setactivityManagerMobile(
+            sortBy,
+            obj.land_name,
+            date,
+            obj.task,
+            obj.status,
+            obj.activity_id,
+            setText
+          );
       }
-      rowActivity.setAttribute("class", setBG);
-      table.appendChild(rowActivity);
-      toDetail.appendChild(table);
-      responsiveTable.appendChild(toDetail);
+      // rowActivity.setAttribute("class", setBG);
+      if (j != 0) {
+        table.innerHTML = table.innerHTML + blank;
+      }
+      table.innerHTML = table.innerHTML + rowActivity;
     }
+    //toDetail.appendChild(table);
+    responsiveTable.appendChild(table);
     cardBody.appendChild(responsiveTable);
     card.appendChild(cardBody);
     bodyContent.innerHTML = bodyContent.innerHTML + landHeader;
@@ -259,106 +272,19 @@ function setActivityUI(docs, sortBy) {
   }
 }
 
-function setActivityOwnerUI(landName, date, task, status, acID) {
-  var ret =
-    "<td>" +
-    landName +
-    "</td><td>" +
-    date +
-    "</td><td>" +
-    task +
-    "</td><td>" +
-    status +
-    '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li id="progress-drop"><a class="dropdown-item text-blue" href="activitydetails.html#' +
-    acID +
-    '">ความก้าวหน้า</a></li><li><a class="dropdown-item text-danger" href="#">ลบ</a></li></ul></td>';
-  return ret;
-}
-
-function setActivityManagerUI(landName, date, task, status, acID) {
-  var ret =
-    "<td>" +
-    landName +
-    "</td><td>" +
-    date +
-    "</td><td>" +
-    task +
-    "</td><td>" +
-    status +
-    '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li id="progress-drop"><a class="dropdown-item text-blue" href="activitydetails.html#' +
-    acID +
-    '">ความก้าวหน้า</a></li></ul></td>';
-  return ret;
-}
-
-function setactivityOwnerMobile(sort, landName, date, task, status, acID ,textColor) {
-  var ret =
-    '<div class="activities-mobile"><div class="timeline-item"><div class="timeline-body"><a class="'+textColor+'" href="activitydetails.html#' +
-    acID +
-    '">';
-
-  if (sort == "by-name") {
-    var byName =
-      '<table><tr><td width="100%">' +
-      task +
-      '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li id="progress-drop"><a class="dropdown-item text-blue" href="activitydetails.html#' +
-      acID +
-      '">ความก้าวหน้า</a></li><li><a class="dropdown-item text-danger" href="#">ลบ</a></li></ul></td></tr><tr><td><small><i class="fas fa-walking"></i>&nbsp;&nbsp;' +
-      status +
-      '</small><small>&nbsp;&nbsp;<i class="fas fa-clock"></i>&nbsp;&nbsp;' +
-      date +
-      "</small></td></tr></table>";
-    ret += byName;
-  } else {
-    var byDate =
-      '<table><tr><td width="100%">' +
-      task +
-      '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li id="progress-drop"><a class="dropdown-item text-blue" href="activitydetails.html#' +
-      acID +
-      '">ความก้าวหน้า</a></li><li><a class="dropdown-item text-danger" href="#">ลบ</a></li></ul></td></tr><tr><td><small><i class="fas fa-walking"></i>&nbsp;&nbsp;' +
-      status +
-      '</small><small>&nbsp;&nbsp;<i class="fas fa-seedling"></i>&nbsp;&nbsp;' +
-      landName +
-      "</small></td></tr></table>";
-    ret += byDate;
+function getLandName() {
+  var landNameDropdown = document.getElementById("land-dropdown");
+  var landNameFilter = document.getElementById("land-name-filter");
+  for (let i = 0; i < landNameArr.length; i++) {
+    var fName = document.createElement("a");
+    fName.innerHTML = landNameArr[i];
+    fName.setAttribute("class", "dropdown-item");
+    fName.setAttribute("role", "presentation");
+    landNameDropdown.appendChild(fName);
+    fName.onclick = (function(arg) {
+      return function() {
+        landNameFilter.innerHTML = arg;
+      };
+    })(landNameArr[i]);
   }
-  ret += "</a></div></div></div>";
-
-  return ret;
-}
-
-function setactivityManagerMobile(sort, landName, date, task, status, acID ,textColor) {
-  var ret =
-    '<div><div class="timeline-item"><div class="timeline-body"><a class="'+textColor+'" href="activitydetails.html#' +
-    acID +
-    '">';
-
-  if (sort == "by-name") {
-    var byName =
-      '<table><tr><td width="100%">' +
-      task +
-      '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li id="progress-drop"><a class="dropdown-item text-blue" href="activitydetails.html#' +
-      acID +
-      '">ความก้าวหน้า</a></li></ul></td></tr><tr><td><small><i class="fas fa-walking"></i>&nbsp;&nbsp;' +
-      status +
-      '</small><small>&nbsp;&nbsp;<i class="fas fa-clock"></i>&nbsp;&nbsp;' +
-      date +
-      "</small></td></tr></table>";
-    ret += byName;
-  } else {
-    var byDate =
-      '<table><tr><td width="100%">' +
-      task +
-      '</td><td><button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button><ul class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-37px, -84px, 0px);"><li id="progress-drop"><a class="dropdown-item text-blue" href="activitydetails.html#' +
-      acID +
-      '">ความก้าวหน้า</a></li></ul></td></tr><tr><td><small><i class="fas fa-walking"></i>&nbsp;&nbsp;' +
-      status +
-      '</small><small>&nbsp;&nbsp;<i class="fas fa-seedling"></i>&nbsp;&nbsp;' +
-      landName +
-      "</small></td></tr></table>";
-    ret += byDate;
-  }
-  ret += "</a></div></div></div>";
-
-  return ret;
 }

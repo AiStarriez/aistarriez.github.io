@@ -1,30 +1,17 @@
-var config = {
-  apiKey: "AIzaSyBF0TF5PQNteZwHVKiq_IqnQYDXmFE7CiM",
-  authDomain: "proplante-7d75e.firebaseapp.com",
-  databaseURL: "https://proplante-7d75e.firebaseio.com",
-  projectId: "proplante-7d75e",
-  storageBucket: "proplante-7d75e.appspot.com",
-  messagingSenderId: "561205632101",
-  appId: "1:561205632101:web:ba99b04a5568e667b0fa8c",
-  measurementId: "G-J760F0W3ZF"
-};
-
 $(window).bind("hashchange", function() {
   checkHash();
 });
 
-firebase.initializeApp(config);
 firebase.auth().onAuthStateChanged(function(user) {
   var role = sessionStorage.role;
   window.user = user;
-
   if (
     window.user == null &&
     !window.location.href.includes("login.html") &&
     !window.location.href.includes("register.html")
   ) {
     window.location = "login.html";
-  } else {
+  } else if(window.user != null) {
     if (role == "manager") {
       console.log(user.phoneNumber);
       checkManagerDB(user.phoneNumber);
@@ -32,6 +19,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       sessionStorage.email != null ||
       sessionStorage.email != undefined
     ) {
+      window.location = "index.html";
     } else {
       console.log(user.email);
       checkUserDB(user.email);
@@ -59,6 +47,7 @@ recaptchaVerifier.render().then(function(widgetId) {
 });
 
 $("#owner-login-bt").click(function() {
+  $("#bg-loading").css("display", "block");
   firebaseAuthenByEmail();
 });
 
@@ -129,6 +118,7 @@ function createAccountOwner(email, password, name) {
 
 //sign out
 function signOut() {
+  sessionStorage.removeItem("email");
   firebase.auth().signOut();
 }
 //------------------------------------
@@ -139,9 +129,12 @@ function checkUserDB(email) {
   var loginDB = connectToServer(u, JSON.stringify(body), typ);
   loginDB.then(
     docs => {
-      setCacheData("role" , "owner")
+      setCacheData("role", "owner");
+      sessionStorage.email = docs.email;
+      sessionStorage.user = JSON.stringify(docs);
       currentURL = window.location.href;
       if (currentURL.includes("login.html")) {
+        $("#bg-loading").css("display", "none");
         window.location = "index.html";
       }
     },
@@ -167,7 +160,8 @@ function checkManagerDB(managerId) {
     docs => {
       $("#error-phone").css("display", "none");
       window.user = docs;
-      setCacheData("role" , "manager")
+      sessionStorage.user = JSON.stringify(docs);
+      setCacheData("role", "manager");
       onSignInSubmit();
     },
     function(e) {
@@ -268,6 +262,7 @@ function onVerifyCodeSubmit() {
         var user = result.user;
         console.log(user);
         window.verifyingCode = false;
+        $("#bg-loading").css("display", "block");
         if (sessionStorage.authenEvent == "manager-register") {
           registerManagerDB();
         }

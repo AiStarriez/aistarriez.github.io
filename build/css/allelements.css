@@ -1,98 +1,164 @@
- /* html {
-  font-size: 62.5%;
-}  */
 
-body {
-    font-family: 'CS ChatThai';
-    background-size: cover;
-    overflow-x: hidden;
-     font-size: 1.2rem;
-  }
+ body {
+   font-family: 'CS ChatThai';
+   background-size: cover;
+   overflow-x: hidden;
+   font-size: 1.4rem;
+ }
 
-  #map {
-    width: 100%;
-    margin: auto;
-  }
-   span {
-    font-size: 1.0rem;
-  }
-
-/* #hamburger {
-  display: none;
-} */
-#filterButton {
-  display: none;
+ .btn{
+  font-size: 1.4rem;
 }
 
-#filterMainPageDiv {
-  margin-right: 15px;
-  float: right;
-  margin-top: 15px;
+ button {
+   font-size: 1.4rem;
+ }
+
+ #map {
+   width: 100%;
+   margin: auto;
+ }
+
+ #topnav{
+   height: calc(100% - 2rem);
+ }
+
+ .modal-body{
+   padding-top:2rem;
+   padding-bottom:2rem;
+   padding-left:3rem;
+   padding-right:3rem;
+ }
+ .content-wrapper {
+  min-height: unset;
+  /* height: calc(100% - 4rem); */
+  height: 500px;
+  overflow-y: scroll;
 }
 
-#filterContainerDiv {
-  display: none;
+ :not(.layout-fixed) .main-sidebar{
+  height: 100vh;
+  min-height: unset;
 }
 
-.dropdown {
-  display: inline;
 
+ #filterButton {
+   display: none;
+ }
+
+ #filterMainPageDiv {
+   margin-right: 15px;
+   float: right;
+  
+ }
+
+ #filterContainerDiv {
+   display: none;
+ }
+
+ #nav-user-name{
+   margin-top:0;
+   margin-bottom:0;
+ }
+
+ .dropdown {
+   display: inline;
+
+ }
+ #button-div {
+   margin-left: 5%;
+   float: left;
+   bottom: 0;
+   margin-bottom: 5vh;
+   position: absolute;
+ }
+
+ #signOutBtn {
+   background-color: red;
+ }
+
+ .signout {
+   bottom: 0;
+   margin-bottom: 5vh;
+   margin-left: 5%;
+   float: left;
+ }
+
+ #addLandBtn {
+  font-size: 1.4rem;
+  font-weight: bold;
+   background-color: #FF7E9D;
+   border-color: #FF7E9D;
+ }
+
+ #sidebar-brand-logo{
+   padding:10%;
+   color:green;
+ }
+ .brand-link .brand-image{
+   margin-top: 0px;
+ }
+#band-name{
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
-#dd-button,#land-name-filter {
-  background-color: #EFEFEF;
-  border-color: #EFEFEF;
-  color: gray;
-  font-size: 1.2rem;
-}
-#button-div {
-  margin-left: 5%;
-  float: left;
-  bottom: 0;
-  margin-bottom: 5vh;
-  position: absolute;
-}
-#signOutBtn {
-  background-color: red;
+ @media screen and (max-width: 768px) {
+   #hamburger {
+     display: inline;
+   }
 
-}
-.signout{
-  bottom: 0;
-  margin-bottom: 5vh;
-  margin-left: 5%;
-  float: left;
-}
-#addLandBtn{
-  font-size: 1.6rem;
-  background-color: darksalmon;
-  border-color: darksalmon;
-}
+   #filterMainPageDiv {
+     display: none;
+   }
 
-@media screen and (max-width: 768px) {
-  #hamburger {
-    display: inline;
-  }
-  #filterMainPageDiv {
-    display: none;
-  }
-  #filterButton {
-    display: inline;
-  }
-  #filterContainerDiv {
-    display: block;
-    width: auto;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-  }
-  #dd-button,#land-name-filter{
-    width: 100%;
-    margin-top: 5%;
-    font-size: 1.0rem;
-  }
+   #filterButton {
+     display: inline;
+   }
 
-  #button-div{
-    display: none;
-  }
-}
+   #filterContainerDiv {
+     display: block;
+     width: auto;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     top: 0;
+   }
+
+   #dd-button,
+   #land-name-filter,#plant-filter {
+     width: 100%;
+     margin-top: 5%;
+     font-size: 1.4rem;
+   }
+
+   #button-div {
+     display: none;
+   }
+ }
+
+ .modal{
+   top:30%
+ }
+
+ .gm-style .gm-style-iw-d {
+   font-family: 'CS ChatThai';
+   margin-left: 20px;
+   margin-right: 20px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+   font-size: 1.4rem;
+ }
+
+ .gm-style .gm-style-iw-d h5 {
+  font-size: 1.4rem;
+   text-align: center;
+ }
+
+ .form-control{
+   font-size:1.4rem;
+ }
+
+ h4{
+   font-size: 1.8rem;
+ }

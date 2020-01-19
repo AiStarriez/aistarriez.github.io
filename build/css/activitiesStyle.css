@@ -6,19 +6,43 @@ body {
   font-family: 'CS ChatThai';
   background-size: cover;
   overflow-x: hidden;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 
-.content-wrapper {
-  overflow-y: scroll;
+label:not(.form-check-label):not(.custom-file-label) {
+  font-weight: normal;
 }
+
+
+#land-name-filter {
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  font-size: 1.4rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
 
 .timeline {
   margin-right: 0px;
+  margin-left: 3vw;
+}
+
+.timeline>.time-label>span {
+  font-weight: normal;
 }
 
 .timeline>div>.timeline-item {
   margin-right: 0px;
+  background: transparent;
+  box-shadow: unset;
+}
+
+.table-responsive {
+  border-radius: 10px;
 }
 
 .table-header {
@@ -32,7 +56,8 @@ body {
 }
 
 .tr-bt-add-ac {
-  text-align: right;
+  position: absolute;
+  right: 3vw;
   display: block;
 }
 
@@ -66,6 +91,7 @@ body {
   width: 100%
 }
 
+
 @media screen and (max-width: 600px) {
   #bt-progress-container {
     display: none;
@@ -91,4 +117,10 @@ body {
     display: block;
     width: 100%;
   }
+
+  .timeline>div>.timeline-item {
+    background: white;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+  }
+
 }

@@ -17,19 +17,17 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  
-
   <!-- PROPLANTE -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link rel="stylesheet" href="build/css/CS%20ChatThai.css" />
   <link rel="stylesheet" href="build/fonts/fontawesome-all.min.css" />
   <link rel="stylesheet" href="build/fonts/ionicons.min.css" />
   <link rel="stylesheet" href="build/css/MainLoginPage.css" />
+  <link rel="stylesheet" href="build/css/loader-1.css">
   <!-- PROPLANTE -->
 </head>
 
 <body class="hold-transition login-page">
-
   <div id="slideshow">
     <div class="carousel slide" data-ride="carousel" id="picSlide">
       <div class="carousel-inner" role="listbox">
@@ -96,7 +94,7 @@
             <div class="row">
               <div class="col-6">
                 <p class="mb-1">
-                  <a id="forget-password-bt" style="color: lightblue">ลืมรหัสผ่าน</a>
+                  <a id="forget-password-bt" href="#">ลืมรหัสผ่าน</a>
                 </p>
               </div>
               <!-- /.col -->
@@ -171,6 +169,12 @@
     </div>
   </div>
   <!-- /.login-box -->
+
+  <div id="bg-loading">
+    <div class="loader-wrapper" id="loader-1">
+      <div id="loader"></div>
+    </div>
+  </div>
 
   <!-- jQuery -->
   <script src="../../plugins/jquery/jquery.min.js"></script>
