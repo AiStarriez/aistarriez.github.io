@@ -4,26 +4,41 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Proplante | รายละเอียดกิจกกรม</title>
+  <title>Proplante</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+
   <!-- PROPLANTE -->
-  <link rel="stylesheet" href="build/css/activitiesStyle.css">
-  <link rel="stylesheet" href="build/css/loader-1.css">
-  <!-- PROPLANTE -->
+  <link rel="stylesheet" href="build/css/allelements.css">
+  <link rel="stylesheet" href="build/css/reportPerLand.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 
-<body class="hold-transition sidebar-mini">
-  <div class="wrapper">
+<body class="hold-transition sidebar-mini layout-fixed">
+  <d class="wrapper">
+
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="topnav">
       <!-- Left navbar links -->
@@ -31,11 +46,8 @@
         <li class="nav-item" id="hamburger">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <button id="bt-progress-nav" class="btn bg-olive">ความก้าวหน้า</button>
-        </li>
+        
+
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -67,7 +79,7 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="index.html" class="nav-link" id="navBarLand">
+              <a href="#" class="nav-link" id="navBarLand">
                 <i class="fas fa-map-marked-alt"></i>
                 <p>
                   &nbsp;&nbsp; ที่ดิน
@@ -75,7 +87,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="calendar.html" class="nav-link" id="navBarSchedule">
+              <a href="#" class="nav-link" id="navBarSchedule">
                 <i class="fas fa-calendar-alt"></i>
                 <p>
                   &nbsp;&nbsp; ตารางงาน
@@ -83,15 +95,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="activities.html" class="nav-link active" id="navBarActivity">
+              <a href="#" class="nav-link" id="navBarActivity">
                 <i class="fas fa-list-alt"></i>
                 <p>
-                  กิจกรรมทั้งหมด
+                  &nbsp;&nbsp; กิจกรรมทั้งหมด
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarReport">
+              <a href="#" class="nav-link active" id="navBarReport">
                 <i class="fas fa-chart-bar"></i>
                 <p>
                   &nbsp;&nbsp; รายงานผล
@@ -134,110 +146,87 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
+      <div id="topHeader">
+        <div id="titleDiv">
+          <a href="" id="mainReportPage" style="display:inline">รายงานที่ดิน</a>
+        </div>
+      </div>
+      <hr>
+      <br>
+
+  
+
+    <!-- Main content -->
+    <section class="content">
         <div class="container-fluid">
-          <table id="header-mobile">
-            <tr class="text-success">
-              <td>
-                <a onclick="window.history.back()" class="text-success" style="cursor:pointer">
-                  <i class="fa fa-arrow-left"></i>
-                  &nbsp;&nbsp;
-                </a>
 
-              </td>
-              <td>
-                <h4 class="h4-header" id="land-header-mobile"></h4>
-              </td>
-            </tr>
-          </table>
-          <table class="table-header">
-            <tr class="text-success">
-              <td>
-                <table>
-                  <tr>
-                    <td>
-                      <a href="activities.html" class="text-success">
-                        <h4 class="h4-header">กิจกรรมทั้งหมด</h4>
-                      </a>
-                    </td>
-                    <td>
-                      &nbsp;&nbsp;
-                      <i class="fa fa-angle-right"></i>
-                      &nbsp;&nbsp;
-                    </td>
-                    <td>
-                      <h4 class="h4-header" id="land-header"></h4>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-
-              <td class="tr-bt-add-ac">
-                <button id="bt-progress-container" class="btn bg-olive">ความก้าวหน้า</button>
-              </td>
-            </tr>
-
-          </table>
-          <hr>
-        </div><!-- /.container-fluid -->
+    <div id="reportPerLandDiv" class="row"></div>
+    <!-- /.container-fluid -->
+    </div>
       </section>
+    <!-- /.content -->
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header">
-                  รายละเอียด
-                </div>
-                <div class="card-body" id="card-details"></div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-header">
-                  รูปภาพ
-                </div>
-                <div class="card-body" id="card-image"></div>
-              </div>
-            </div>
-          </div>
-          <!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
-  </div>
-  <!-- ./wrapper -->
-
-  <div id="bg-loading">
-    <div class="loader-wrapper" id="loader-1">
-      <div id="loader"></div>
     </div>
-  </div>
-  <!-- jQuery -->
-  <script src="../plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- jQuery UI -->
-  <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../dist/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="../dist/js/demo.js"></script>
-  <!-- Page specific script -->
+    <!-- ./wrapper -->
 
-  <script src="build/js/connectServer.js"></script>
-  <script src="build/js/activityDetailsFunc.js"></script>
-  <script src="build/js/navBarLinks.js"></script>
+    <!-- PROPLANTE -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
+      async defer></script>
+    <script src="build/js/connectServer.js"></script>
+    <script src="build/js/reportPerLand.js"></script>
+    <script src="build/js/navBarLinks.js"></script>
+
+
+
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="dist/js/pages/dashboard.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="build/js/firebaseAuthen.js"></script>
 
 
 
