@@ -14,17 +14,17 @@
 }*/
 #weatherTextDiv:nth-child(2){
   
-  text-align: left;
+  /*text-align: left;
   padding-left: 2%;
-  position:absolute;
+  position:absolute;*/
   
 }
 #temperatureDiv:nth-child(3){
   
-  text-align: right;
+  /*text-align: right;
   left: 67%;
   padding-left: 2%;
-  position:relative;
+  position:relative;*/
   
 }
 #windSpeedDiv{
@@ -98,7 +98,7 @@
 
  }
 
- #weatherIcon{
+ #weatherIcon, #currentIcon{
    padding-top: 1%;
    width: 20%;
   
@@ -107,8 +107,8 @@
  }
 
  #icon{
-  width: 40%;
-  height: 40%;
+  width: 50%;
+  height: 50%;
  }
 
  #currentInfo{
@@ -118,7 +118,15 @@
   float: right;
  }
 
- #weatherTextDiv{}
+ #weatherForecastInfo{
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 5%;
+ }
+
+ #weatherTextDiv{
+
+ }
 
  #temperatureDiv{}
 
