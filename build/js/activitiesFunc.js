@@ -115,7 +115,7 @@ function setActivityUI(docs, sortBy) {
       "/" +
       (toDate.getMonth() + 1) +
       "/" +
-      toDate.getFullYear();
+     (toDate.getFullYear()+543);
     var activityArr = [];
     var acByDate = [];
     var keyDate = date;
@@ -132,7 +132,7 @@ function setActivityUI(docs, sortBy) {
         "/" +
         (toDate.getMonth() + 1) +
         "/" +
-        toDate.getFullYear();
+        (toDate.getFullYear()+543);
 
       if (date == compareDate) {
         activityArr.push(docs[count]);
@@ -185,7 +185,7 @@ function setActivityUI(docs, sortBy) {
       var fullDate = obj.end_date != null ? obj.end_date : obj.start_date;
       var date = new Date(fullDate);
       date =
-        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear()+543);
       var toDetails = document.createElement("a");
       toDetails.href = "activitydetails.html#" + obj.activity_id;
 
@@ -220,12 +220,13 @@ function setActivityUI(docs, sortBy) {
       }
 
       if (localStorage["role"] == '"owner"') {
+       
         rowActivity += setActivityOwnerUI(
           obj.land_name,
           date,
           obj.task,
           obj.status,
-          obj.activity_id,
+          (obj.activity_id + "&" + obj.land_id),
           setBG
         );
         mobileCard =
@@ -236,7 +237,7 @@ function setActivityUI(docs, sortBy) {
             date,
             obj.task,
             obj.status,
-            obj.activity_id,
+            (obj.activity_id + "&" + obj.land_id),
             setText
           );
       } else {
@@ -245,7 +246,7 @@ function setActivityUI(docs, sortBy) {
           date,
           obj.task,
           obj.status,
-          obj.activity_id,
+          (obj.activity_id + "&" + obj.land_id),
           setBG
         );
         mobileCard =
@@ -256,7 +257,7 @@ function setActivityUI(docs, sortBy) {
             date,
             obj.task,
             obj.status,
-            obj.activity_id,
+            (obj.activity_id + "&" + obj.land_id),
             setText
           );
       }
@@ -296,7 +297,7 @@ function getLandName() {
   }
 }
 
-$("#emer-ac-btn").click(function() {
+$("#emer").click(function() {
   var landId = sessionStorage.landEmergency;
   if (landId) {
     window.location = "addActivity.html#" + landId;

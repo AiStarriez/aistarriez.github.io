@@ -15,14 +15,14 @@ $(window, document).ready(function() {
 function apiGetPlant() {
   var cachePlant = localStorage["plants"] || undefined;
   if (cachePlant != undefined) {
-    filterLands();
+     filterLands();
   } else {
     var url = "/plants/" + ownerId;
     var body = "";
     var getAllPlant = connectToServer(url, body, "GET");
     getAllPlant.then(docs => {
       setCacheData("plants", docs);
-      filterLands();
+       filterLands();
     });
   }
 }

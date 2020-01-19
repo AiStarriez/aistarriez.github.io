@@ -123,7 +123,7 @@ $(function() {
       var obj = {
         title: docs[i].task,
         start:formatDate,
-        url: 'activitydetails.html#' + docs[i].activity_id,
+        url: 'activitydetails.html#' + docs[i].activity_id + "&" + docs[i].land_id,
         backgroundColor: color,
         borderColor: color
       };
@@ -152,7 +152,6 @@ $(function() {
       droppable: false, // this allows things to be dropped onto the calendar !!!
       eventClick: function(info) {
         var eventObj = info.event;
-  
         if (eventObj.url) {  
           window.location = eventObj.url;
           info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
@@ -236,10 +235,11 @@ $(function() {
         "/" +
         (startDate.getMonth() + 1) +
         "/" +
-        startDate.getFullYear();
+        (startDate.getFullYear()+543);
       var task = docs[i].task;
       var status = docs[i].status;
       var activityID = docs[i].activity_id;
+      var landID = docs[i].land_id;
       var table = document.createElement("table");
       table.className += "table";
       table.innerHTML +=
@@ -279,7 +279,7 @@ $(function() {
           toDate,
           task,
           status,
-          activityID,
+          (activityID + "&" + landID),
           setBG
         );
         mobileCard =
@@ -291,12 +291,12 @@ $(function() {
             toDate,
             task,
             status,
-            activityID,
+            (activityID + "&" + landID),
             setText
           ) +
           "</div></div>";
       } else {
-        row += setActivityManagerUI(landName, toDate, task, status, activityID,setBG);
+        row += setActivityManagerUI(landName, toDate, task, status,  (activityID + "&" + landID),setBG);
         mobileCard =
           mobileCard +
           '<div class="card"><div class="card-body">' +
@@ -306,7 +306,7 @@ $(function() {
             toDate,
             task,
             status,
-            activityID,
+            (activityID + "&" + landID),
             setText
           ) +
           "</div></div>";

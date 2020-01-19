@@ -41,7 +41,6 @@ function postActivity() {
   var postNewActivity = connectToServer(url, body, "POST");
   postNewActivity.then(
     docs => {
-
       console.log("create activity success " + docs)
     },
     function (e) {
