@@ -12,8 +12,10 @@ var config = {
 };
 
 firebase.initializeApp(config);
-checkSessionLogin();
-uiOnloadPage();
+  checkSessionLogin();
+  uiOnloadPage();
+
+
 
 function connectToServer(u, body, typ) {
   // var url = "http://localhost:8080" + u;
@@ -79,4 +81,33 @@ function setSessionData(name, data) {
   //session
   sessionStorage.setItem = JSON.stringify({ name: "John" });
   //window.location.href = "detailland.html";
+}
+
+function dateThai(strDate) {
+  var date_time = strDate.split(" ");
+  var date = date_time[0];
+  var time = date_time[1];
+
+  var y_m_d = date.split("/");
+  var strYear = y_m_d[2];
+  var strMonth = y_m_d[1];
+  var strDay = y_m_d[0];
+
+  var strMonthCut = Array(
+    "",
+    "มกราคม",
+    "กุมภาพันธ์",
+    "มีนาคม",
+    "เมษายน",
+    "พฤษภาคม",
+    "มิถุนายน",
+    "กรกฎาคม",
+    "สิงหาคม",
+    "กันยายน",
+    "ตุลาคม",
+    "พฤศจิกายน",
+    "ธันวาคม"
+  );
+  var strMonthThai = strMonthCut[strMonth];
+  return strDay + " " + strMonthThai+ " " + strYear + " เวลา " + time;
 }

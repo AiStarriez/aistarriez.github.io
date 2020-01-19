@@ -19,6 +19,8 @@
   <!-- PROPLANTE -->
   <link rel="stylesheet" href="build/css/activitiesStyle.css">
   <link rel="stylesheet" href="build/css/loader-1.css">
+  <link rel="stylesheet" href="build/css/allelements.css">
+
   <!-- PROPLANTE -->
 </head>
 
@@ -43,21 +45,27 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="#" class="brand-link">
-        <img src="build/img/icon.png" alt="Proplante logo" class="brand-image img-circle elevation-3"
-          style="opacity: .8">
-        <span class="brand-text font-weight-bold">PROPLANTE</span>
+      <a id="sidebar-brand-logo" href="index.html" class="brand-link">
+        <table>
+          <tr>
+            <td>
+              <img src="build/img/icon.png" width="50px;" />
+            </td>
+            <td id="band-name">
+              &nbsp;&nbsp;PROPLANTE
+            </td>
+          </tr>
+        </table>
       </a>
-
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <!-- <div class="image">
-          <i ></i>
-        </div> -->
+            <i ></i>
+          </div> -->
           <div class="info">
-            <a href="#" class="d-block">ยินดีต้อนรับ !</a>
+            <p id="nav-user-name" href="#" class="d-block">ยินดีต้อนรับ </p>
           </div>
         </div>
 
@@ -65,7 +73,7 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+                 with font-awesome or any other icon font library -->
             <li class="nav-item">
               <a href="index.html" class="nav-link" id="navBarLand">
                 <i class="fas fa-map-marked-alt"></i>
@@ -86,7 +94,7 @@
               <a href="activities.html" class="nav-link active" id="navBarActivity">
                 <i class="fas fa-list-alt"></i>
                 <p>
-                  กิจกรรมทั้งหมด
+                  &nbsp;&nbsp; กิจกรรมทั้งหมด
                 </p>
               </a>
             </li>
@@ -99,7 +107,9 @@
               </a>
             </li>
             <li class="nav-item">
+
               <a href="#" class="nav-link" id="navBarManager">
+
                 <i class="fas fa-users"></i>
                 <p>
                   &nbsp;&nbsp;&nbsp; ผู้ดูแล
@@ -114,9 +124,13 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item " id="nav-signout">
-              <a href="#" class="nav-link text-danger">
-                <i class="fas fa-sign-out-alt"></i>
+          </ul>
+        </nav>
+        <nav class="mt-2" style="position: absolute; bottom:5%">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item " id="nav-signout" onclick="signOut()">
+              <a href="#logout" class="nav-link text-danger" id="nav-signout">
+                <i class="fas fa-sign-out-alt" id="nav-signout"></i>
                 <p>
                   &nbsp;&nbsp; ออกจากระบบ
                 </p>
@@ -129,7 +143,6 @@
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
-
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
@@ -234,7 +247,9 @@
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js"></script>
   <!-- Page specific script -->
-
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
   <script src="build/js/connectServer.js"></script>
   <script src="build/js/activityDetailsFunc.js"></script>
   <script src="build/js/navBarLinks.js"></script>

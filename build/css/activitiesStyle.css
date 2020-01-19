@@ -79,7 +79,7 @@ label:not(.form-check-label):not(.custom-file-label) {
   margin-left: 50px;
 }
 
-.table-header {
+#bar-header {
   display: block;
 }
 
@@ -91,6 +91,16 @@ label:not(.form-check-label):not(.custom-file-label) {
   width: 100%
 }
 
+#bar-header{
+  content: "";
+  display: table;
+  clear: both;
+  width: 100%;
+}
+.bar-col-header{
+  width: 50%;
+  float: left;
+}
 
 @media screen and (max-width: 600px) {
   #bt-progress-container {
@@ -105,7 +115,7 @@ label:not(.form-check-label):not(.custom-file-label) {
     display: block;
   }
 
-  .table-header {
+  #activity-header {
     display: none;
   }
 
@@ -124,3 +134,8 @@ label:not(.form-check-label):not(.custom-file-label) {
   }
 
 }
+
+.table td, .table th{
+  border-top: unset;
+}
+

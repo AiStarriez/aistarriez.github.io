@@ -271,3 +271,21 @@ function setNewSession() {
   //   }
   // );
 }
+
+// check modal visibility
+var $div = $("#modal-success");
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.attributeName === "class") {
+      var attributeValue = $(mutation.target).prop(mutation.attributeName);
+      if(!attributeValue.includes('show')){
+        window.location = "index.html";
+      } 
+    }
+  });
+});
+
+observer.observe($div[0], {
+  attributes: true
+});
+// check modal visibility
