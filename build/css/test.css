@@ -79,8 +79,8 @@
     padding: 0;
 }
 
-  @media screen and (max-width: 768px) {
-    #navbar{
+@media screen and (max-width: 992px) {
+  #navbar{
         display: none;
       }
       #button-div{

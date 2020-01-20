@@ -62,7 +62,7 @@
   margin-right: 2vw;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   #activityTable{
     font-size: 1.4rem;
     border-collapse: none;

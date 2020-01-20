@@ -86,7 +86,7 @@ label:not(.form-check-label):not(.custom-file-label) {
   float: left;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
 
   #header-mobile {
     display: block;
