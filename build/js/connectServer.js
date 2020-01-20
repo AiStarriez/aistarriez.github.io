@@ -1,4 +1,4 @@
-var ownerId = "5dfcabe6666c642250d2ec59";
+var ownerId;
 
 var config = {
   apiKey: "AIzaSyBF0TF5PQNteZwHVKiq_IqnQYDXmFE7CiM",
@@ -45,11 +45,17 @@ function uploadToAWS(u, body, typ) {
 
 function checkSessionLogin() {
   var user = sessionStorage.user;
+  ownerId = sessionStorage.ownerId;
   if (
     !window.location.href.includes("login.html") &&
     !window.location.href.includes("register.html")
   ) {
-    if (user == null || user == undefined) {
+    if (
+      user == null ||
+      user == undefined ||
+      ownerId == null ||
+      ownerId == undefined
+    ) {
       signOut();
     }
   }
@@ -57,10 +63,11 @@ function checkSessionLogin() {
 
 function signOut() {
   console.log("signout");
+  firebase.auth().signOut();
   sessionStorage.removeItem("email");
   sessionStorage.removeItem("user");
   sessionStorage.removeItem("role");
-  firebase.auth().signOut();
+  sessionStorage.removeItem("ownerId")
   window.location = "login.html";
 }
 
@@ -79,4 +86,33 @@ function setSessionData(name, data) {
   //session
   sessionStorage.setItem = JSON.stringify({ name: "John" });
   //window.location.href = "detailland.html";
+}
+
+function dateThai(strDate) {
+  var date_time = strDate.split(" ");
+  var date = date_time[0];
+  var time = date_time[1];
+
+  var y_m_d = date.split("/");
+  var strYear = y_m_d[2];
+  var strMonth = y_m_d[1];
+  var strDay = y_m_d[0];
+
+  var strMonthCut = Array(
+    "",
+    "มกราคม",
+    "กุมภาพันธ์",
+    "มีนาคม",
+    "เมษายน",
+    "พฤษภาคม",
+    "มิถุนายน",
+    "กรกฎาคม",
+    "สิงหาคม",
+    "กันยายน",
+    "ตุลาคม",
+    "พฤศจิกายน",
+    "ธันวาคม"
+  );
+  var strMonthThai = strMonthCut[strMonth];
+  return strDay + " " + strMonthThai + " " + strYear + " เวลา " + time;
 }

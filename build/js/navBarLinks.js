@@ -5,7 +5,6 @@ id="navBarReport"
 id="navBarManager"
 id="navBarPlant"*/
 
-  console.log("hello")
   var landLinks = document.getElementById("navBarLand")
   landLinks.href = "index.html"
   var scheduleLink = document.getElementById("navBarSchedule")
@@ -15,7 +14,7 @@ id="navBarPlant"*/
   var reportLink = document.getElementById("navBarReport")
   reportLink.href = "reportPerLand.html"
   var managerLink = document.getElementById("navBarManager")
-  managerLink.href = "mainManagerPage.html"
+  managerLink.href = "managers.html?id=123"
 
 
 

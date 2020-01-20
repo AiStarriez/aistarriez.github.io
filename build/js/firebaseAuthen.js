@@ -5,6 +5,7 @@ $(window).bind("hashchange", function() {
 firebase.auth().onAuthStateChanged(function(user) {
   var role = sessionStorage.role;
   window.user = user;
+
   if (
     window.user == null &&
     !window.location.href.includes("login.html") &&
@@ -132,6 +133,7 @@ function checkUserDB(email) {
       setCacheData("role", "owner");
       sessionStorage.email = docs.email;
       sessionStorage.user = JSON.stringify(docs);
+      sessionStorage.ownerId = docs._id
       currentURL = window.location.href;
       if (currentURL.includes("login.html")) {
         $("#bg-loading").css("display", "none");
@@ -161,6 +163,7 @@ function checkManagerDB(managerId) {
       $("#error-phone").css("display", "none");
       window.user = docs;
       sessionStorage.user = JSON.stringify(docs);
+      sessionStorage.ownerId = docs.owner_id;
       setCacheData("role", "manager");
       onSignInSubmit();
     },

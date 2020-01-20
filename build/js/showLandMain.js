@@ -15,8 +15,10 @@ var contentString =
   '<div><p>ทดสอบ</p><a href="addLandPage.html">แก้ไข</a></div>';
 
 var ownerId = "5dfcabe6666c642250d2ec59";
+document.getElementById("bg-loading").style.display = "block";
 
 async function initMap() {
+  console.log("initMap");
   var landsPercent = localStorage["percent-lands"] || undefined;
   cacheLands = localStorage["lands"] || undefined;
   if (landsPercent != undefined) {
@@ -24,7 +26,6 @@ async function initMap() {
   } else {
     cacheLands = await getCacheLands(cacheLands);
     await getPercentOpCycle(cacheLands);
-    
   }
 }
 
@@ -179,7 +180,7 @@ function createMapComponent(poly, cacheLands) {
           plantName +
           "</p><p>กิจกรรมล่าสุด : " +
           lastActivity +
-          '</p><hr><a href="landDetai.html#' +
+          '</p><hr><a href="landDetail.html#' +
           cacheLands[j].land._id +
           '">ดูแบบละเอียด</a><br><a href="addland.html#' +
           cacheLands[j].land._id +
@@ -307,6 +308,7 @@ async function toCanvasMarker(divArr) {
     document.getElementById("img-out").style.display = "none";
     cacheLands = await getCacheLands(cacheLands);
     var init = await createMap(cacheLands);
+    document.getElementById("bg-loading").style.display = "none";
   }
 }
 

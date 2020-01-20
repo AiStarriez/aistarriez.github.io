@@ -69,18 +69,8 @@ label:not(.form-check-label):not(.custom-file-label) {
   float: right;
 }
 
-#bt-progress-nav {
-  display: none;
-  margin-right: 2vw;
-}
-
-
 .timeline>div>.timeline-item {
   margin-left: 50px;
-}
-
-.table-header {
-  display: block;
 }
 
 .activities-mobile {
@@ -91,24 +81,20 @@ label:not(.form-check-label):not(.custom-file-label) {
   width: 100%
 }
 
+.bar-col-header{
+  width: 50%;
+  float: left;
+}
 
-@media screen and (max-width: 600px) {
-  #bt-progress-container {
-    display: none;
-  }
-
-  #bt-progress-nav {
-    display: block;
-  }
+@media screen and (max-width: 768px) {
 
   #header-mobile {
     display: block;
   }
 
-  .table-header {
+  #bar-header {
     display: none;
   }
-
   .activities-browser {
     display: none;
   }
@@ -117,10 +103,10 @@ label:not(.form-check-label):not(.custom-file-label) {
     display: block;
     width: 100%;
   }
-
   .timeline>div>.timeline-item {
     background: white;
     box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
   }
 
 }
+

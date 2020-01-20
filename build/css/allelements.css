@@ -103,43 +103,15 @@
   font-weight: bold;
 }
 
- @media screen and (max-width: 768px) {
-   #hamburger {
-     display: inline;
-   }
-
-   #filterMainPageDiv {
-     display: none;
-   }
-
-   #filterButton {
-     display: inline;
-   }
-
-   #filterContainerDiv {
-     display: block;
-     width: auto;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     top: 0;
-   }
-
-   #dd-button,
-   #land-name-filter,#plant-filter {
-     width: 100%;
-     margin-top: 5%;
-     font-size: 1.4rem;
-   }
-
-   #button-div {
-     display: none;
-   }
- }
-
  .modal{
    top:30%
  }
+
+ 
+.bt-progressive-nav {
+  display: none;
+  margin-right: 2vw;
+}
 
  .gm-style .gm-style-iw-d {
    font-family: 'CS ChatThai';
@@ -162,3 +134,93 @@
  h4{
    font-size: 1.8rem;
  }
+
+ #bar-header {
+  display: block;
+}
+
+#bar-header{
+  content: "";
+  display: table;
+  clear: both;
+  width: 100%;
+}
+
+#header-mobile {
+  display: none;
+}
+
+.bar-col-header{
+  width: 50%;
+  float: left;
+}
+
+#nav-nav{
+  display: none;
+}
+#topnav{
+  color: #F4F6F9;
+}
+
+@media screen and (max-width: 768px) {
+
+  #nav-nav{
+    display: none;
+  }
+
+  #topnav{
+    color: white;
+  }
+  .bt-custom-hrader {
+    display: none;
+  }
+  #header-mobile {
+    display: block;
+  }
+  #bar-header {
+    display: none;
+  }
+
+  .bt-progressive-nav {
+    display: block;
+  }
+
+  #hamburger {
+    display: inline;
+  }
+
+  #filterMainPageDiv {
+    display: none;
+  }
+
+  #filterButton {
+    display: inline;
+  }
+
+  #filterContainerDiv {
+    display: block;
+    width: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+
+  #dd-button,
+  #land-name-filter,#plant-filter {
+    width: 100%;
+    margin-top: 5%;
+    font-size: 1.4rem;
+  }
+
+  #button-div {
+    display: none;
+  }
+
+}
+
+.table td, .table th{
+  border-top: unset;
+  padding:.4rem;
+  vertical-align:unset;
+}
