@@ -1,0 +1,146 @@
+#weatherTodayDiv{
+ background-color: rgb(233, 233, 233);
+ border-color: rgb(233, 233, 233);
+ border-radius: 10px;
+ width: 100%
+}
+/* choosing style for today each div*/
+/*#dateDiv:first-child{
+  
+  text-align: left;
+  padding-left: 2%;
+  position:absolute;
+  
+}*/
+#weatherTextDiv:nth-child(2){
+  
+  /*text-align: left;
+  padding-left: 2%;
+  position:absolute;*/
+  
+}
+#temperatureDiv:nth-child(3){
+  
+  /*text-align: right;
+  left: 67%;
+  padding-left: 2%;
+  position:relative;*/
+  
+}
+#windSpeedDiv{
+  
+}
+#totalSunHoursDiv{
+ 
+ 
+}
+#sunHoursDiv{
+
+  
+}
+#weatherTodayDiv{
+  padding-left: 2%;
+}
+#forecastDiv{
+  margin: auto;
+  padding-left: 2%;
+  /*width: 700px;*/
+}
+
+.icon {
+  position: relative;
+  display: inline-block;
+  width: 12em;
+  height: 10em;
+  font-size: 1.6em; /* control icon size here */
+}
+#nextDay1{
+  display: inline-block;
+
+}
+#nextTemperatureDiv1{
+  right: 5%;
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
+#nextWeatherTextDiv1{
+  width: max-content;
+  display: inline-block;
+}
+
+#nextDay2{
+  background-color: rgb(233, 233, 233);
+  border-color: rgb(233, 233, 233);
+  border-radius: 10px;
+  width: 100%
+}
+
+#nextDay3{
+
+}
+
+#nextDay4{
+  background-color: rgb(233, 233, 233);
+  border-color: rgb(233, 233, 233);
+  border-radius: 10px;
+  width: 100%
+}
+
+#currentConditionDiv{
+  background-color: rgb(233, 233, 233);
+  border-color: rgb(233, 233, 233);
+  border-radius: 10px;
+  width: 100%
+ }
+
+ #dateDiv{
+
+ }
+
+ #weatherIcon, #currentIcon{
+   padding-top: 1%;
+   width: 20%;
+  
+   float: left;
+
+ }
+
+ #icon{
+  width: 50%;
+  height: 50%;
+ }
+
+ #currentInfo{
+  padding-top: 1%;
+  width: 80%;
+  height: max-content;
+  float: right;
+ }
+
+ #weatherForecastInfo{
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 5%;
+ }
+
+ #weatherTextDiv{
+
+ }
+
+ #temperatureDiv{}
+
+ #windSpeedDiv{}
+
+ #humidityDiv{}
+
+ #pressureDiv{}
+
+ #cloudCoverDiv{}
+
+ @media screen and (max-width: 992px) {
+  #icon{
+    width: 100%;
+    height: 210%;
+   }
+}

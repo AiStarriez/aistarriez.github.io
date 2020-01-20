@@ -1,0 +1,67 @@
+.content-wrapper{
+  background-color: white;
+}
+
+#topnav{
+  display: none;
+}
+
+#topHeader{
+  padding-top: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.button{
+  display: inline-block;
+  float: right;
+  width: max-content;
+  right: 5%;
+  vertical-align: middle;
+}
+
+#cancelBtn{
+  display: inline-block;
+  vertical-align: middle;
+  font-size:1.2rem;
+  color: #343A40;
+  background-color: #F4F6F9;
+  border-color: #408214 ;
+}
+
+#saveBtn{
+  display: inline-block;
+  vertical-align: middle;
+  font-size:1.2rem;
+  background-color: #408214;
+
+}
+.thumbnail{
+  width: 30%;
+  height: 30%;
+}
+
+#addActivity{
+  margin-left: 3%;
+  margin-right: 3%;
+}
+#addAdditionActivity{
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+@media screen and (max-width: 992px){
+  #topnav {
+    display: block;
+  }
+  #forButton{
+    float: right;
+    width: max-content;
+    right: 5%;
+    vertical-align: middle;
+    position: absolute;
+  }
+  #buttonDivFull{
+    display: none;
+  }
+}

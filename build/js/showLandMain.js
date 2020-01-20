@@ -2,21 +2,77 @@ var defultLocation = {
   lat: 14.9780154,
   lng: 102.1029185
 };
-var drawingManager;
-var controlUI;
-var saveEditBt;
-var clearBt;
 var countButton = 0;
-var geocoder;
-var infowindow;
-var map;
-
+var geocoder, infowindow, map, cacheLands;
+var markerArr = [];
+var divArr = [];
+var canvasArr = [];
+var couterMarker = 0;
+var colorPieArr = ["#F76647", "#319CBE", "#40253D", "#0A3B9A", "#F2404C"];
+var mapPolyPieColor = [];
+sessionStorage.removeItem("polygonEditLand");
 var contentString =
   '<div><p>ทดสอบ</p><a href="addLandPage.html">แก้ไข</a></div>';
 
 var ownerId = "5dfcabe6666c642250d2ec59";
+document.getElementById("bg-loading").style.display = "block";
 
-function initMap() {
+async function initMap() {
+  console.log("initMap");
+  var landsPercent = localStorage["percent-lands"] || undefined;
+  cacheLands = localStorage["lands"] || undefined;
+  if (landsPercent != undefined) {
+    await loopCreatePie(landsPercent);
+  } else {
+    cacheLands = await getCacheLands(cacheLands);
+    await getPercentOpCycle(cacheLands);
+  }
+}
+
+async function loopCreatePie(landsPercent) {
+  landsPercent = JSON.parse(landsPercent);
+  for (let i = 0; i < landsPercent.length; i++) {
+    var percent = landsPercent[i].percent || 0;
+    createPie(percent, i);
+  }
+  toCanvasMarker(divArr);
+}
+
+async function getCacheLands(cacheLands) {
+  if (cacheLands == undefined) {
+    cacheLands = await getLatLngDB();
+    setCacheData("lands", cacheLands);
+    location.reload();
+  } else {
+    cacheLands = JSON.parse(cacheLands);
+  }
+  return cacheLands;
+}
+
+async function getPercentOpCycle(cacheLands) {
+  try {
+    var body = { qland: getLandsID(cacheLands) };
+    var typ = "POST";
+    var url = "/operations/percent";
+    var getPercent = await connectToServer(url, JSON.stringify(body), typ);
+    setCacheData("percent-lands", getPercent);
+    location.reload();
+    return getPercent;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function getLandsID(cacheLands) {
+  var landID = [];
+  for (var i = 0; i < cacheLands.length; i++) {
+    var id = { land_id: cacheLands[i].land._id };
+    landID.push(id);
+  }
+  return landID;
+}
+
+function createMap(cacheLands) {
   map = new google.maps.Map(document.getElementById("map"), {
     center: defultLocation,
     zoom: 16,
@@ -29,87 +85,164 @@ function initMap() {
   infowindow = new google.maps.InfoWindow({
     content: contentString
   });
+  getPolygonLands(null);
+}
 
-  var cacheLands = localStorage["lands"] || undefined;
-  if (cacheLands != undefined) {
-    getPolygonLands(JSON.parse(cacheLands));
-  } else {
-    getLatLngDB();
+async function getLatLngDB() {
+  try {
+    var url = "/lands/" + ownerId;
+    var body = "";
+    var getAllLands = await connectToServer(url, body, "GET");
+    return getAllLands;
+  } catch (err) {
+    console.log(err);
   }
 }
 
-function getLatLngDB() {
-  var url = "/lands/" + ownerId;
-  var body = "";
-  var getAllLands = connectToServer(url, body, "GET");
-  getAllLands.then(
-    docs => {
-      getPolygonLands(docs);
-      setCacheData("lands", docs);
-    },
-    function(e) {
-      // 404 owner not found
-      console.log(e.responseText);
+async function getPolygonLands(landArr) {
+  var getCachePoly = localStorage["poly-lands-main"] || undefined;
+  if (getCachePoly !== undefined) {
+    getCachePoly = JSON.parse(getCachePoly);
+    createMapComponent(getCachePoly, cacheLands);
+    drawingPolygonLands(getCachePoly, landArr);
+  } else {
+    var url = "/sec/lands/polygon/main";
+    var body = JSON.stringify(cacheLands);
+    var polygonMain = connectToServer(url, body, "POST");
+    polygonMain.then(poly => {
+      setCacheData("poly-lands-main", poly);
+      createMapComponent(poly, cacheLands);
+      drawingPolygonLands(poly, landArr);
+    }),
+      function(e) {
+        console.log(e);
+      };
+  }
+}
+
+function getPlantsActivity(cacheLandsIndex, activityID) {
+  var plants = JSON.parse(localStorage["plants"]);
+  var plantName, task;
+  for (let k = 0; k < plants.length; k++) {
+    var plantActivities = plants[k].activities;
+    if (cacheLandsIndex.operation.logs.plant_id == plants[k]._id) {
+      plantName = plants[k].name;
     }
-  );
+    if (activityID != undefined) {
+      var id = activityID._id;
+      for (let i = 0; i < plantActivities.length; i++) {
+        if (id == plantActivities[i]._id) {
+          task = plantActivities[i].tasks;
+        }
+      }
+    }
+  }
+  return { plantName, task };
 }
 
-function getPolygonLands(docs) {
-  var url = "/sec/lands/polygon/main";
-  var body = JSON.stringify(docs);
-  var polygonMain = connectToServer(url, body, "POST");
-  polygonMain.then(poly => {
-    drawingPolygonLands(poly);
-    // setLandSession("poly-lands-main", poly);
-  }),
-    function(e) {
-      console.log(e);
-    };
-  // }
+function createMapComponent(poly, cacheLands) {
+  mapPolyPieColor = [];
+  var polygonLands = poly.polygonLands;
+  var l;
+  for (let i = 0; i < polygonLands.length; i++) {
+    for (let j = 0; j < cacheLands.length; j++) {
+      if (polygonLands[i].land_id == cacheLands[j].land._id) {
+        var activities = cacheLands[j].operation.logs.activities;
+        activities.sort(dynamicSort("status"));
+        var lastActivity = null;
+        try {
+          lastActivity = activities[activities.length - 1].task;
+        } catch (err) {}
+
+        var activityID = activities[activities.length - 1];
+
+        plantObj = getPlantsActivity(cacheLands[j], activityID);
+        var plantName = plantObj.plantName || "ยังไม่ปลูกพืช";
+        if (lastActivity == null || lastActivity == undefined) {
+          lastActivity = plantObj.task || "ไม่มีกิจกรรม";
+        } else {
+          lastActivity = activities[activities.length - 1].task;
+        }
+
+        var latlngInLand = polygonLands[i].lat_lng;
+        l = new google.maps.Polygon({
+          paths: latlngInLand,
+          strokeColor: colorPieArr[i],
+          strokeOpacity: 0.6,
+          strokeWeight: 2,
+          fillColor: colorPieArr[i],
+          fillOpacity: 0.35
+        });
+        var popupMap =
+          "<h5>" +
+          cacheLands[j].land.name +
+          "</h5><p>พืช : " +
+          plantName +
+          "</p><p>กิจกรรมล่าสุด : " +
+          lastActivity +
+          '</p><hr><a href="landDetail.html#' +
+          cacheLands[j].land._id +
+          '">ดูแบบละเอียด</a><br><a href="addland.html#' +
+          cacheLands[j].land._id +
+          '">แก้ไขขนาด</a>';
+        var obj = {
+          land_id: polygonLands[i].land_id,
+          poly: l,
+          pie: canvasArr[i],
+          position: polygonLands[i].center,
+          popup: popupMap
+        };
+        mapPolyPieColor.push(obj);
+        // }
+      }
+    }
+  }
 }
 
-function drawingPolygonLands(poly) {
+async function drawingPolygonLands(poly, landArr) {
   var polygonLands = poly.polygonLands;
   var bounds = new google.maps.LatLngBounds();
   var l;
-  for (let i = 0; i < polygonLands.length; i++) {
+  if (landArr == null) {
+    landArr = [];
+    for (let i = 0; i < polygonLands.length; i++) {
+      landArr.push(polygonLands[i].land_id);
+    }
+  }
+  for (let i = 0; i < mapPolyPieColor.length; i++) {
     var latlngInLand = polygonLands[i].lat_lng;
-    l = new google.maps.Polygon({
-      paths: latlngInLand,
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#FF0000",
-      fillOpacity: 0.35
-    }).setMap(map);
+    for (let j = 0; j < landArr.length; j++) {
+      if (landArr[j] == mapPolyPieColor[i].land_id) {
+        l = mapPolyPieColor[i].poly;
+        l.setMap(map);
+        var marker = new google.maps.Marker({
+          position: mapPolyPieColor[i].position,
+          title: "Hello World!",
+          description: polygonLands[i],
+          icon: mapPolyPieColor[i].pie,
+          map: map
+        });
+        markerArr.push(marker);
 
-    var marker = new google.maps.Marker({
-      position: polygonLands[i].center,
-      title: "Hello World!",
-      description: polygonLands[i],
-      icon: createMarker(25, 25, 4),
-      map: map
-    });
-
-    google.maps.event.addListener(
-      marker,
-      "click",
-      (function(marker, i) {
-        return function() {
-          var context =
-            "<div><p>" +
-            polygonLands[i].land_id +
-            '</p><a href="addLandPage.html">แก้ไข</a></div>';
-          infowindow.setContent(context);
-          infowindow.open(map, marker);
-          sessionStorage.polygonEditLand = JSON.stringify(marker.description);
-        };
-      })(marker, i)
-    );
-
-    if (i == 0) {
-      for (let j = 0; j < latlngInLand.length; j++) {
-        bounds.extend(latlngInLand[j]);
+        google.maps.event.addListener(
+          marker,
+          "click",
+          (function(marker, i) {
+            return function() {
+              var context = "<div>" + mapPolyPieColor[i].popup + "</div>";
+              infowindow.setContent(context);
+              infowindow.open(map, marker);
+              sessionStorage.polygonEditLand = JSON.stringify(
+                marker.description
+              );
+            };
+          })(marker, i)
+        );
+        if (j == 0) {
+          for (let j = 0; j < latlngInLand.length; j++) {
+            bounds.extend(latlngInLand[j]);
+          }
+        }
       }
     }
   }
@@ -123,37 +256,74 @@ function addListenersOnPolygon(polygon) {
   });
 }
 
-function createMarker(width, height, radius) {
-  var canvas, context;
+async function createPie(percent, color) {
+  var parent = document.createElement("div");
+  var widget = document.getElementById("widget");
+  var pie = document.createElement("div");
+  var canvas = document.createElement("canvas");
+  var number = document.createElement("input");
+  pie.style.display = "inline";
+  pie.style.width = "90px";
+  pie.style.height = "90px";
+  parent.style.paddingTop = "10px";
+  canvas.width = 112;
+  canvas.height = 112;
+  canvas.style.width = "90px";
+  canvas.style.height = "90px";
+  number.type = "text";
+  number.setAttribute("class", "knob");
+  number.value = percent;
+  number.setAttribute("data-width", "90");
+  number.setAttribute("data-height", "90");
+  number.setAttribute("data-fgcolor", colorPieArr[color]);
+  number.setAttribute("data-readonly", "true");
+  number.setAttribute("readonly", "readonly");
+  number.style.width = "49px";
+  number.style.height = "30px";
+  number.style.position = "absolute";
+  number.style.verticalAlign = "middle";
+  number.style.marginTop = "30px";
+  number.style.marginLeft = "-69px";
+  number.style.border = "0px none";
+  number.style.background = "#000000";
+  // pie.appendChild(canvas);
+  pie.appendChild(number);
+  parent.appendChild(pie);
+  widget.appendChild(parent);
+  divArr.push(parent);
+}
 
-  canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
+async function toCanvasMarker(divArr) {
+  if (couterMarker < divArr.length) {
+    await html2canvas(divArr[couterMarker], {
+      onrendered: function(canvas) {
+        $("#img-out").append(canvas);
+        canvasArr.push(canvas.toDataURL());
+        couterMarker++;
+        toCanvasMarker(divArr);
+      }
+    });
+  } else {
+    document.getElementById("widget").style.display = "none";
+    document.getElementById("img-out").style.display = "none";
+    cacheLands = await getCacheLands(cacheLands);
+    var init = await createMap(cacheLands);
+    document.getElementById("bg-loading").style.display = "none";
+  }
+}
 
-  context = canvas.getContext("2d");
-
-  context.clearRect(0, 0, width, height);
-
-  // background is yellow
-  context.fillStyle = "rgba(255,255,0,1)";
-
-  // border is black
-  context.strokeStyle = "rgba(0,0,0,1)";
-
-  context.beginPath();
-  context.moveTo(radius, 0);
-  context.lineTo(width - radius, 0);
-  context.quadraticCurveTo(width, 0, width, radius);
-  context.lineTo(width, height - radius);
-  context.quadraticCurveTo(width, height, width - radius, height);
-  context.lineTo(radius, height);
-  context.quadraticCurveTo(0, height, 0, height - radius);
-  context.lineTo(0, radius);
-  context.quadraticCurveTo(0, 0, radius, 0);
-  context.closePath();
-
-  context.fill();
-  context.stroke();
-
-  return canvas.toDataURL();
+function dynamicSort(property) {
+  var sortOrder = 1;
+  if (property[0] === "-") {
+    sortOrder = -1;
+    property = property.substr(1);
+  }
+  return function(a, b) {
+    /* next line works with strings and numbers,
+     * and you may want to customize it to your needs
+     */
+    var result =
+      a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+    return result * sortOrder;
+  };
 }

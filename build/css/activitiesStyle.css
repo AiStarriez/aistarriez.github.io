@@ -1,0 +1,112 @@
+html {
+  background-color: #F4F6F9;
+}
+
+body {
+  font-family: 'CS ChatThai';
+  background-size: cover;
+  overflow-x: hidden;
+  font-size: 1.4rem;
+}
+
+label:not(.form-check-label):not(.custom-file-label) {
+  font-weight: normal;
+}
+
+
+#land-name-filter {
+  background-color: #EFEFEF;
+  border-color: #EFEFEF;
+  color: gray;
+  font-size: 1.4rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+
+.timeline {
+  margin-right: 0px;
+  margin-left: 3vw;
+}
+
+.timeline>.time-label>span {
+  font-weight: normal;
+}
+
+.timeline>div>.timeline-item {
+  margin-right: 0px;
+  background: transparent;
+  box-shadow: unset;
+}
+
+.table-responsive {
+  border-radius: 10px;
+}
+
+.table-header {
+  width: 98%;
+  margin-bottom: 1vw;
+  margin-top: 1vw;
+}
+
+#header-mobile {
+  display: none;
+}
+
+.tr-bt-add-ac {
+  position: absolute;
+  right: 3vw;
+  display: block;
+}
+
+#table-filter {
+  position: relative;
+}
+
+#table-filter table {
+  float: right;
+}
+
+.timeline>div>.timeline-item {
+  margin-left: 50px;
+}
+
+.activities-mobile {
+  display: none;
+}
+
+.activities-mobile td {
+  width: 100%
+}
+
+.bar-col-header{
+  width: 50%;
+  float: left;
+}
+
+@media screen and (max-width: 992px) {
+
+  #header-mobile {
+    display: block;
+  }
+
+  #bar-header {
+    display: none;
+  }
+  .activities-browser {
+    display: none;
+  }
+
+  .activities-mobile {
+    display: block;
+    width: 100%;
+  }
+  .timeline>div>.timeline-item {
+    background: white;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+  }
+
+}
+

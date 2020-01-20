@@ -1,0 +1,85 @@
+
+#harvestBtn{
+
+  font-size:1.4rem;
+  background-color: #408214;
+  
+}
+#harvestFull{
+  display: inline-block;
+  right: 5%;
+  vertical-align: middle;
+  float: right;
+}
+
+.content-header , .content{
+  margin-left: 18px;
+  margin-right: 18px;
+}
+
+#activity{
+  width: max-content;
+  display: inline-block;
+}
+
+#showActivity{
+  text-align: center;
+  
+}
+
+#activityTable{
+  margin-left:auto;
+  margin-right:auto;
+  border-collapse: separate;
+  border-spacing: 5rem 0;
+}
+
+#viewAllActivities{
+  right: 5%;
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
+
+#weather{
+  width: max-content;
+  display: inline-block;
+}
+
+#weatherFilterDate{
+  right: 5%;
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
+
+.content-wrapper{
+  background-color: white;
+}
+
+#bt-harvest-nav {
+  display: none;
+  margin-right: 2vw;
+}
+
+@media screen and (max-width: 992px) {
+  #activityTable{
+    font-size: 1.4rem;
+    border-collapse: none;
+    border-spacing: 10px 0;
+  }
+  #harvestFull{
+    display: none;
+  }
+  #forButton{
+    float: right;
+    width: max-content;
+    right: 5%;
+    vertical-align: middle;
+    position: absolute;
+  }
+  #bt-harvest-nav {
+    display: block;
+  }
+
+}

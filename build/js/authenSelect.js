@@ -1,22 +1,9 @@
-var colSelrole = document.querySelector(".login");
-var colOwnerLogin = document.querySelector(".owner-login");
-var colOwnerRegis = document.querySelector(".owner-register");
-var colOwnerRegisGG = document.querySelector(".owner-gg-register");
-var colManagerLogin = document.querySelector(".manager-login");
-var colManagerRegis = document.querySelector(".manager-regis");
+var ownerRoleBt = document.getElementById("owner-sel-role-bt");
+var managerRoleBt = document.getElementById("manager-sel-role-bt");
+var ownerLoginUI = document.getElementById("owner-login-ui");
+var managerLoginUI = document.getElementById("manager-login-ui");
+checkHash();
 
-// function setLabelAuthen(className) {
-//   document.querySelector("." + className).style.display = "block";
-//   colManagerLogin.style.display = "none";
-// }
-
-$(document).scroll(function() {
-  windowScroll();
-});
-
-$(window, document).ready(function() {
-  checkHash();
-});
 
 $(window).bind("hashchange", function() {
   checkHash();
@@ -26,70 +13,38 @@ function checkHash() {
   var href = window.location.hash;
   switch (href) {
     case "": {
-      setLabelAuthen(colSelrole);
+      sessionStorage.role = "owner";
       break;
     }
-    case "#owner-login": {
-      setLabelAuthen(colOwnerLogin);
+    case "#role-owner": {
+      sessionStorage.role = "owner";
       break;
     }
-    case "#manager-login": {
-      setLabelAuthen(colManagerLogin);
-      break;
-    }
-    case "#owner-rergis": {
-      setLabelAuthen(colOwnerRegis);
-      break;
-    }
-    case "#owner-authen": {
-      //check db register
-      window.location = "MainPage.html";
-      break;
-    }
-    case "#owner-rergis-gg": {
-      //check db register
-      window.location = "MainPage.html";
-      break;
-    }
-    case "#owner-rergis-success": {
-      setLabelAuthen(colOwnerLogin);
-      break;
-    }
-    case "#manager-rergis": {
-      setLabelAuthen(colManagerRegis);
-      break;
-    }
-    case "#manager-authen": {
-      window.location = "MainPage.html";
-      break;
-    }
-    case "#manager-regis-success": {
-      setLabelAuthen(colManagerLogin);
+    case "#role-manager": {
+      sessionStorage.role = "manager";
       break;
     }
   }
+  selLoginUI();
 }
 
-function setLabelAuthen(className) {
-  var labelArr = [
-    colSelrole,
-    colOwnerLogin,
-    colOwnerRegis,
-    colOwnerRegisGG,
-    colManagerLogin,
-    colManagerRegis
-  ];
-  for (let i = 0; i < labelArr.length; i++) {
-    if (className == labelArr[i]) {
-      className.style.display = "block";
+function selLoginUI() {
+  var role = sessionStorage.role || undefined;
+  if (role != undefined) {
+    if (role == "owner") {
+      $("#owner-login-ui").fadeIn();
+      managerLoginUI.style.display = "none";
+      ownerRoleBt.style.backgroundColor = "white";
+      managerRoleBt.style.backgroundColor = "rgb(53, 173, 87)";
+      $("#text-manager-role").css("color", "white");
+      $("#text-owner-role").css("color", "black");
     } else {
-      labelArr[i].style.display = "none";
+      $("#manager-login-ui").fadeIn();
+      ownerLoginUI.style.display = "none";
+      managerRoleBt.style.backgroundColor = "white";
+      ownerRoleBt.style.backgroundColor = "rgb(53, 173, 87)";
+      $("#text-owner-role").css("color", "white");
+      $("#text-manager-role").css("color", "black");
     }
   }
-}
-
-function windowScroll() {
-  var st = $(document).scrollTop();
-
-  $("#bg-mobile").css({ top: 0 + st * 1 + "px" });
 }

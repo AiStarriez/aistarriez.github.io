@@ -17,20 +17,43 @@ var latlngResult = document.getElementById("latlngResult");
 var landAreaInput = document.getElementById("landArea-input");
 var landNameInput = document.getElementById("landName-input");
 
+document.getElementById("search-location-form").onsubmit = function(e) {
+  return false;
+};
+
 $("#mapSearchBt").click(function() {
-  initSearchMap($("#map_search").val());
+  initSearchMap(document.getElementById("map_search").value);
+  //console.log(initSearchMap($("#map_search").val()));
 });
+document.getElementById("map_search").onkeydown = function(e) {
+  if (e.keyCode == 13) {
+    initSearchMap(document.getElementById("map_search").value);
+  }
+};
 $("#mapCleanBt").click(function() {
+  sessionStorage.removeItem("polygonEditLand");
+  document.getElementById("latlngResult").innerHTML = "";
   initMap();
 });
+
+$("#toIndexBtn").click(function() {
+  window.location = "index.html";
+});
+$("#modal-success").on("hidden.bs.modal", function() {
+  window.location = "index.html";
+});
+
 $("#saveBtn").click(function() {
+  $("#modal-default").modal("hide");
+  document.getElementById("bg-loading").style.display = "block";
   if (polygonEditLand != null) {
     apiAddLands("PUT", landId);
   } else {
-    apiAddLands("POST", params);
+    apiAddLands("POST", ownerId);
   }
 });
 
+// $('#modal-default').modal({backdrop: 'static', keyboard: false})
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: defultLocation,
@@ -45,8 +68,9 @@ function initMap() {
   infowindow = new google.maps.InfoWindow();
 
   addDrawingManager();
-  polygonEditLand = JSON.parse(sessionStorage.polygonEditLand);
+  polygonEditLand = sessionStorage.polygonEditLand;
   if (polygonEditLand != null) {
+    polygonEditLand = JSON.parse(polygonEditLand);
     editSetPolygon(polygonEditLand);
     drawingManager.setDrawingMode(google.maps.drawing.OverlayType.FALSE);
     getProvinceDistrict(geocoder, polygonArr[0]);
@@ -117,7 +141,7 @@ function editSetPolygon(polygonEditLand) {
     bounds.extend(polygonEditLand.lat_lng[j]);
   }
   map.fitBounds(bounds);
-  map.setZoom(17.5);
+  map.setZoom(18.5);
 
   for (let i = 0; i < cacheLands.length; i++) {
     if (cacheLands[i].land._id == polygonEditLand.land_id) {
@@ -145,6 +169,8 @@ function initSearchMap(inputQuery) {
         map: map
       });
       defultLocation = results[0].geometry.location;
+      // console.log(results[0].geometry.location)
+
       initMap();
       //   map.setCenter(results[0].geometry.location);
     }
@@ -206,7 +232,7 @@ function apiAddLands(typ, params) {
   postNewLand.then(
     docs => {
       console.log(docs);
-      getLatLngDB();
+      setNewSession();
     },
     function(e) {
       if (e.status == 400) {
@@ -215,22 +241,51 @@ function apiAddLands(typ, params) {
       } else if (e.status == 404) {
         //owner id ผิด
         console.log(e.responseText);
+      } else if (e.status == 200) {
+        setNewSession();
+      } else {
+        console.log(e);
       }
     }
   );
 }
 
-function getLatLngDB() {
-  var url = "/lands/" + ownerId;
-  var body = "";
-  var getAllLands = connectToServer(url, body, "GET");
-  getAllLands.then(
-    docs => {
-      setCacheData("lands", docs);
-    },
-    function(e) {
-      // 404 owner not found
-      console.log(e);
-    }
-  );
+function setNewSession() {
+  localStorage.removeItem("percent-lands");
+  localStorage.removeItem("poly-lands-main");
+  localStorage.removeItem("lands");
+  document.getElementById("bg-loading").style.display = "none";
+  $("#modal-success").modal("show");
+  // var url = "/lands/" + ownerId;
+  // var body = "";
+  // var getAllLands = connectToServer(url, body, "GET");
+  // getAllLands.then(
+  //   docs => {
+  //     console.log("setNewSession done")
+  //     setCacheData("lands", docs);
+
+  //   },
+  //   function(e) {
+  //     // 404 owner not found
+  //     console.log(e);
+  //   }
+  // );
 }
+
+// check modal visibility
+var $div = $("#modal-success");
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.attributeName === "class") {
+      var attributeValue = $(mutation.target).prop(mutation.attributeName);
+      if(!attributeValue.includes('show')){
+        window.location = "index.html";
+      } 
+    }
+  });
+});
+
+observer.observe($div[0], {
+  attributes: true
+});
+// check modal visibility

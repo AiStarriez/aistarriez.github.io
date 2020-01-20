@@ -50,11 +50,12 @@
   display: inline-block;
 }
 
-#dd-button,#land-name-filter {
+#dd-button,
+#land-name-filter,#plant-filter {
   background-color: #EFEFEF;
   border-color: #EFEFEF;
   color: gray;
-  font-size: 2.0em;
+  font-size: 1.4rem;
 }
 
 #button-div {
@@ -66,14 +67,15 @@
 #addLandBtn {
   background-color: #FF7E9D;
   border-color: #FF7E9D;
-  font-size: 2.0em;
+  font-size: 2.0rem;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .dropdown {
     width: 100%;
   }
 }
+
 
 /* #map {
   height: 800px;
