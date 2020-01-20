@@ -1,11 +1,10 @@
-var landArray = []
-var landNameArray = []
+var plantArray = []
 
 window.onload = function() {
-  var allLands = JSON.parse(localStorage["lands"]);
-  var reportPerLandDiv = document.getElementById("reportPerLandDiv");
-  for(var i = 0; i < allLands.length; i++){
-    landNameArray = allLands[i].land.name
+  var allPlants = JSON.parse(localStorage["plants"]);
+  var plantCard = document.getElementById("plantCard");
+  for(var i = 0; i < allPlants.length; i++){
+    managerArray = allPlants[i].name
 
     var div = document.createElement("div")
     div.setAttribute("class", "col-md-4")
@@ -15,13 +14,12 @@ window.onload = function() {
     cardBody.setAttribute("class", "card-body")
 
     var namePara = document.createElement("p")
-    namePara.setAttribute("class", "perLand")
-    namePara.innerHTML = landNameArray
+    namePara.setAttribute("class", "perPlant")
+    namePara.innerHTML = managerArray
     cardBody.appendChild(namePara)
     card.appendChild(cardBody)
     div.appendChild(card)
-    reportPerLandDiv.appendChild(div)
+    plantCard.appendChild(div)
   }
 }
-
 

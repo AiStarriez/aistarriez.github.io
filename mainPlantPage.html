@@ -31,7 +31,7 @@
 
   <!-- PROPLANTE -->
   <link rel="stylesheet" href="build/css/allelements.css">
-  <link rel="stylesheet" href="build/css/mainManagerPage.css">
+  <link rel="stylesheet" href="build/css/mainPlantPage.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
@@ -150,25 +150,26 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <div id="topHeader">
-        <div id="titleDiv">
-          <a href="" id="mainManagerPage" style="display:inline">ผู้ดูแล</a>
+      <section class="content-header">
+        <div class="container-fluid">
+          <div id="titleDiv">
+            <a href="" id="mainPlantPage" style="display:inline">จัดการพืช</a>
+          </div>
         </div>
-      </div>
-      <hr>
-      <br>
+        <hr>
+        <br>
+      </section>
 
-  
 
-    <!-- Main content -->
-    <section class="content">
+      <!-- Main content -->
+      <section class="content">
         <div class="container-fluid">
 
-    <div id="managerCard" class="row"></div>
-    <!-- /.container-fluid -->
-    </div>
+          <div id="plantCard" class="row"></div>
+          <!-- /.container-fluid -->
+        </div>
       </section>
-    <!-- /.content -->
+      <!-- /.content -->
 
     </div>
     <!-- /.content-wrapper -->
@@ -188,6 +189,7 @@
       async defer></script>
     <script src="build/js/connectServer.js"></script>
     <script src="build/js/navBarLinks.js"></script>
+    <script src="build/js/mainPlantPage.js"></script>
 
 
 
