@@ -36,6 +36,11 @@
   overflow-y: scroll;
 }
 
+.content-header{
+  margin-top: 3vh;
+  margin-left: 3vw;
+}
+
  :not(.layout-fixed) .main-sidebar{
   height: 100vh;
   min-height: unset;
@@ -107,7 +112,6 @@
    top:30%
  }
 
- 
 .bt-progressive-nav {
   display: none;
   margin-right: 2vw;
@@ -155,19 +159,16 @@
   float: left;
 }
 
-#nav-nav{
-  display: none;
-}
 #topnav{
-  color: #F4F6F9;
+  display: none;
 }
 
 @media screen and (max-width: 768px) {
 
-  #nav-nav{
-    display: none;
+  #topnav{
+    display: flex;
   }
-
+  
   #topnav{
     color: white;
   }

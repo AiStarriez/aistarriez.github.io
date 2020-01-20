@@ -68,10 +68,11 @@ function setManagerCard(regisManager) {
     col.setAttribute("class", "col-md-4");
     card.setAttribute("class", "card");
     cardBody.setAttribute("class", "card-body");
+    cardBody.style.height = "300px"
     cardBody.innerHTML =
       '<img style="border-radius: 5px" src="' +
       img +
-      '" width="100%"/><br><br><span>' +
+      'class="manager-img"/><br><br><span>' +
       name +
       "</span>";
     card.appendChild(cardBody);

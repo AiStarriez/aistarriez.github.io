@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Proplante</title>
+  <title>Proplante | ผู้ดูแล</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -185,37 +185,15 @@
           <hr>
         </div><!-- /.container-fluid -->
       </section>
-
-      <section class="content-header manager-detail">
-        <div class="container-fluid">
-          <table id="header-mobile">
-            <tr class="text-success">
-              <td>
-                <h4 class="text-success">ผู้ดูแล</h4>
-              </td>
-            </tr>
-          </table>
-
-          <div id="bar-header">
-            <div class="bar-col-header">
-              <h4 class="text-success">ผู้ดูแล</h4>
-            </div>
-            <div class="bar-col-header" style="text-align: right;">
-              <button id="new-manager-btn" class="btn bg-olive bt-custom-hrader" data-toggle="modal"
-                data-target="#modal-add-manager" onclick="genCodeManager()">เพิ่มผู้ดูแล</button>
-            </div>
-          </div>
-          <hr>
-        </div><!-- /.container-fluid -->
-      </section>
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <div class="row" id="managers-div">
+
             <div class="col-md-4">
               <div class="card">
-                <div class="card-body" style="text-align: center;">
-                  <img src="build/img/farmer.png" height="180px">
+                <div style="height: 300px;" class="card-body" style="text-align: center;">
+                  <img class="manager-img" src="build/img/bg1.jpg">
                   <br><br>
                   <span>สมชาย</span>
                 </div>
@@ -240,9 +218,6 @@
               </div>
             </div>
           </div>
-        
-
-          <!-- /.container-fluid -->
         </div>
       </section>
       <!-- /.content -->
@@ -259,7 +234,12 @@
           <p>
             รหัสผู้ดูแล
           </p>
-          <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+          <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <h1 id="manager-code" class="text-primary"></h1>
           <p>นำรหัสนี้ให้ผู้ดูแลสวนของท่านเพื่อใช้ในการลงทะเบียน</p>
           <div style="width: 100%; text-align:right;">
@@ -271,7 +251,7 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
-    <!-- MODAL -->
+  <!-- MODAL -->
 
   <!-- PROPLANTE -->
   <!-- firebase -->

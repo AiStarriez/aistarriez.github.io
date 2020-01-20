@@ -116,3 +116,6 @@ function dateThai(strDate) {
   var strMonthThai = strMonthCut[strMonth];
   return strDay + " " + strMonthThai + " " + strYear + " เวลา " + time;
 }
+
+document.querySelector(".content-wrapper").style.height = $(window).height() + "px";
+console.log($(window).height())
