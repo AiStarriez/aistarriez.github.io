@@ -1,4 +1,4 @@
-var ownerId = "5dfcabe6666c642250d2ec59";
+var ownerId;
 
 var config = {
   apiKey: "AIzaSyBF0TF5PQNteZwHVKiq_IqnQYDXmFE7CiM",
@@ -12,10 +12,8 @@ var config = {
 };
 
 firebase.initializeApp(config);
-  checkSessionLogin();
-  uiOnloadPage();
-
-
+checkSessionLogin();
+uiOnloadPage();
 
 function connectToServer(u, body, typ) {
   // var url = "http://localhost:8080" + u;
@@ -47,11 +45,17 @@ function uploadToAWS(u, body, typ) {
 
 function checkSessionLogin() {
   var user = sessionStorage.user;
+  ownerId = sessionStorage.ownerId;
   if (
     !window.location.href.includes("login.html") &&
     !window.location.href.includes("register.html")
   ) {
-    if (user == null || user == undefined) {
+    if (
+      user == null ||
+      user == undefined ||
+      ownerId == null ||
+      ownerId == undefined
+    ) {
       signOut();
     }
   }
@@ -59,10 +63,11 @@ function checkSessionLogin() {
 
 function signOut() {
   console.log("signout");
+  firebase.auth().signOut();
   sessionStorage.removeItem("email");
   sessionStorage.removeItem("user");
   sessionStorage.removeItem("role");
-  firebase.auth().signOut();
+  sessionStorage.removeItem("ownerId")
   window.location = "login.html";
 }
 
@@ -109,5 +114,5 @@ function dateThai(strDate) {
     "ธันวาคม"
   );
   var strMonthThai = strMonthCut[strMonth];
-  return strDay + " " + strMonthThai+ " " + strYear + " เวลา " + time;
+  return strDay + " " + strMonthThai + " " + strYear + " เวลา " + time;
 }
