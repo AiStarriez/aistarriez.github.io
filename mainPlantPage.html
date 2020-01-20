@@ -41,18 +41,21 @@
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="topnav">
+      <!--  -->
       <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item" id="hamburger">
-          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item" id="forButton">
-          <div id="exportReportMobile">
-            <button class="btn btn-primary" type="button" id="exportCSVBtn">ส่งออกรายงาน .csv</button>
-          </div>
-        </li>
-
-      </ul>
+      <div id="nav-nav">
+        <ul class="navbar-nav">
+          <li class="nav-item" id="hamburger">
+            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <button id="new-plant-btn" class="btn bg-olive bt-progressive-nav" data-toggle="modal"
+              data-target="#modal-add-plant">เพิ่มพืช</button>
+          </li>
+        </ul>
+      </div>
     </nav>
     <!-- /.navbar -->
 
@@ -155,6 +158,11 @@
           <div id="titleDiv">
             <a href="" id="mainPlantPage" style="display:inline">จัดการพืช</a>
           </div>
+
+          <div class="bar-col-header" style="text-align: right;">
+            <button id="new-plant-btn" class="btn bg-olive bt-progressive-nav" data-toggle="modal"
+              data-target="#modal-add-plant">เพิ่มพืช</button>
+          </div>
         </div>
         <hr>
         <br>
@@ -182,7 +190,49 @@
     <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-
+    <!-- MODAL -->
+    <div class="modal fade" id="modal-add-plant" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body" style="text-align: center;">
+            <p>
+              เพิ่มพืชใหม่
+            </p>
+            <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <form role="form">
+              <div class="form-group">
+                <label for ="inputPlantName">ชื่อพืช</label>
+                <input type="text" class="form-control" id="plantName">
+              </div>
+              <div id="addAdditionActivity">
+                <form role="form">
+                  <div class="form-group">
+                  <label for="activityPicUpload">อัปโหลดรูปภาพ</label>
+                  <div class="input-group">
+                    <input id="activityPicUpload" type="file" multiple/>
+                    <output id="result"/>
+                  </div>
+                </div>
+              </form>
+              </div>
+            </form>
+            
+            
+            <div style="width: 100%; text-align:right;">
+              <button id="save-plant-modal-btn" class="btn bg-olive" data-dismiss="modal">&nbsp;บันทึก&nbsp;</button>
+            </div>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- MODAL -->
     <!-- PROPLANTE -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
