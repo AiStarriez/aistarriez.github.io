@@ -15,7 +15,7 @@ var contentString =
   '<div><p>ทดสอบ</p><a href="addLandPage.html">แก้ไข</a></div>';
 
 var ownerId = "5dfcabe6666c642250d2ec59";
-document.getElementById("bg-loading").style.display = "block";
+document.getElementById("modal-loading").style.display = "block";
 
 async function initMap() {
   console.log("initMap");
@@ -72,7 +72,7 @@ function getLandsID(cacheLands) {
   return landID;
 }
 
-function createMap(cacheLands) {
+async function createMap(cacheLands) {
   map = new google.maps.Map(document.getElementById("map"), {
     center: defultLocation,
     zoom: 16,
@@ -308,7 +308,7 @@ async function toCanvasMarker(divArr) {
     document.getElementById("img-out").style.display = "none";
     cacheLands = await getCacheLands(cacheLands);
     var init = await createMap(cacheLands);
-    document.getElementById("bg-loading").style.display = "none";
+    document.getElementById("modal-loading").style.display = "none";
   }
 }
 

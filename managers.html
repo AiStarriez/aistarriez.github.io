@@ -31,6 +31,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <!-- PROPLANTE -->
+  <link rel="stylesheet" href="build/css/circleImageProfile.css" />
   <link rel="stylesheet" href="build/css/mainManagerPage.css">
   <link rel="stylesheet" href="build/css/allelements.css">
   <link rel="stylesheet" href="build/css/loader-1.css">
@@ -53,7 +54,9 @@
         <li class="nav-item">
           <button id="new-manager-btn" class="btn bg-olive bt-progressive-nav" data-toggle="modal"
             data-target="#modal-add-manager" onclick="genCodeManager()">เพิ่มผู้ดูแล</button>
-        </li>
+            <button id="edit-manager-btn" class="btn bg-olive bt-progressive-nav" data-toggle="modal"
+            data-target="#modal-add-manager" onclick="genCodeManager()">แก้ไขข้อมูล</button>
+          </li>
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -166,20 +169,29 @@
       <section class="content-header managers-main">
         <div class="container-fluid">
           <table id="header-mobile">
-            <tr class="text-success">
+            <tr class="text-success manager-name-header">
               <td>
-                <h4 class="text-success">ผู้ดูแล</h4>
+                <h4 class="text-success"><a href="managers.html" class="text-success">ผู้ดูแล</a>
+                </h4>
               </td>
             </tr>
           </table>
-
           <div id="bar-header">
             <div class="bar-col-header">
-              <h4 class="text-success">ผู้ดูแล</h4>
+              <table>
+                <tr class="text-success manager-name-header">
+                  <td>
+                    <h4 class="text-success"><a href="managers.html" class="text-success">ผู้ดูแล</a>
+                    </h4>
+                  </td>
+                </tr>
+              </table>
             </div>
             <div class="bar-col-header" style="text-align: right;">
               <button id="new-manager-btn" class="btn bg-olive bt-custom-hrader" data-toggle="modal"
                 data-target="#modal-add-manager" onclick="genCodeManager()">เพิ่มผู้ดูแล</button>
+              <button id="edit-manager-btn" class="btn bg-olive bt-custom-hrader" data-toggle="modal"
+                data-target="#modal-add-manager" onclick="genCodeManager()">แก้ไขข้อมูล</button>
             </div>
           </div>
           <hr>
@@ -188,42 +200,15 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <div class="row" id="managers-div">
-
-            <div class="col-md-4">
-              <div class="card">
-                <div style="height: 300px;" class="card-body" style="text-align: center;">
-                  <img class="manager-img" src="build/img/bg1.jpg">
-                  <br><br>
-                  <span>สมชาย</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body" style="text-align: center;">
-                  <img src="build/img/farmer.png" height="180px">
-                  <br><br>
-                  <span>สมชาย</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body" style="text-align: center;">
-                  <img src="build/img/farmer.png" height="180px">
-                  <br><br>
-                  <span>สมชาย</span>
-                </div>
-              </div>
-            </div>
+          <div class="row" id="managers-div"></div>
+          <div class="row content-manager-detail">
+    
+ 
           </div>
         </div>
       </section>
       <!-- /.content -->
-
     </div>
-
   </div>
   <!-- ./wrapper -->
   <!-- MODAL -->

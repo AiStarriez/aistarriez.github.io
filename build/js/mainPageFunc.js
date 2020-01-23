@@ -10,6 +10,7 @@ window.plant = "all";
 
 $(window, document).ready(function() {
   apiGetPlant();
+  sessionStorage.removeItem("authenEvent")
 });
 
 function apiGetPlant() {

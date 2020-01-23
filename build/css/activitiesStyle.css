@@ -28,7 +28,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 
 .timeline {
   margin-right: 0px;
-  margin-left: 3vw;
+  margin-left: 0px;
 }
 
 .timeline>.time-label>span {

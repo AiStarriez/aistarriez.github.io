@@ -31,6 +31,7 @@
  }
  .content-wrapper {
   min-height: unset;
+  background:#ffff;
   /* height: calc(100% - 4rem); */
   height: 500px;
   overflow-y: scroll;
@@ -39,6 +40,13 @@
 .content-header{
   margin-top: 3vh;
   margin-left: 3vw;
+  margin-right: 3vw;
+
+}
+
+.content{
+  margin-left: 3vw;
+  margin-right: 3vw;
 }
 
  :not(.layout-fixed) .main-sidebar{
