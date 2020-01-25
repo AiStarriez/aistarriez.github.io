@@ -15,6 +15,8 @@ id="navBarPlant"*/
   reportLink.href = "reportPerLand.html"
   var managerLink = document.getElementById("navBarManager")
   managerLink.href = "managers.html?id=123"
+  var plantLink = document.getElementById("navBarPlant")
+  plantLink.href = "mainPlantPage.html"
 
 
 

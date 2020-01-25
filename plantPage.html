@@ -50,8 +50,7 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <button id="new-plant-btn" class="btn bg-olive bt-progressive-nav" data-toggle="modal"
-            data-target="#modal-add-plant">เพิ่มพืช</button>
+          <button id="new-plant-activity-btn" class="btn bg-olive bt-progressive-nav">เพิ่มกิจกรรม2 </button>
         </li>
       </ul>
     </nav>
@@ -167,18 +166,20 @@
           <table id="header-mobile">
             <tr class="text-success">
               <td>
-                <h4 class="text-success">จัดการพืช</h4>
+                <h4 class="text-success">จัดการพืช &nbsp; &nbsp; > &nbsp; &nbsp;</h4>
+                <h4 class="text-success" id="plantName"></h4>
+                
               </td>
             </tr>
           </table>
 
           <div id="bar-header">
             <div class="bar-col-header">
-              <h4 class="text-success">จัดการพืช</h4>
+              <h4 class="text-success">จัดการพืช &nbsp; &nbsp; > &nbsp; &nbsp;</h4>
+              <h4 class="text-success" id="plantName"></h4>
             </div>
             <div class="bar-col-header" style="text-align: right;">
-              <button id="new-plant-btn" class="btn bg-olive bt-custom-hrader" data-toggle="modal"
-                data-target="#modal-add-plant">เพิ่มพืช</button>
+              <button id="new-plant=activity-btn" class="btn bg-olive bt-custom-hrader">เพิ่มกิจกรรม</button>
             </div>
           </div>
 
@@ -191,8 +192,15 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-
-          <div id="plant-div" class="row"></div>
+          <div id="showPlantActivity"></div>
+          <div id="noPlantActivity" class="text-secondary" style="text-align: center;">
+            
+              <h2>ยังไม่มีกิจกรรมสำหรับ<span id="plantName">กระต่าย</span></h2>
+            
+            <br>
+            <h2>กดปุ่ม "เพิ่มกิจกรรม" เพื่อสร้างกิจกรรมใหม่</h2>
+          </div>
+         
           <!-- /.container-fluid -->
         </div>
       </section>
@@ -215,7 +223,7 @@
         <div class="modal-content">
           <div class="modal-body" style="text-align: center;">
             <p>
-              เพิ่มพืชใหม่
+              เพิ่มกิจกรรม
             </p>
             <div class="lds-ellipsis">
               <div></div>
@@ -229,37 +237,34 @@
                 <input type="text" class="form-control" id="plantName">
               </div>
               <div id="addAdditionActivity">
-                <form role="form">
-                  <div class="form-group">
-                    <p for="activityPicUpload">อัปโหลดรูปภาพ</p>
-                    <div class="input-group">
-                      <input id="plantPicUpload" type="file" multiple />
-                      <output id="result" />
-                    </div>
-                  </div>
-                </form>
+                <div class="form-group">
+                  <p for="inputWeekPlant">สัปดาห์ที่ทำ</p>
+                  <input type="text" class="form-control" id="weekPlant">
+                </div>
               </div>
             </form>
 
 
             <div style="width: 100%; text-align:right;">
-              <button id="save-plant-modal-btn" class="btn bg-olive" onclick="postNewPlants()">&nbsp;บันทึก&nbsp;</button>
+              <button id="save-plant-modal-btn" class="btn bg-olive" data-dismiss="modal">&nbsp;บันทึก&nbsp;</button>
             </div>
           </div>
         </div>
-        <!-- /.modal-content -->
+        
       </div>
-      <!-- /.modal-dialog -->
+      
     </div>
     <!-- MODAL -->
     <!-- PROPLANTE -->
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
-    <!-- firebase -->
-    <script src="build/js/connectServer.js"></script>
-    <script src="build/js/navBarLinks.js"></script>
-    <script src="build/js/mainPlantPage.js"></script>
+       <!-- PROPLANTE -->
+       <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+       <script src="https://apis.google.com/js/platform.js" async defer></script>
+       <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+       <!-- firebase -->
+       <script src="build/js/connectServer.js"></script>
+       <script src="build/js/navBarLinks.js"></script>
+       <script src="build/js/mainPlantPage.js"></script>
+ 
 
 
 
@@ -299,6 +304,9 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="build/js/firebaseAuthen.js"></script>
 
 
 

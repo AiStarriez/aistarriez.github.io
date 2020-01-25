@@ -46,7 +46,7 @@
         <li class="nav-item" id="hamburger">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
-        
+
 
       </ul>
     </nav>
@@ -132,9 +132,16 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item " id="nav-signout">
-              <a href="#" class="nav-link text-danger">
-                <i class="fas fa-sign-out-alt"></i>
+
+          </ul>
+
+        </nav>
+        <!-- /.sidebar-menu -->
+        <nav class="mt-2" style="position: absolute; bottom:5%">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item " id="nav-signout" onclick="signOut()">
+              <a href="#logout" class="nav-link text-danger" id="nav-signout">
+                <i class="fas fa-sign-out-alt" id="nav-signout"></i>
                 <p>
                   &nbsp;&nbsp; ออกจากระบบ
                 </p>
@@ -144,7 +151,6 @@
           </ul>
 
         </nav>
-        <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
 
@@ -152,80 +158,90 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <div id="topHeader">
-        <div id="titleDiv">
-          <a href="" id="mainReportPage" style="display:inline">รายงานที่ดิน</a>
+      <section class="content-header managers-main">
+        <div class="container-fluid">
+          <table id="header-mobile">
+            <tr class="text-success">
+              <td>
+                <h4 class="text-success">รายงานที่ดิน</h4>
+              </td>
+            </tr>
+          </table>
+
+          <div id="bar-header">
+            <div class="bar-col-header">
+              <h4 class="text-success">รายงานที่ดิน</h4>
+            </div>
+          </div>
         </div>
-      </div>
-      <hr>
-      <br>
+        <hr>
+        <!-- /.container-fluid -->
+      </section>
 
-  
-
-    <!-- Main content -->
-    <section class="content">
+      <!-- Main content -->
+      <section class="content">
         <div class="container-fluid">
 
-    <div id="reportPerLandDiv" class="row"></div>
-    <!-- /.container-fluid -->
-    </div>
+          <div id="reportPerLandDiv" class="row"></div>
+          <!-- /.container-fluid -->
+        </div>
       </section>
-    <!-- /.content -->
+      <!-- /.content -->
 
     </div>
     <!-- /.content-wrapper -->
 
     <!-- /.control-sidebar -->
-    </div>
-    <!-- ./wrapper -->
+  </div>
+  <!-- ./wrapper -->
 
-    <!-- PROPLANTE -->
-   <!-- firebase -->
-   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-   <script src="https://apis.google.com/js/platform.js" async defer></script>
-   <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
-   <!-- firebase -->
-   <script src="build/js/connectServer.js"></script>
-    <script src="build/js/reportPerLand.js"></script>
-    <script src="build/js/navBarLinks.js"></script>
-
-
+  <!-- PROPLANTE -->
+  <!-- firebase -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+  <!-- firebase -->
+  <script src="build/js/connectServer.js"></script>
+  <script src="build/js/reportPerLand.js"></script>
+  <script src="build/js/navBarLinks.js"></script>
 
 
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-      $.widget.bridge('uibutton', $.ui.button)
-    </script>
-    <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- ChartJS -->
-    <script src="plugins/chart.js/Chart.min.js"></script>
-    <!-- Sparkline -->
-    <script src="plugins/sparklines/sparkline.js"></script>
-    <!-- JQVMap -->
-    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-    <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- daterangepicker -->
-    <script src="plugins/moment/moment.min.js"></script>
-    <script src="plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- Summernote -->
-    <script src="plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="dist/js/pages/dashboard.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
+
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- ChartJS -->
+  <script src="plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="plugins/sparklines/sparkline.js"></script>
+  <!-- JQVMap -->
+  <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="plugins/moment/moment.min.js"></script>
+  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.js"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="dist/js/pages/dashboard.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="dist/js/demo.js"></script>
 
 
 
