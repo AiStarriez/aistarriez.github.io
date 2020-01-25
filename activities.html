@@ -18,6 +18,8 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="build/css/allelements.css">
   <link rel="stylesheet" href="build/css/activitiesStyle.css">
+  <link rel="stylesheet" href="build/css/loader-1.css">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -228,15 +230,23 @@
           <center>
             <button id="emer-ac-btn" type="button" class="btn bg-olive">&nbsp;เริ่มบันทึก&nbsp;</button>
           </center>
-
         </div>
-
       </div>
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
   </div>
-  <!-- MODAL -->
+  <!--! LOADING MODAL -->
+  <div class="modal" id="modal-loading" style="display: none; top:0 ;background: #ffffff" aria-hidden="true">
+    <div class="modal-dialog" style="margin-top:50vh ;">
+      <div id="bg-loading" style="display:block;width:100%; height:100%">
+        <div class="loader-wrapper" id="loader-1">
+          <div id="loader"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--! LOADING MODAL -->
   <!-- jQuery -->
   <script src="../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap -->

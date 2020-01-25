@@ -1,4 +1,8 @@
 var ownerId;
+var managerId;
+// var apiURL = "https://rocky-gorge-34614.herokuapp.com";
+var apiURL = "http://localhost:8080";
+var headerImage = apiURL + "/images/display/";
 
 var config = {
   apiKey: "AIzaSyBF0TF5PQNteZwHVKiq_IqnQYDXmFE7CiM",
@@ -16,8 +20,8 @@ checkSessionLogin();
 uiOnloadPage();
 
 function connectToServer(u, body, typ) {
-  // var url = "http://localhost:8080" + u;
-  var url = "https://rocky-gorge-34614.herokuapp.com" + u;
+  console.log("call api | ", typ, " ", u);
+  var url = apiURL + u;
   return Promise.resolve(
     $.ajax({
       url: url,
@@ -29,9 +33,8 @@ function connectToServer(u, body, typ) {
   );
 }
 
-function uploadToAWS(u, body, typ) {
-  var url = "https://rocky-gorge-34614.herokuapp.com" + u;
-  // var url = "http://localhost:8080" + u;
+function uploadMongoImage(u, body, typ) {
+  var url = apiURL + u;
   return Promise.resolve(
     $.ajax({
       url: url,
@@ -46,6 +49,7 @@ function uploadToAWS(u, body, typ) {
 function checkSessionLogin() {
   var user = sessionStorage.user;
   ownerId = sessionStorage.ownerId;
+  managerId = sessionStorage.managerId;
   if (
     !window.location.href.includes("login.html") &&
     !window.location.href.includes("register.html")
@@ -67,7 +71,7 @@ function signOut() {
   sessionStorage.removeItem("email");
   sessionStorage.removeItem("user");
   sessionStorage.removeItem("role");
-  sessionStorage.removeItem("ownerId")
+  sessionStorage.removeItem("ownerId");
   window.location = "login.html";
 }
 
@@ -117,5 +121,17 @@ function dateThai(strDate) {
   return strDay + " " + strMonthThai + " " + strYear + " เวลา " + time;
 }
 
-document.querySelector(".content-wrapper").style.height = $(window).height() + "px";
-console.log($(window).height())
+
+function urltoFile(url, filename, mimeType) {
+  return fetch(url)
+    .then(function(res) {
+      return res.arrayBuffer();
+    })
+    .then(function(buf) {
+      return new File([buf], filename, { type: mimeType });
+    });
+}
+
+
+document.querySelector(".content-wrapper").style.height =
+  $(window).height() + "px";

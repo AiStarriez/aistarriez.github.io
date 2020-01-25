@@ -53,7 +53,7 @@ function checkValidation(role) {
       console.log("check pass");
       errorMessage.style.display = "none";
       registerOwnerDB(sessionStorage.email, nameOwner.value);
-      sessionStorage.email = "";
+      sessionStorage.removeItem("email");
     } else {
       errorMessage.style.display = "block";
     }
@@ -77,10 +77,10 @@ function checkValidation(role) {
         var ownerID = owner.owner_id;
         var url = "/aws/image?m=" + managerID + "&o=" + ownerID;
         var formdata = new FormData();
-        formdata.append("busboy", managerImage);
+        formdata.append("file", managerImage);
         var typ = "POST";
-        var uploadImageAWS = uploadToAWS(url, formdata, typ);
-        uploadImageAWS.then(
+        var uploadImage = uploadMongoImage(url, formdata, typ);
+        uploadImage.then(
           docs => {
             var managerDetail = {
               name: nameManage.value,

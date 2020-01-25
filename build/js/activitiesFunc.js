@@ -46,10 +46,34 @@ function apiGetactivities(sortBy) {
       }
       activities = docs;
       setActivityUI(activities, sortBy);
+      updateOverDue(activities);
       console.log(docs);
     });
   } else {
+    updateOverDue(activities);
     setActivityUI(activities, sortBy);
+  }
+}
+
+async function updateOverDue(activities) {
+  var currentDate = new Date();
+  for (i in activities) {
+    var acDate = new Date(activities[i].start_date);
+    if (currentDate > acDate && activities[i].status != "เลยกำหนด") {
+      try {
+        var url =
+          "/activities/overdue/" +
+          activities[i].land_id +
+          "?activity=" +
+          activities[i].activity_id;
+        var body = "";
+        var typ = "PUT";
+        var overdueUpdate = await connectToServer(url, body, typ);
+        console.log(overdueUpdate);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 }
 
@@ -115,7 +139,7 @@ function setActivityUI(docs, sortBy) {
       "/" +
       (toDate.getMonth() + 1) +
       "/" +
-     (toDate.getFullYear()+543);
+      (toDate.getFullYear() + 543);
     var activityArr = [];
     var acByDate = [];
     var keyDate = date;
@@ -132,7 +156,7 @@ function setActivityUI(docs, sortBy) {
         "/" +
         (toDate.getMonth() + 1) +
         "/" +
-        (toDate.getFullYear()+543);
+        (toDate.getFullYear() + 543);
 
       if (date == compareDate) {
         activityArr.push(docs[count]);
@@ -185,7 +209,11 @@ function setActivityUI(docs, sortBy) {
       var fullDate = obj.end_date != null ? obj.end_date : obj.start_date;
       var date = new Date(fullDate);
       date =
-        date.getDate() + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear()+543);
+        date.getDate() +
+        "/" +
+        (date.getMonth() + 1) +
+        "/" +
+        (date.getFullYear() + 543);
       var toDetails = document.createElement("a");
       toDetails.href = "activitydetails.html#" + obj.activity_id;
 
@@ -220,13 +248,12 @@ function setActivityUI(docs, sortBy) {
       }
 
       if (localStorage["role"] == '"owner"') {
-       
         rowActivity += setActivityOwnerUI(
           obj.land_name,
           date,
           obj.task,
           obj.status,
-          (obj.activity_id + "&" + obj.land_id),
+          obj.activity_id + "&" + obj.land_id,
           setBG
         );
         mobileCard =
@@ -237,7 +264,7 @@ function setActivityUI(docs, sortBy) {
             date,
             obj.task,
             obj.status,
-            (obj.activity_id + "&" + obj.land_id),
+            obj.activity_id + "&" + obj.land_id,
             setText
           );
       } else {
@@ -246,7 +273,7 @@ function setActivityUI(docs, sortBy) {
           date,
           obj.task,
           obj.status,
-          (obj.activity_id + "&" + obj.land_id),
+          obj.activity_id + "&" + obj.land_id,
           setBG
         );
         mobileCard =
@@ -257,7 +284,7 @@ function setActivityUI(docs, sortBy) {
             date,
             obj.task,
             obj.status,
-            (obj.activity_id + "&" + obj.land_id),
+            obj.activity_id + "&" + obj.land_id,
             setText
           );
       }
@@ -297,10 +324,11 @@ function getLandName() {
   }
 }
 
-$("#emer").click(function() {
+$("#emer-ac-btn").click(function() {
+  console.log("emer click")
   var landId = sessionStorage.landEmergency;
   if (landId) {
-    window.location = "addActivity.html#" + landId;
+    window.location = "addActivity.html?land=" + landId;
   } else {
     $("#modal-error-text").css("display", "block");
   }
@@ -312,9 +340,9 @@ var observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     if (mutation.attributeName === "class") {
       var attributeValue = $(mutation.target).prop(mutation.attributeName);
-      if(!attributeValue.includes('show')){
+      if (!attributeValue.includes("show")) {
         sessionStorage.removeItem("landEmergency");
-      } 
+      }
     }
   });
 });
