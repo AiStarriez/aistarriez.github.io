@@ -1,7 +1,8 @@
 var ownerId;
 var managerId;
-var apiURL = "https://proplante.herokuapp.com";
-// var apiURL = "http://localhost:8080";
+// var apiURL = "http://68.183.230.159:8080";
+var apiURL = "http://localhost:8080";
+
 var headerImage = apiURL + "/images/display/";
 
 var config = {
