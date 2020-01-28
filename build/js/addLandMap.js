@@ -39,6 +39,7 @@ $("#mapCleanBt").click(function() {
 $("#toIndexBtn").click(function() {
   window.location = "index.html";
 });
+
 $("#modal-success").on("hidden.bs.modal", function() {
   window.location = "index.html";
 });

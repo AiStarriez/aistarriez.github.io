@@ -12,13 +12,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     !window.location.href.includes("register.html")
   ) {
     window.location = "login.html";
-  } else if(window.user != null) {
+  } else if (window.user != null) {
     if (role == "manager") {
       console.log(user.phoneNumber);
       checkManagerDB(user.phoneNumber);
     } else if (
-      sessionStorage.email != null ||
-      sessionStorage.email != undefined
+      sessionStorage.user != null ||
+      sessionStorage.user != undefined
     ) {
       window.location = "index.html";
     } else {
@@ -48,7 +48,7 @@ recaptchaVerifier.render().then(function(widgetId) {
 });
 
 $("#owner-login-bt").click(function() {
-  $("#bg-loading").css("display", "block");
+  $("#modal-loading").css("display", "block");
   firebaseAuthenByEmail();
 });
 
@@ -133,10 +133,11 @@ function checkUserDB(email) {
       setCacheData("role", "owner");
       sessionStorage.email = docs.email;
       sessionStorage.user = JSON.stringify(docs);
-      sessionStorage.ownerId = docs._id
+      sessionStorage.ownerId = docs._id;
+      sessionStorage.managerId = docs.manager_id;
       currentURL = window.location.href;
       if (currentURL.includes("login.html")) {
-        $("#bg-loading").css("display", "none");
+        $("#modal-loading").css("display", "none");
         window.location = "index.html";
       }
     },
@@ -164,6 +165,7 @@ function checkManagerDB(managerId) {
       window.user = docs;
       sessionStorage.user = JSON.stringify(docs);
       sessionStorage.ownerId = docs.owner_id;
+      sessionStorage.managerId = managerId;
       setCacheData("role", "manager");
       onSignInSubmit();
     },
@@ -265,7 +267,7 @@ function onVerifyCodeSubmit() {
         var user = result.user;
         console.log(user);
         window.verifyingCode = false;
-        $("#bg-loading").css("display", "block");
+        $("#modal-loading").css("display", "block");
         if (sessionStorage.authenEvent == "manager-register") {
           registerManagerDB();
         }
