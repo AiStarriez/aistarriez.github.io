@@ -171,7 +171,7 @@ async function fileUpload() {
     }
   }
 }
-
+//! preview image
 window.onload = function() {
   //Check File API support
   if (window.File && window.FileList && window.FileReader) {
