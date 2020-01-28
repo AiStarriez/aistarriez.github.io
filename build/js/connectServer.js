@@ -1,6 +1,6 @@
 var ownerId;
 var managerId;
-// var apiURL = "https://rocky-gorge-34614.herokuapp.com";
+// var apiURL = "http://68.183.230.159:8080";
 var apiURL = "http://localhost:8080";
 var headerImage = apiURL + "/images/display/";
 

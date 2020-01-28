@@ -15,7 +15,7 @@ var uploadCount = 0;
 var url = window.location.toString();
 var indexLand = url.indexOf("land=") + 5;
 var indexAc = url.indexOf("activity=") + 9;
-var landId = url.slice(indexLand, indexAc - 10);
+var landId = url.slice(indexLand, indexLand + 24);
 var activityId = indexAc == 8 ? null : url.slice(indexAc, url.length);
 
 var collectedActivityName;
@@ -25,10 +25,8 @@ var collectedAdditionNote;
 var collectedActivityImage = [];
 
 $(window, document).ready(function() {
-  
-  console.log(indexLand)
-  if(indexLand == 4){
-    window.location = "activities.html"
+  if (indexLand == 4) {
+    window.location = "activities.html";
   }
   if (activityId) {
     updateProgressUI();
@@ -37,7 +35,7 @@ $(window, document).ready(function() {
 
 $("#toIndexBtn").click(function() {
   console.log("toIndexBtn clicked");
-  window.location = "activitydetails.html#" + activityId  + "&" + landId;
+  window.location = "activitydetails.html#" + activityId + "&" + landId;
 });
 
 function clearField() {
@@ -50,11 +48,49 @@ function clearField() {
 }
 
 function postToDatabase() {
+  var getDate = activityDate.value.split("/");
+  getDate[2] = getDate[2] - 543;
   collectedActivityName = activityName.value;
-  collectedActivityDate = activityDate.value;
+  collectedActivityDate = new Date(`${getDate[2]}-${getDate[1]}-${getDate[0]}`)
   collectedActivityStatus = activityStatus.value;
   collectedAdditionNote = additionNote.value;
-  fileUpload();
+  var elementArray = [activityName, activityDate, activityStatus];
+  var inputPass = checkValidityInput(elementArray);
+  if (inputPass) {
+    fileUpload();
+  }
+}
+
+function checkValidityInput(elementArray) {
+  var pass = true;
+  for (i in elementArray) {
+    var errorMessage = document.createElement("p");
+    var br = document.createElement("br");
+    errorMessage.style.color = "red";
+    errorMessage.innerHTML = "*กรุณากรอกช่องนี้";
+    if (!elementArray[i].value) {
+      elementArray[i].style.borderColor = "red";
+      elementArray[i].parentNode.appendChild(br);
+      elementArray[i].parentNode.appendChild(errorMessage);
+      pass = false;
+    }
+  }
+
+  // if (!collectedActivityName) {
+  //   errorMessage.innerHTML = "*กรุณากรอกกิจกรรม";
+  //   activityName.style.borderColor = "red";
+  //   activityName.parentNode.appendChild(errorMessage);
+  //   errorElement = errorMessage.parentNode.lastChild;
+  //   pass = false;
+  // } else {
+  //   activityName.style.borderColor = "#CDCDCD";
+  //   if (activityName.parentNode.lastChild != activityName) {
+  //     activityName.parentNode.removeChild(activityName.parentNode.lastChild);
+  //   }
+
+  // }
+  console.log(pass);
+  return pass;
 }
 
 function emergencyAPI() {
@@ -89,6 +125,7 @@ function emergencyAPI() {
 
 function updateProgressAPI() {
   var url = "/activities/" + landId + "?activity=" + activityId;
+  console.log("collectedActivityDate" , collectedActivityDate)
   var body = JSON.stringify({
     task: collectedActivityName,
     images: collectedActivityImage,
@@ -109,8 +146,6 @@ function updateProgressAPI() {
 }
 
 async function fileUpload() {
-  console.log(pictureArray.length);
-  console.log("uploadCount", uploadCount);
   if (uploadCount < pictureArray.length) {
     var url = "/images/upload?land=" + landId;
     var formdata = new FormData();
@@ -120,7 +155,6 @@ async function fileUpload() {
     uploadImage.then(
       docs => {
         uploadCount++;
-        console.log(docs);
         collectedActivityImage.push(docs);
         fileUpload();
       },
@@ -159,9 +193,9 @@ window.onload = function() {
           var ctx = canvas.getContext("2d");
           var img = new Image();
           img.onload = function() {
-            canvas.width = 800;
+            canvas.width = 500;
             canvas.height = canvas.width * (img.height / img.width);
-            var controlSize = img.width >= 800 ? 0.5 : 1;
+            var controlSize = img.width >= 500 ? 1 : 1;
             // step 1 - resize to 50%
             var oc = document.createElement("canvas"),
               octx = oc.getContext("2d");
@@ -219,6 +253,10 @@ function updateProgressUI() {
   }
   activityName.value = updateActivity.task;
   activityName.disabled = true;
+  activityDate.value =
+    updateActivity.end_date != null
+      ? updateActivity.end_date
+      : updateActivity.start_date;
   additionNote.value = updateActivity.notes;
 
   for (i in updateActivity.images) {
@@ -232,6 +270,7 @@ function toImageFile(canvas, filename) {
   var timestamp = Date.now();
   var filename = filename != null ? filename : timestamp + ".png";
   urltoFile(canvas, filename, "image/png").then(function(file) {
+    console.log(file)
     pictureArray.push(file);
   });
   return filename;

@@ -59,7 +59,8 @@ async function updateOverDue(activities) {
   var currentDate = new Date();
   for (i in activities) {
     var acDate = new Date(activities[i].start_date);
-    if (currentDate > acDate && activities[i].status != "เลยกำหนด") {
+    acDate.setDate(acDate.getDate() + 6)
+    if (currentDate > acDate && activities[i].status != "เสร็จแล้ว") {
       try {
         var url =
           "/activities/overdue/" +
