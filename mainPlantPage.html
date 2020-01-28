@@ -46,12 +46,13 @@
         <li class="nav-item" id="hamburger">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item" id="forButton">
-          <div id="exportReportMobile">
-            <button class="btn btn-primary" type="button" id="exportCSVBtn">ส่งออกรายงาน .csv</button>
-          </div>
-        </li>
 
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button id="new-plant-btn" class="btn bg-olive bt-progressive-nav" data-toggle="modal"
+            data-target="#modal-add-plant">เพิ่มพืช</button>
+        </li>
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -59,21 +60,27 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="#" class="brand-link">
-        <img src="build/img/icon.png" alt="Proplante logo" class="brand-image img-circle elevation-3"
-          style="opacity: .8">
-        <span class="brand-text font-weight-bold">PROPLANTE</span>
+      <a id="sidebar-brand-logo" href="index.html" class="brand-link">
+        <table>
+          <tr>
+            <td>
+              <img src="build/img/icon.png" width="50px;" />
+            </td>
+            <td id="band-name">
+              &nbsp;&nbsp;PROPLANTE
+            </td>
+          </tr>
+        </table>
       </a>
-
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <!-- <div class="image">
-          <i ></i>
-        </div> -->
+            <i ></i>
+          </div> -->
           <div class="info">
-            <a href="#" class="d-block">ยินดีต้อนรับ !</a>
+            <p id="nav-user-name" href="#" class="d-block">ยินดีต้อนรับ </p>
           </div>
         </div>
 
@@ -81,9 +88,9 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+                 with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarLand">
+              <a href="index.html" class="nav-link" id="navBarLand">
                 <i class="fas fa-map-marked-alt"></i>
                 <p>
                   &nbsp;&nbsp; ที่ดิน
@@ -91,7 +98,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarSchedule">
+              <a href="calendar.html" class="nav-link" id="navBarSchedule">
                 <i class="fas fa-calendar-alt"></i>
                 <p>
                   &nbsp;&nbsp; ตารางงาน
@@ -115,7 +122,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link active" id="navBarManager">
+              <a href="#" class="nav-link" id="navBarManager">
+
                 <i class="fas fa-users"></i>
                 <p>
                   &nbsp;&nbsp;&nbsp; ผู้ดูแล
@@ -123,16 +131,20 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarPlant">
+              <a href="%id=456" class="nav-link active" id="navBarPlant">
                 <i class="fas fa-leaf"></i>
                 <p>
                   &nbsp;&nbsp; จัดการพืช
                 </p>
               </a>
             </li>
-            <li class="nav-item " id="nav-signout">
-              <a href="#" class="nav-link text-danger">
-                <i class="fas fa-sign-out-alt"></i>
+          </ul>
+        </nav>
+        <nav class="mt-2" style="position: absolute; bottom:5%">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item " id="nav-signout" onclick="signOut()">
+              <a href="#logout" class="nav-link text-danger" id="nav-signout">
+                <i class="fas fa-sign-out-alt" id="nav-signout"></i>
                 <p>
                   &nbsp;&nbsp; ออกจากระบบ
                 </p>
@@ -145,19 +157,34 @@
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
-
     </aside>
+
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <section class="content-header">
+      <section class="content-header managers-main">
         <div class="container-fluid">
-          <div id="titleDiv">
-            <a href="" id="mainPlantPage" style="display:inline">จัดการพืช</a>
+          <table id="header-mobile">
+            <tr class="text-success">
+              <td>
+                <h4 class="text-success">จัดการพืช</h4>
+              </td>
+            </tr>
+          </table>
+
+          <div id="bar-header">
+            <div class="bar-col-header">
+              <h4 class="text-success">จัดการพืช</h4>
+            </div>
+            <div class="bar-col-header" style="text-align: right;">
+              <button id="new-plant-btn" class="btn bg-olive bt-custom-hrader" data-toggle="modal"
+                data-target="#modal-add-plant">เพิ่มพืช</button>
+            </div>
           </div>
+
         </div>
         <hr>
-        <br>
+        <!-- /.container-fluid -->
       </section>
 
 
@@ -165,7 +192,7 @@
       <section class="content">
         <div class="container-fluid">
 
-          <div id="plantCard" class="row"></div>
+          <div id="plant-div" class="row"></div>
           <!-- /.container-fluid -->
         </div>
       </section>
@@ -182,11 +209,54 @@
     <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+    <!-- MODAL -->
+    <div class="modal fade" id="modal-add-plant" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body" style="text-align: center;">
+            <p>
+              เพิ่มพืชใหม่
+            </p>
+            <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <form role="form">
+              <div class="form-group">
+                <p for="inputPlantName">ชื่อพืช</p>
+                <input type="text" class="form-control" id="plantName">
+              </div>
+              <div id="addAdditionActivity">
+                <form role="form">
+                  <div class="form-group">
+                    <p for="activityPicUpload">อัปโหลดรูปภาพ</p>
+                    <div class="input-group">
+                      <input id="plantPicUpload" type="file" multiple />
+                      <output id="result"></output>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </form>
 
+
+            <div style="width: 100%; text-align:right;">
+              <button id="save-plant-modal-btn" class="btn bg-olive" onclick="postNewPlants()">&nbsp;บันทึก&nbsp;</button>
+            </div>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- MODAL -->
     <!-- PROPLANTE -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
-      async defer></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+    <!-- firebase -->
     <script src="build/js/connectServer.js"></script>
     <script src="build/js/navBarLinks.js"></script>
     <script src="build/js/mainPlantPage.js"></script>
@@ -229,9 +299,6 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- firebase -->
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="build/js/firebaseAuthen.js"></script>
 
 
 

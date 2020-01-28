@@ -1,7 +1,7 @@
 var ownerId;
 var managerId;
-// var apiURL = "https://rocky-gorge-34614.herokuapp.com";
-var apiURL = "http://localhost:8080";
+var apiURL = "https://proplante.herokuapp.com";
+// var apiURL = "http://localhost:8080";
 var headerImage = apiURL + "/images/display/";
 
 var config = {
