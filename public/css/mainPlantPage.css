@@ -1,0 +1,26 @@
+.body-plant{
+background-color:rgba(75, 75, 75, 0.247)
+}
+.c-plant{
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  background-image: url("https://gdb.voanews.com/24A4525A-A09E-42FF-A1CE-B0C291CE5325_cx0_cy11_cw0_w408_r1_s.jpg");
+}
+.plant-name{
+  cursor: pointer;
+  position: absolute;
+  align-self: center;
+  width: 200px;
+  margin-top: 90px;
+  text-align: center;
+  color: white;
+}
+.cover-black{
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  cursor: pointer;
+  background-color:rgba(63, 63, 63, 0.678);
+  border-radius: 10px;
+}

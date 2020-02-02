@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Proplante | ผู้ดูแล</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="admin-lte/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="admin-lte/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="admin-lte/plugins/summernote/summernote-bs4.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- PROPLANTE -->
+  <link rel="stylesheet" href="css/circleImageProfile.css" />
+  <link rel="stylesheet" href="css/mainManagerPage.css">
+  <link rel="stylesheet" href="css/registerStyle.css">
+  <link rel="stylesheet" href="css/loader-1.css">
+  <link rel="stylesheet" href="css/allelements.css">
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="topnav">
+      <ul class="navbar-nav">
+        <li class="nav-item" id="hamburger">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" aria-expanded="true">
+            <i class="fas fa-grip-vertical"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a id="new-manager-btn" class="dropdown-item text-success" data-target="#modal-manager"
+              style="display: none;" aria-hidden="true" data-toggle="modal">
+              <i class=" fas fa-user-plus"></i> <span id="tetx-btn-header">เพิ่มผู้ดูแล</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a id="edit-manager-btn" class="dropdown-item text-warning">
+              <i class="fas fa-user-edit"></i> แก้ไขข้อมูล
+            </a>
+            <div class="dropdown-divider"></div>
+            <a id="del-manager-btn" class="dropdown-item text-danger" data-toggle="modal" data-target="#modal-manager"
+              aria-hidden="true">
+              <i class="fas fa-user-times"></i> ลบผู้ดูแล
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-light-primary elevation-4">
+      <!-- Brand Logo -->
+      <a id="sidebar-brand-logo" href="index.html" class="brand-link">
+        <table>
+          <tr>
+            <td>
+              <img src="images/icon.png" width="50px;" />
+            </td>
+            <td id="band-name">
+              &nbsp;&nbsp;PROPLANTE
+            </td>
+          </tr>
+        </table>
+      </a>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <!-- <div class="image">
+            <i ></i>
+          </div> -->
+          <div class="info">
+            <p id="nav-user-name" href="#" class="d-block">ยินดีต้อนรับ </p>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="index.html" class="nav-link" id="navBarLand">
+                <i class="fas fa-map-marked-alt"></i>
+                <p>
+                  &nbsp;&nbsp; ที่ดิน
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="calendar.html" class="nav-link" id="navBarSchedule">
+                <i class="fas fa-calendar-alt"></i>
+                <p>
+                  &nbsp;&nbsp; ตารางงาน
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" id="navBarActivity">
+                <i class="fas fa-list-alt"></i>
+                <p>
+                  &nbsp;&nbsp; กิจกรรมทั้งหมด
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" id="navBarReport">
+                <i class="fas fa-chart-bar"></i>
+                <p>
+                  &nbsp;&nbsp; รายงานผล
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link active" id="navBarManager">
+                <i class="fas fa-users"></i>
+                <p>
+                  &nbsp;&nbsp;&nbsp; ผู้ดูแล
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="%id=456" class="nav-link" id="navBarPlant">
+                <i class="fas fa-leaf"></i>
+                <p>
+                  &nbsp;&nbsp; จัดการพืช
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav class="mt-2" style="position: absolute; bottom:50px">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item " id="nav-signout" onclick="signOut()">
+              <a href="#logout" class="nav-link text-danger" id="nav-signout">
+                <i class="fas fa-sign-out-alt" id="nav-signout"></i>
+                <p>
+                  &nbsp;&nbsp; ออกจากระบบ
+                </p>
+              </a>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content-header managers-main">
+        <div class="container-fluid">
+          <!-- !! -->
+          <nav class="navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav text-success">
+              <li id="header-managers-list">
+                <h4>ผู้ดูแล</h4>
+              </li>
+              <li id="header-manager-detail">
+                <h4>
+                  <span class="max-v-header" onclick="history.back()" style="cursor: pointer;">ผู้ดูแล&nbsp;&nbsp;<i
+                      class="fa fa-angle-right"></i></span>
+                  <span class="mobile-v-header" onclick="history.back()" style="cursor: pointer;"><i
+                      class="fa fa-arrow-left"></i></span>
+                </h4>
+              </li>
+              <li>
+                <h4 id="extend-header">
+                </h4>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto right-header-btn">
+              <li> <button id="new-manager-btn" class="btn bg-olive bt-custom-hrader" data-toggle="modal"
+                  data-target="#modal-manager" style="display: none;" aria-hidden="true">เพิ่มผู้ดูแล</button></li>
+              <li> <button id="edit-manager-btn" class="btn bg-olive bt-custom-hrader" style="display: none;"
+                  aria-hidden="true">แก้ไขข้อมูล</button></li>
+              <li id="dd-header" class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" aria-expanded="true">
+                  <i class="fas fa-grip-vertical"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                  <a id="new-manager-btn" class="dropdown-item text-success" data-target="#modal-manager"
+                    style="display: none;" aria-hidden="true" data-toggle="modal">
+                    <i class=" fas fa-user-plus"></i> <span id="tetx-btn-header">เพิ่มผู้ดูแล</span>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a id="edit-manager-btn" class="dropdown-item text-warning">
+                    <i class="fas fa-user-edit"></i> แก้ไขข้อมูล
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a id="del-manager-btn" class="dropdown-item text-danger" data-toggle="modal"
+                    data-target="#modal-manager" aria-hidden="true">
+                    <i class="fas fa-user-times"></i> ลบผู้ดูแล
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- !! -->
+          <hr>
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div id="managers-div"></div>
+          <div class="row content-manager-detail">
+          </div>
+          <div id="manager-register-ui" style="display:none;">
+            <div class="input-group mb-3">
+              <div id="profile">
+                <div class="dashes"></div>
+                <label>คลิกเพื่อเลือกรูปภาพ หรือลากรูปภาพมาวางที่นี่</label>
+              </div>
+              <input type="file" id="mediaFile" />
+            </div>
+            <div class="input-group mb-3">
+              <input required id="name-manager-input" type="text" class="form-control" placeholder="ชื่อ" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input required id="phone-manager-input" type="text" class="form-control"
+                data-inputmask="'mask': ['999-999-9999']" data-mask="" im-insert="true" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-phone"></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <textarea id="addres-manager-input" class="form-control" rows="3" placeholder="ที่อยู่"></textarea>
+            </div>
+            <div class="row" style="margin-bottom:5vh">
+              <div class="col-md-6" style="width:50%; text-align:left">
+                <button id="cancel-edit-btn" class="btn btn-outline-danger"
+                  onclick="window.history.back();">ยกเลิก</button>
+              </div>
+              <div class="col-md-6" style="width:50%; text-align:right">
+                <button id="save-edit-btn" class="btn bg-olive">บันทึก</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+    </div>
+  </div>
+  <!-- ./wrapper -->
+  <!-- MODAL -->
+  <div class="modal fade" id="modal-manager" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body" style="text-align: center;">
+          <div id="modal-created-code">
+            <p>
+              รหัสผู้ดูแล
+            </p>
+            <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <h1 id="manager-code" class="text-primary"></h1>
+            <p>นำรหัสนี้ให้ผู้ดูแลสวนของท่านเพื่อใช้ในการลงทะเบียน</p>
+            <div style="width: 100%; text-align:right;">
+              <button id="close-gencode-modal-btn" class="btn bg-olive" data-dismiss="modal">&nbsp;ปิด&nbsp;</button>
+            </div>
+          </div>
+          <div id="modal-del-manager" style="display: none">
+            <div id="warning-del-body">
+              <h3 class="text-danger">คุณต้องการลบผู้ดูแลนี้ใช่หรือไม่</h3>
+              <hr>
+              <p>โปรดทราบว่าหากคุณดำเนินการต่อ คุณจะไม่สามารถกู้คืนข้อมูลของบุคคลนี้ได้
+                คุณยืนยันที่จะดำเนินการต่อหรือไม่?</p>
+            </div>
+            <div class="row">
+              <div class="col-md-6" style="width:50%;text-align: left;">
+                <button id="del-manager-conf" class="btn bg-olive">&nbsp;ยืนยัน&nbsp;</button>
+              </div>
+              <div class="col-md-6" style="text-align:right; width:50%">
+                <button id="cancel-form" data-dismiss="modal" class="btn bg-danger">&nbsp;ยกเลิก&nbsp;</button>
+              </div>
+            </div>
+          </div>
+          <div id="moda-response">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL -->
+
+  <!-- PROPLANTE -->
+  <!-- firebase -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+  <!-- firebase -->
+  <script src="js/connectServer.js"></script>
+  <script src="js/navBarLinks.js"></script>
+  <script src="js/mutilplePageunction.js"></script>
+  <script src="js/managersFunc.js"></script>
+
+
+  <!-- jQuery -->
+  <script src="admin-lte/plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <!-- Bootstrap 4 -->
+  <script src="admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- JQVMap -->
+  <script src="admin-lte/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="admin-lte/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="admin-lte/plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="admin-lte/plugins/moment/moment.min.js"></script>
+  <script src="admin-lte/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- InputMask -->
+  <script src="admin-lte/plugins/moment/moment.min.js"></script>
+  <script src="admin-lte/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+  <script>
+    $('[data-mask]').inputmask()
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+  <!-- Summernote -->
+  <script src="admin-lte/plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="admin-lte/dist/js/adminlte.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="admin-lte/dist/js/demo.js"></script>
+
+
+</body>
+
+</html>
