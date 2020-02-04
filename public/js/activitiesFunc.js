@@ -7,7 +7,7 @@ var filterByname = document.getElementById("by-name");
 var filterBydate = document.getElementById("by-date");
 var landNameArr = [];
 var activities;
-sessionStorage.removeItem("landEmergency");
+localStorage.removeItem("landEmergency");
 
 // filterBydate.addEventListener("click", function(e) {
 //   window.sortBy = e.target.id;
@@ -351,7 +351,7 @@ function getLandName() {
       return function() {
         $("#modal-error-text").css("display", "none");
         landNameFilter.innerHTML = arg.name;
-        sessionStorage.landEmergency = arg.id;
+        localStorage.landEmergency = arg.id;
       };
     })(landNameArr[i]);
   }
@@ -359,7 +359,7 @@ function getLandName() {
 
 $("#emer-ac-btn").click(function() {
   console.log("emer click");
-  var landId = sessionStorage.landEmergency;
+  var landId = localStorage.landEmergency;
   if (landId) {
     window.location = "addActivity.html?land=" + landId;
   } else {
@@ -374,7 +374,7 @@ var observer = new MutationObserver(function(mutations) {
     if (mutation.attributeName === "class") {
       var attributeValue = $(mutation.target).prop(mutation.attributeName);
       if (!attributeValue.includes("show")) {
-        sessionStorage.removeItem("landEmergency");
+        localStorage.removeItem("landEmergency");
       }
     }
   });

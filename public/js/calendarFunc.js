@@ -102,7 +102,7 @@ $(function() {
   }
 
   function setCalendarDetails(docs) {
-    sessionStorage.acByDate = docs;
+    localStorage.acByDate = docs;
     activityDetail(docs);
 
     for (let i = 0; i < docs.length; i++) {

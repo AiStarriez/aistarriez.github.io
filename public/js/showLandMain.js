@@ -10,7 +10,7 @@ var canvasArr = [];
 var couterMarker = 0;
 var colorPieArr = ["#F76647", "#319CBE", "#40253D", "#0A3B9A", "#F2404C"];
 var mapPolyPieColor = [];
-sessionStorage.removeItem("polygonEditLand");
+localStorage.removeItem("polygonEditLand");
 var contentString =
   '<div><p>ทดสอบ</p><a href="addLandPage.html">แก้ไข</a></div>';
 
@@ -137,9 +137,9 @@ async function getPolygonLands(landArr) {
     var polygonMain = connectToServer(url, body, "POST");
     polygonMain.then(poly => {
       console.log(poly);
-      setCacheData("poly-lands-main", poly);
-      createMapComponent(poly, cacheLands);
-      drawingPolygonLands(poly, landArr);
+      setCacheData("poly-lands-main", poly.polygonLands);
+      createMapComponent(poly.polygonLands, cacheLands);
+      drawingPolygonLands(poly.polygonLands, landArr);
     }),
       function(e) {
         console.log(e);
@@ -169,7 +169,7 @@ function getPlantsActivity(cacheLandsIndex, activityID) {
 
 function createMapComponent(poly, cacheLands) {
   mapPolyPieColor = [];
-  var polygonLands = poly.polygonLands;
+  var polygonLands = poly;
   var l;
   for (let i = 0; i < polygonLands.length; i++) {
     for (let j = 0; j < cacheLands.length; j++) {
@@ -227,7 +227,7 @@ function createMapComponent(poly, cacheLands) {
 }
 
 async function drawingPolygonLands(poly, landArr) {
-  var polygonLands = poly.polygonLands;
+  var polygonLands = poly;
   var bounds = new google.maps.LatLngBounds();
   var l;
   if (landArr == null) {
@@ -259,7 +259,7 @@ async function drawingPolygonLands(poly, landArr) {
               var context = "<div>" + mapPolyPieColor[i].popup + "</div>";
               infowindow.setContent(context);
               infowindow.open(map, marker);
-              sessionStorage.polygonEditLand = JSON.stringify(
+              localStorage.polygonEditLand = JSON.stringify(
                 marker.description
               );
             };

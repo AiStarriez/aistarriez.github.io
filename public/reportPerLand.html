@@ -4,34 +4,22 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Proplante | รายงาน</title>
+  <title>Proreporte | รายงาน</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="admin-lte/plugins/jqvmap/jqvmap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="admin-lte/plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="admin-lte/plugins/summernote/summernote-bs4.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+ <!-- Font Awesome -->
+ <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
+ <!-- Ionicons -->
+ <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+ <!-- overlayScrollbars -->
+ <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
+ <!-- Google Font: Source Sans Pro -->
+ <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-
-  <!-- PROPLANTE -->
-  <link rel="stylesheet" href="css/allelements.css">
+  <!-- PROreportE -->
   <link rel="stylesheet" href="css/reportPerLand.css">
+  <link rel="stylesheet" href="css/addActivityPage.css">
+  <link rel="stylesheet" href="css/allelements.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </head>
@@ -39,20 +27,27 @@
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
 
-    <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="topnav">
+      <!--  -->
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item" id="hamburger">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
-
-
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" aria-expanded="true">
+            <i class="fas fa-grip-vertical"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a id="export-csv-btn" class="dropdown-item text-success" data-toggle="modal">
+              <i class="fas fa-seedling mr-2"></i> <span id="tetx-btn-header">ส่งออกไฟล์ .csv</span>
+            </a>
+          </div>
+        </li>
       </ul>
     </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-primary elevation-4">
       <!-- Brand Logo -->
       <a id="sidebar-brand-logo" href="index.html" class="brand-link">
@@ -83,9 +78,9 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+                 with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarLand">
+              <a href="index.html" class="nav-link" id="navBarLand">
                 <i class="fas fa-map-marked-alt"></i>
                 <p>
                   &nbsp;&nbsp; ที่ดิน
@@ -93,7 +88,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarSchedule">
+              <a href="calendar.html" class="nav-link" id="navBarSchedule">
                 <i class="fas fa-calendar-alt"></i>
                 <p>
                   &nbsp;&nbsp; ตารางงาน
@@ -118,6 +113,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link" id="navBarManager">
+
                 <i class="fas fa-users"></i>
                 <p>
                   &nbsp;&nbsp;&nbsp; ผู้ดูแล
@@ -132,11 +128,8 @@
                 </p>
               </a>
             </li>
-
           </ul>
-
         </nav>
-        <!-- /.sidebar-menu -->
         <nav class="mt-2" style="position: absolute; bottom:50px">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item " id="nav-signout" onclick="signOut()">
@@ -147,33 +140,43 @@
                 </p>
               </a>
             </li>
-
           </ul>
-
         </nav>
+        <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
-
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <section class="content-header managers-main">
-        <div class="container-fluid">
-          <table id="header-mobile">
-            <tr class="text-success">
-              <td>
-                <h4 class="text-success">รายงานที่ดิน</h4>
-              </td>
-            </tr>
-          </table>
-
-          <div id="bar-header">
-            <div class="bar-col-header">
-              <h4 class="text-success">รายงานที่ดิน</h4>
-            </div>
-          </div>
-        </div>
+        <nav class="navbar navbar-expand navbar-white navbar-light">
+          <ul class="navbar-nav text-success">
+            <li id="header-report-list">
+              <h4>
+                รายงานที่ดิน
+              </h4>
+            </li>
+            <li id="header-report-detail">
+              <h4>
+                <span class="mobile-v-header" onclick="history.back()" style="cursor: pointer;"><i
+                    class="fa fa-arrow-left"></i></span>
+                <span class="max-v-header" onclick="history.back()" style="cursor: pointer;">รายงานที่ดิน&nbsp;&nbsp;<i
+                    class="fa fa-angle-right"></i></span>
+              </h4>
+            </li>
+            <li>
+              <h4 id="extend-header">
+              </h4>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto right-header-btn">
+            <li class="nav-item">
+              <button id="export-csv-btn" class="btn bg-olive" data-toggle="modal"><span
+                  id="tetx-btn-header">ส่งออกไฟล์ .csv</span></button>
+            </li>
+          </ul>
+        </nav>
         <hr>
         <!-- /.container-fluid -->
       </section>
@@ -181,9 +184,9 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-
-          <div id="reportPerLandDiv" class="row"></div>
-          <!-- /.container-fluid -->
+          <div id="container-report-list"></div>
+          <div id="container-report-perland"></div>
+          <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center=16.475000202974, 102.832854364312&zoom=17&path=color:0xff0000ff%7Cweight:0%7Cfillcolor:0x0000ff80%7C16.475000202974,102.832854364312%7C16.4750207796696,102.833927247918%7C16.4741514123777,102.83394870559%7C16.4740742494118,102.832870457566&size=300x300&maptype=satellite&key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg">            /.container-fluid -->
         </div>
       </section>
       <!-- /.content -->
@@ -195,56 +198,24 @@
   </div>
   <!-- ./wrapper -->
 
-  <!-- PROPLANTE -->
+  <!-- PROreportE -->
   <!-- firebase -->
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
   <!-- firebase -->
   <script src="js/connectServer.js"></script>
+  <script src="js/mutilplePageunction.js"></script>
   <script src="js/reportPerLand.js"></script>
   <script src="js/navBarLinks.js"></script>
 
-
-
-
-  <!-- jQuery -->
   <script src="admin-lte/plugins/jquery/jquery.min.js"></script>
-  <!-- jQuery UI 1.11.4 -->
-  <script src="admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-    $.widget.bridge('uibutton', $.ui.button)
-  </script>
   <!-- Bootstrap 4 -->
   <script src="admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- ChartJS -->
-  <script src="admin-lte/plugins/chart.js/Chart.min.js"></script>
-  <!-- Sparkline -->
-  <script src="admin-lte/plugins/sparklines/sparkline.js"></script>
-  <!-- JQVMap -->
-  <script src="admin-lte/plugins/jqvmap/jquery.vmap.min.js"></script>
-  <script src="admin-lte/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-  <!-- jQuery Knob Chart -->
-  <script src="admin-lte/plugins/jquery-knob/jquery.knob.min.js"></script>
-  <!-- daterangepicker -->
-  <script src="admin-lte/plugins/moment/moment.min.js"></script>
-  <script src="admin-lte/plugins/daterangepicker/daterangepicker.js"></script>
-  <!-- Tempusdominus Bootstrap 4 -->
-  <script src="admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!-- Summernote -->
-  <script src="admin-lte/plugins/summernote/summernote-bs4.min.js"></script>
-  <!-- overlayScrollbars -->
-  <script src="admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="admin-lte/dist/js/adminlte.js"></script>
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="admin-lte/dist/js/pages/dashboard.js"></script>
+  <script src="admin-lte/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="admin-lte/dist/js/demo.js"></script>
-
-
-
 
 
 </body>
