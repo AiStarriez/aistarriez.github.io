@@ -3,7 +3,7 @@ $(window).bind("hashchange", function() {
 });
 
 firebase.auth().onAuthStateChanged(function(user) {
-  var role = sessionStorage.role;
+  var role = localStorage.role;
   window.user = user;
 
   if (
@@ -17,8 +17,8 @@ firebase.auth().onAuthStateChanged(function(user) {
       console.log(user.phoneNumber);
       checkManagerDB(user.phoneNumber);
     } else if (
-      sessionStorage.user != null ||
-      sessionStorage.user != undefined
+      localStorage.user != null ||
+      localStorage.user != undefined
     ) {
       window.location = "index.html";
     } else {
@@ -32,7 +32,7 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
   {
     size: "invisible",
     callback: function(response) {
-      if (sessionStorage.authenEvent == "manager-register") {
+      if (localStorage.authenEvent == "manager-register") {
         onSignInSubmit();
       } else {
         var phoneNumber = getPhoneNumberFromUserInput();
@@ -80,7 +80,7 @@ function checkHash() {
 
 //login with email
 function firebaseAuthenByEmail() {
-  sessionStorage.authenEvent = "login";
+  localStorage.authenEvent = "login";
   var email = document.querySelector("#email-input-owner").value;
   var password = document.querySelector("#pass-input-owner").value;
   email = email.replace(/\s/g, "");
@@ -102,7 +102,7 @@ function firebaseAuthenByEmail() {
 
 //google login
 function firebaseAuthenByGoogle() {
-  sessionStorage.authenEvent = "loginGoogle";
+  localStorage.authenEvent = "loginGoogle";
   var provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope("profile");
   provider.addScope("email");
@@ -128,7 +128,7 @@ function createAccountOwner(email, password, name) {
 
 //sign out
 function signOut() {
-  sessionStorage.removeItem("email");
+  localStorage.removeItem("email");
   firebase.auth().signOut();
 }
 //------------------------------------
@@ -141,10 +141,10 @@ function checkUserDB(email) {
   loginDB.then(
     docs => {
       setCacheData("role", "owner");
-      sessionStorage.email = docs.email;
-      sessionStorage.user = JSON.stringify(docs);
-      sessionStorage.ownerId = docs._id;
-      sessionStorage.managerId = docs.manager_id;
+      localStorage.email = docs.email;
+      localStorage.user = JSON.stringify(docs);
+      localStorage.ownerId = docs._id;
+      localStorage.managerId = docs.manager_id;
       currentURL = window.location.href;
       if (currentURL.includes("login.html")) {
         $("#modal-loading").css("display", "none");
@@ -152,8 +152,8 @@ function checkUserDB(email) {
       }
     },
     function(e) {
-      if (sessionStorage.authenEvent == "loginGoogle") {
-        sessionStorage.email = window.user.email;
+      if (localStorage.authenEvent == "loginGoogle") {
+        localStorage.email = window.user.email;
         window.location = "register.html";
       } else {
         signOut();
@@ -174,9 +174,9 @@ function checkManagerDB(managerId) {
     docs => {
       $("#error-phone").css("display", "none");
       window.user = docs;
-      sessionStorage.user = JSON.stringify(docs);
-      sessionStorage.ownerId = docs.owner_id;
-      sessionStorage.managerId = managerId;
+      localStorage.user = JSON.stringify(docs);
+      localStorage.ownerId = docs.owner_id;
+      localStorage.managerId = managerId;
       setCacheData("role", "manager");
       onSignInSubmit();
     },
@@ -196,7 +196,7 @@ function registerOwnerDB(email, name) {
   var regisDB = connectToServer(u, JSON.stringify(body), typ);
   regisDB.then(
     docs => {
-      if (sessionStorage.authenEvent == "loginGoogle") {
+      if (localStorage.authenEvent == "loginGoogle") {
         window.location = "index.html";
       }
       signOut();
@@ -218,7 +218,7 @@ function registerManagerDB() {
   var addrress = document.getElementById("addres-manager-input");
   var base64IMG = img.slice(4, -1).replace(/"/g, "");
   var url = "/managers/register/" + "eV5F9JZB";
-  var body = sessionStorage.mDetail;
+  var body = localStorage.mDetail;
   console.log(body);
   var typ = "POST";
   var managerRegis = connectToServer(url, body, typ);
@@ -240,7 +240,7 @@ function onSignInSubmit() {
   phoneNumber = phoneNumber.trim();
   phoneNumber = phoneNumber.replace(/-/g, "");
   var formatPhone = "+66" + phoneNumber.substr(1, 10);
-  if (window.user || sessionStorage.authenEvent == "manager-register") {
+  if (window.user || localStorage.authenEvent == "manager-register") {
     console.log("user", window.user);
     window.singingIn = true;
     var phoneNumber = formatPhone;
@@ -279,7 +279,7 @@ function onVerifyCodeSubmit() {
         console.log(user);
         window.verifyingCode = false;
         $("#modal-loading").css("display", "block");
-        if (sessionStorage.authenEvent == "manager-register") {
+        if (localStorage.authenEvent == "manager-register") {
           registerManagerDB();
         }
       })

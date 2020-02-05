@@ -145,8 +145,8 @@ async function run() {
   var activityData = setActivityData(activitiesArr);
   setBodyCardDetails(activityData);
   setBodyCardImages(activityData);
-  sessionStorage.updateActivity = JSON.stringify(activityData);
-  sessionStorage.landHeader = landHeader.innerHTML;
+  localStorage.updateActivity = JSON.stringify(activityData);
+  localStorage.landHeader = landHeader.innerHTML;
 }
 
 run()

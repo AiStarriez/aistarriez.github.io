@@ -13,7 +13,7 @@ var managerImage;
 selectRoleUI();
 
 $("#manager-login-bt").click(function() {
-  checkValidation(sessionStorage.role);
+  checkValidation(localStorage.role);
 });
 
 document
@@ -21,12 +21,12 @@ document
   .addEventListener("keyup", checkConfirmPassword);
 
 function selectRoleUI() {
-  var role = sessionStorage.role;
-  if (sessionStorage.authenEvent == "loginGoogle") {
+  var role = localStorage.role;
+  if (localStorage.authenEvent == "loginGoogle") {
     console.log("Google");
     $("#owner-register-ui").css("display", "block");
     $("#regis-from-email").css("display", "none");
-    sessionStorage.role = "owner-gg";
+    localStorage.role = "owner-gg";
   } else if (role == "manager") {
     $("#manager-register-ui").css("display", "block");
   } else {
@@ -52,8 +52,8 @@ function checkValidation(role) {
     if (nameOwner.checkValidity()) {
       console.log("check pass");
       errorMessage.style.display = "none";
-      registerOwnerDB(sessionStorage.email, nameOwner.value);
-      sessionStorage.removeItem("email");
+      registerOwnerDB(localStorage.email, nameOwner.value);
+      localStorage.removeItem("email");
     } else {
       errorMessage.style.display = "block";
     }
@@ -65,7 +65,7 @@ function checkValidation(role) {
       addressManage.checkValidity() &&
       window.managerimg
     ) {
-      sessionStorage.authenEvent = "manager-register";
+      localStorage.authenEvent = "manager-register";
       errorMessage.style.display = "none";
       var managerID = codeManage.value;
       var getOwner = connectToServer(
@@ -90,7 +90,7 @@ function checkValidation(role) {
                 phone: phoneManage.value
               }
             };
-            sessionStorage.mDetail = JSON.stringify(managerDetail);
+            localStorage.mDetail = JSON.stringify(managerDetail);
           },
           err => {
             console.log(err);

@@ -29,7 +29,7 @@ document.getElementById("map_search").onkeydown = function(e) {
   }
 };
 $("#mapCleanBt").click(function() {
-  sessionStorage.removeItem("polygonEditLand");
+  localStorage.removeItem("polygonEditLand");
   document.getElementById("landArea-input").value = "";
   document.getElementById("landName-input").value = "";
   document.getElementById("latlngResult").innerHTML = "";
@@ -91,7 +91,7 @@ function initMap() {
 
 
   addDrawingManager();
-  polygonEditLand = sessionStorage.polygonEditLand;
+  polygonEditLand = localStorage.polygonEditLand;
   if (polygonEditLand != null) {
     polygonEditLand = JSON.parse(polygonEditLand);
     editSetPolygon(polygonEditLand);

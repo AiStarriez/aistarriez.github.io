@@ -1,4 +1,5 @@
 //* โหลดรูปจากเครื่อง +  resize และแสดงผ่าน canvas
+var googleMapApiKey = 'AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg'
 window.onload = function() {
   //Check File API support
   var url = window.location.toString();
@@ -67,7 +68,7 @@ window.onload = function() {
       }
     });
   } else {
-    console.log("Your browser does not support File API");
+    // console.log("Your browser does not support File API");
   }
 };
 //*แปลง cavvas เป็น image file .png

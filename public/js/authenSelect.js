@@ -13,15 +13,15 @@ function checkHash() {
   var href = window.location.hash;
   switch (href) {
     case "": {
-      sessionStorage.role = "owner";
+      localStorage.role = "owner";
       break;
     }
     case "#role-owner": {
-      sessionStorage.role = "owner";
+      localStorage.role = "owner";
       break;
     }
     case "#role-manager": {
-      sessionStorage.role = "manager";
+      localStorage.role = "manager";
       break;
     }
   }
@@ -29,7 +29,7 @@ function checkHash() {
 }
 
 function selLoginUI() {
-  var role = sessionStorage.role || undefined;
+  var role = localStorage.role || undefined;
   if (role != undefined) {
     if (role == "owner") {
       $("#owner-login-ui").fadeIn();

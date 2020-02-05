@@ -10,7 +10,7 @@ window.plant = "all";
 
 $(window, document).ready(function() {
   apiGetPlant();
-  sessionStorage.removeItem("authenEvent")
+  localStorage.removeItem("authenEvent")
 });
 
 function apiGetPlant() {
@@ -84,7 +84,7 @@ function setFilterValueOnclick(type, value) {
 }
 
 function findLands(province, district, landName, plant) {
-  //var landsData = JSON.parse(sessionStorage.lands);
+  //var landsData = JSON.parse(localStorage.lands);
   var landsData = JSON.parse(localStorage["lands"]) || undefined;
   var plantData = JSON.parse(localStorage["plants"]) || undefined;
 
@@ -132,6 +132,6 @@ $("#hamburger").click(function(e) {
 
 $("#addLandBtn").click(function(e) {
   e.preventDefault();
-  sessionStorage.removeItem("polygonEditLand");
+  localStorage.removeItem("polygonEditLand");
   window.location = "addland.html";
 });

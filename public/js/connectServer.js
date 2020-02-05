@@ -51,9 +51,9 @@ function uploadMongoImage(u, body, typ) {
 }
 
 function checkSessionLogin() {
-  var user = sessionStorage.user;
-  ownerId = sessionStorage.ownerId;
-  managerId = sessionStorage.managerId;
+  var user = localStorage.user;
+  ownerId = localStorage.ownerId;
+  managerId = localStorage.managerId;
   if (
     !window.location.href.includes("login.html") &&
     !window.location.href.includes("register.html")
@@ -77,14 +77,14 @@ function signOut() {
   // sessionStorage.removeItem("role");
   // sessionStorage.removeItem("ownerId");
   // sessionStorage.removeItem("managers");
-  localStorage.clear();
-  sessionStorage.clear();
+   localStorage.clear();
+  // sessionStorage.clear();
   window.location = "login.html";
 }
 
 function uiOnloadPage() {
   var userName = document.getElementById("nav-user-name");
-  var userData = JSON.parse(sessionStorage.user);
+  var userData = JSON.parse(localStorage.user);
   var name = userData.name || userData[0].manager.name;
   userName.innerHTML = userName.innerHTML + name;
 }
@@ -96,7 +96,7 @@ function setCacheData(name, data) {
 
 function setSessionData(name, data) {
   //session
-  sessionStorage.setItem = JSON.stringify({ name: "John" });
+  localStorage.setItem = JSON.stringify({ name: "John" });
   //window.location.href = "detailland.html";
 }
 

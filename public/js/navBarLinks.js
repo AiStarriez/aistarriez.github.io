@@ -20,7 +20,7 @@ id="navBarPlant"*/
 
   $(".content-wrapper").show(1000)
 
-  if(sessionStorage.role == "manager"){
+  if(localStorage.role == "manager"){
     reportLink.style.display = "none";
     plantLink.style.display = "none";
     managerLink.innerHTML = '<i class="fas fa-user"></i><p>&nbsp;&nbsp;&nbsp; ข้อมูลส่วนตัว</p>'

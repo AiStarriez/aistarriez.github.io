@@ -165,8 +165,8 @@ function updateProgressUI() {
   // sessionStorage.removeItem("updateActivity");
   var rightHeaderText = document.querySelectorAll("#rightHeaderText");
   var leftHeaderText = document.getElementById("leftHeaderText");
-  var updateActivity = JSON.parse(sessionStorage.updateActivity);
-  leftHeaderText.innerHTML = sessionStorage.landHeader;
+  var updateActivity = JSON.parse(localStorage.updateActivity);
+  leftHeaderText.innerHTML = localStorage.landHeader;
   for (i in rightHeaderText) {
     rightHeaderText[i].innerHTML = "ความก้าวหน้า";
   }

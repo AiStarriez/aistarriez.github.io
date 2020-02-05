@@ -8,13 +8,13 @@ var id = getmanagerId();
 var managerData, managerImage;
 
 async function getManagerData(newerData) {
-  var role = sessionStorage.role;
+  var role = localStorage.role;
   var managersArr = [];
   if (newerData) {
-    sessionStorage.removeItem("managers");
+    localStorage.removeItem("managers");
   }
-  if (role == "owner") {
-    var sessionManager = sessionStorage.managers;
+  if (role == '"owner"') {
+    var sessionManager = localStorage.managers;
     if (sessionManager) {
       managersArr = JSON.parse(sessionManager);
       managersArr = managersArr.managers;
@@ -26,7 +26,7 @@ async function getManagerData(newerData) {
         var typ = "GET";
         var getManagerAPI = await connectToServer(url, body, typ);
         managersArr = getManagerAPI.managers;
-        sessionStorage.managers = JSON.stringify(getManagerAPI);
+        localStorage.managers = JSON.stringify(getManagerAPI);
       } catch (err) {
         console.log(err);
       }
@@ -71,6 +71,9 @@ function setManagerCard(regisManager) {
       "0 0 2px rgba(0,0,0,.125),0 2px 3px rgba(0,0,0,.2)";
     imageShow.setAttribute("class", "myImg");
     imageShow.setAttribute("src", img);
+    imageShow.style.width = "250px";
+    imageShow.style.height = "250px";
+    imageShow.style.objectFit = "cover"
 
     var managerName = document.createElement("p");
     managerName.innerHTML = name;
@@ -237,7 +240,7 @@ async function initButton() {
         JSON.stringify({ id: managerId }),
         "POST"
       );
-      sessionStorage.user = JSON.stringify(getNewdata);
+      localStorage.user = JSON.stringify(getNewdata);
      window.location = "managers.html"
     }
   });
@@ -310,8 +313,9 @@ async function updateManagerDataDB(managerData) {
 
 async function deleteManager(id) {
   try {
-    var url = `/managers/quit/${id}?owner=${sessionStorage.ownerId}`;
+    var url = `/managers/quit/${id}?owner=${localStorage.ownerId}`;
     var deleteManager = await connectToServer(url, "", "DELETE");
+    deleteImage(`${localStorage.ownerId}_${id}.png`)
     console.log("delete manager success");
   } catch (err) {
     console.log(err.status, err.responseText);
@@ -363,8 +367,8 @@ function logsManagerUI(landLogs) {
 }
 
 function selectShowBtn(id) {
-  var role = sessionStorage.role;
-  if (role == "owner") {
+  var role = localStorage.role;
+  if (role == '"owner"') {
     if (id.length == 8) {
       document.querySelectorAll("#edit-manager-btn").forEach(el => {
         el.style.display = "none";
@@ -437,8 +441,8 @@ async function run() {
   var managersArr = await getManagerData(false);
   var regisManager = managersArr.filter(({ active }) => active == true);
   selectShowBtn(id);
-  if (sessionStorage.role == "manager") {
-    var userData = JSON.parse(sessionStorage.user);
+  if (localStorage.role == '"manager"') {
+    var userData = JSON.parse(localStorage.user);
     managerData = userData[0].manager;
     var landLogs = await loadActivity(managerData._id);
     $("#header-managers-list").css("display", "none");
