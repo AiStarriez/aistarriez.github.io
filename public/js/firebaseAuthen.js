@@ -48,11 +48,13 @@ recaptchaVerifier.render().then(function(widgetId) {
 });
 
 $("#owner-login-bt").click(function() {
+  $("#loader").html(loadingDiv())
   $("#modal-loading").css("display", "block");
   firebaseAuthenByEmail();
 });
 document.getElementById("pass-input-owner").onkeydown = function(e) {
   if (e.keyCode == 13) {
+    $("#loader").html(loadingDiv())
     $("#modal-loading").css("display", "block");
     firebaseAuthenByEmail();
   }
@@ -278,6 +280,7 @@ function onVerifyCodeSubmit() {
         var user = result.user;
         console.log(user);
         window.verifyingCode = false;
+        $("#loader").html(loadingDiv())
         $("#modal-loading").css("display", "block");
         if (localStorage.authenEvent == "manager-register") {
           registerManagerDB();

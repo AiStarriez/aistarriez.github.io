@@ -6,23 +6,24 @@ var countButton = 0;
 var geocoder, infowindow, map, cacheLands;
 var markerArr = [];
 var divArr = [];
-var canvasArr = [];
+var canvasArr = {};
 var couterMarker = 0;
-var colorPieArr = ["#F76647", "#319CBE", "#40253D", "#0A3B9A", "#F2404C"];
+var colorPieArr = ["#FFE098", "#BAFF96", "#88EFFF", "#9BC2FF", "#FF999D"];
 var mapPolyPieColor = [];
 localStorage.removeItem("polygonEditLand");
 var contentString =
   '<div><p>ทดสอบ</p><a href="addLandPage.html">แก้ไข</a></div>';
 
+  $("#loader").html(loadingDiv())
 document.getElementById("modal-loading").style.display = "block";
 
 async function initMap() {
-  console.log("initMap");
   var landsPercent = localStorage["percent-lands"] || undefined;
   cacheLands = localStorage["lands"] || undefined;
   if (landsPercent != undefined) {
-    await loopCreatePie(landsPercent);
-  } else {
+    await loopCreatePie(landsPercent , cacheLands);
+  }
+  else {
     cacheLands = await getCacheLands(cacheLands);
     if(cacheLands){
        await getPercentOpCycle(cacheLands);
@@ -30,32 +31,31 @@ async function initMap() {
       blankMap()
       document.getElementById("modal-loading").style.display = "none";
     }
+    location.reload();
   }
 }
 
-async function loopCreatePie(landsPercent) {
+async function loopCreatePie(landsPercent,cacheLands) {
+  cacheLands = JSON.parse(cacheLands)
   landsPercent = JSON.parse(landsPercent);
   for (let i = 0; i < landsPercent.length; i++) {
+    var findLand = cacheLands.find(({land}) => land._id == landsPercent[i].land_id)
     var percent = landsPercent[i].percent || 0;
-    createPie(percent, i);
+    percent = parseInt(percent)
+    landsPercent[i].land_name = findLand.land.name;
+    landsPercent[i].percent = percent;
+    createPie(landsPercent[i], i%5);
   }
-  toCanvasMarker(divArr);
+  toCanvasMarker(divArr , landsPercent);
 }
 
-async function getCacheLands(cacheLands) {
-  console.log("cacheLands", typeof cacheLands);
-  if (cacheLands == undefined || cacheLands == "undefined") {
-    console.log("cacheLands", "undefined");
-    cacheLands = await getLatLngDB();
+async function getCacheLands() {
+   var cacheLands = await getLatLngDB();
     if (cacheLands != null) {
-      setCacheData("lands", cacheLands);
-      location.reload();
+      localStorage.lands = JSON.stringify(cacheLands);
     }else{
       return null
     }
-  } else {
-    cacheLands = JSON.parse(cacheLands);
-  }
   return cacheLands;
 }
 
@@ -65,14 +65,12 @@ async function getPercentOpCycle(cacheLands) {
     var typ = "POST";
     var url = "/operations/percent";
     var getPercent = await connectToServer(url, JSON.stringify(body), typ);
-    setCacheData("percent-lands", getPercent);
-    location.reload();
+    localStorage['percent-lands'] = JSON.stringify(getPercent);
     return getPercent;
   } catch (err) {
     console.log(err);
   }
 }
-
 function getLandsID(cacheLands) {
   var landID = [];
   for (var i = 0; i < cacheLands.length; i++) {
@@ -121,7 +119,7 @@ async function getLatLngDB() {
   } catch (err) {
     console.log(err);
     return null;
-   
+
   }
 }
 
@@ -194,11 +192,11 @@ function createMapComponent(poly, cacheLands) {
         var latlngInLand = polygonLands[i].lat_lng;
         l = new google.maps.Polygon({
           paths: latlngInLand,
-          strokeColor: colorPieArr[i],
+          strokeColor:colorPieArr[i % 5],
           strokeOpacity: 0.6,
-          strokeWeight: 2,
-          fillColor: colorPieArr[i],
-          fillOpacity: 0.35
+          strokeWeight: 4,
+          fillColor: colorPieArr[i % 5],
+          fillOpacity: 0.6
         });
         var popupMap =
           "<h5>" +
@@ -215,7 +213,7 @@ function createMapComponent(poly, cacheLands) {
         var obj = {
           land_id: polygonLands[i].land_id,
           poly: l,
-          pie: canvasArr[i],
+          pie: canvasArr[polygonLands[i].land_id],
           position: polygonLands[i].center,
           popup: popupMap
         };
@@ -283,51 +281,41 @@ function addListenersOnPolygon(polygon) {
   });
 }
 
-async function createPie(percent, color) {
+async function createPie(landPercent, color) {
   var parent = document.createElement("div");
   var widget = document.getElementById("widget");
   var pie = document.createElement("div");
-  var canvas = document.createElement("canvas");
   var number = document.createElement("input");
+  var landName = document.createElement("div")
+  pie.className = "pie-div"
   pie.style.display = "inline";
   pie.style.width = "90px";
   pie.style.height = "90px";
-  parent.style.paddingTop = "10px";
-  canvas.width = 112;
-  canvas.height = 112;
-  canvas.style.width = "90px";
-  canvas.style.height = "90px";
+  landName.innerHTML = landPercent.land_name
+  landName.style.textAlign = "center"
+  landName.style.color = "white"
   number.type = "text";
-  number.setAttribute("class", "knob");
-  number.value = percent;
+  number.className = "knob pie-chart"
+  number.value = landPercent.percent;
   number.setAttribute("data-width", "90");
   number.setAttribute("data-height", "90");
   number.setAttribute("data-fgcolor", colorPieArr[color]);
   number.setAttribute("data-readonly", "true");
   number.setAttribute("readonly", "readonly");
-  number.style.width = "49px";
-  number.style.height = "30px";
-  number.style.position = "absolute";
-  number.style.verticalAlign = "middle";
-  number.style.marginTop = "30px";
-  number.style.marginLeft = "-69px";
-  number.style.border = "0px none";
-  number.style.background = "#000000";
-  // pie.appendChild(canvas);
   pie.appendChild(number);
   parent.appendChild(pie);
   widget.appendChild(parent);
   divArr.push(parent);
 }
 
-async function toCanvasMarker(divArr) {
+async function toCanvasMarker(divArr , landsPercent) {
   if (couterMarker < divArr.length) {
     await html2canvas(divArr[couterMarker], {
       onrendered: function(canvas) {
         $("#img-out").append(canvas);
-        canvasArr.push(canvas.toDataURL());
+        canvasArr[landsPercent[couterMarker].land_id] = canvas.toDataURL();
         couterMarker++;
-        toCanvasMarker(divArr);
+        toCanvasMarker(divArr , landsPercent);
       }
     });
   } else {

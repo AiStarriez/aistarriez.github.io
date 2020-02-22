@@ -20,6 +20,7 @@
 
  #topnav{
    height: calc(100% - 2rem);
+   margin-bottom: 1.4rem;
  }
  .sp-require{
    color:red
@@ -32,10 +33,9 @@
    padding-right:3rem;
  }
  .content-wrapper {
-  min-height: unset;
+  /* min-height: unset; */
   background:#ffff;
-  /* height: calc(100% - 4rem); */
-  height: 500px;
+  /* min-height: calc(100% - 2rem); */
   overflow-y: scroll;
 }
 .card-title{
@@ -67,7 +67,7 @@
  #filterMainPageDiv {
    margin-right: 15px;
    float: right;
-  
+
  }
 
  #filterContainerDiv {
@@ -194,7 +194,7 @@
   #topnav{
     display: flex;
   }
-  
+
   #topnav{
     color: white;
   }
@@ -252,11 +252,59 @@
   .max-v-header{
     display: none
   }
-
 }
 
 .table td, .table th{
   border-top: unset;
   padding:.4rem;
   vertical-align:unset;
+}
+
+.table-curved {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table-curved th {
+  padding: 3px 10px;
+}
+
+.table-curved th:first-child {
+  padding: 6px;
+}
+
+.table-curved td {
+  background-color: #f1efef;
+  padding: 6px 10px;
+  border-bottom: 10px solid white;
+  border-top: 10px solid white;
+}
+
+.table-curved td:first-child {
+  padding: 6px;
+  border-radius: 18px 0 0 18px;
+  /* background-color: rgb(141, 133, 130); */
+}
+
+.table-curved td:last-child {
+  border-radius: 0 18px 18px 0;
+}
+
+/* .table-curved tr:hover td:not(:first-child) {
+    background-color: #c5c5c5;
+  } */
+.table-curved tr:hover td {
+  background-color: #d4d4d4;
+}
+
+.table-curved tr.blue td:first-child {
+  background-color: cornflowerblue;
+}
+
+.table-curved tr.green td:first-child {
+  background-color: forestgreen;
+}
+
+.table tbody+tbody {
+  border-top: none
 }

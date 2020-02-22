@@ -7,14 +7,14 @@
   <title>Proreporte | รายงาน</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
- <!-- Font Awesome -->
- <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
- <!-- Ionicons -->
- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
- <!-- overlayScrollbars -->
- <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
- <!-- Google Font: Source Sans Pro -->
- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
   <!-- PROreportE -->
   <link rel="stylesheet" href="css/reportPerLand.css">
@@ -34,15 +34,23 @@
         <li class="nav-item" id="hamburger">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
+        <li class="nav-item" id="back-report" onclick="history.back()" style="display: none;">
+          <a class="nav-link"><i class="fa fa-arrow-left"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">
+            <p id="extend-header"></p>
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" aria-expanded="true">
-            <i class="fas fa-grip-vertical"></i>
+            <i class="fas fa-th-large"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a id="export-csv-btn" class="dropdown-item text-success" data-toggle="modal">
-              <i class="fas fa-seedling mr-2"></i> <span id="tetx-btn-header">ส่งออกไฟล์ .csv</span>
+              <i class="fas fa-seedling mr-2"></i> <span id="tetx-btn-header">ส่งออกรายงาน .csv</span>
             </a>
           </div>
         </li>
@@ -149,7 +157,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <section class="content-header managers-main">
+      <section class="content-header report-header">
         <nav class="navbar navbar-expand navbar-white navbar-light">
           <ul class="navbar-nav text-success">
             <li id="header-report-list">
@@ -160,9 +168,9 @@
             <li id="header-report-detail">
               <h4>
                 <span class="mobile-v-header" onclick="history.back()" style="cursor: pointer;"><i
-                    class="fa fa-arrow-left"></i></span>
+                    class="fa fa-arrow-left"></i>&nbsp;&nbsp;</span>
                 <span class="max-v-header" onclick="history.back()" style="cursor: pointer;">รายงานที่ดิน&nbsp;&nbsp;<i
-                    class="fa fa-angle-right"></i></span>
+                    class="fa fa-angle-right"></i>&nbsp;&nbsp;</span>
               </h4>
             </li>
             <li>
@@ -173,7 +181,7 @@
           <ul class="navbar-nav ml-auto right-header-btn">
             <li class="nav-item">
               <button id="export-csv-btn" class="btn bg-olive" data-toggle="modal"><span
-                  id="tetx-btn-header">ส่งออกไฟล์ .csv</span></button>
+                  id="tetx-btn-header">ส่งออกรายงาน .csv</span></button>
             </li>
           </ul>
         </nav>
@@ -186,6 +194,7 @@
         <div class="container-fluid">
           <div id="container-report-list"></div>
           <div id="container-report-perland"></div>
+          <div id="container-report-cycle"></div>
           <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center=16.475000202974, 102.832854364312&zoom=17&path=color:0xff0000ff%7Cweight:0%7Cfillcolor:0x0000ff80%7C16.475000202974,102.832854364312%7C16.4750207796696,102.833927247918%7C16.4741514123777,102.83394870559%7C16.4740742494118,102.832870457566&size=300x300&maptype=satellite&key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg">            /.container-fluid -->
         </div>
       </section>

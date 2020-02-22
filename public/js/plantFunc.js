@@ -5,6 +5,7 @@ var errDivModal = document.querySelectorAll("#err-div-modal");
 var extendHeader = document.querySelector("#extend-header");
 var btnHeader = document.querySelectorAll("#new-activity-btn");
 var textBtnHeader = document.querySelectorAll("#tetx-btn-header");
+var editPlantBtn = document.querySelectorAll("#dd-edit-plant")
 var errText = document.getElementById("warning-del-body");
 var modalFormBody = document.querySelectorAll("#modal-plant-body");
 var modalLoading = document.querySelectorAll("#modal-loading");
@@ -12,18 +13,27 @@ var modalSuccess = document.querySelectorAll("#modal-plant-success");
 var delPlantBtn = document.querySelectorAll(".del-plant-btn");
 var ddDelPlant = document.querySelectorAll("#dd-del-plant");
 var cancelModal = document.querySelectorAll("#cancel-form");
-
+var output = document.getElementById("result");
 var plantDetailsContent = document.getElementById("plant-detail");
 var plantListContent = document.getElementById("plant-list");
+var plantModalStatus = document.getElementById("modal-plant-status")
 var collectedPlantImage = [];
 var plantArray = [];
 var pictureArray = [];
 var plantId = getPlantId();
 var plantObj , plantName;
+
+localStorage.removeItem("lands");
+  localStorage.removeItem("percent-lands");
+  localStorage.removeItem("poly-lands-main")
+
 //*สร้าง card พืชที่มีอยู่
 async function createExitingPalntUI(allPlants) {
   $("#plant-list").show(500);
   extendHeader.innerHTML = "";
+  output.innerHTML = "";
+  collectedPlantName.value = ""
+  $("#input-plant-image").css("display", "block");
   $("#header-plant-list").css("display", "block");
   $("#header-plant-detail").css("display", "none");
   if(allPlants.length == 0){
@@ -36,6 +46,7 @@ async function createExitingPalntUI(allPlants) {
     btnHeader[j].dataset.target = "#modal-add-plant";
     textBtnHeader[j].innerHTML = "เพิ่มพืชใหม่";
     delPlantBtn[j].style.display = "none";
+    editPlantBtn[j].style.display = "none"
   }
   plantDetailsContent.style.display = "none";
   plantListContent.style.display = "block";
@@ -89,8 +100,8 @@ async function createExitingPalntUI(allPlants) {
 //*get ข้อมูลพืชจาก db | return jsondata
 async function loadPlantDataAPI(newerData) {
   if (!newerData) {
-    localStorage.removeItem("acByName");
-    localStorage.removeItem("acByDate");
+    localStorage.removeItem("by-name");
+    localStorage.removeItem("by-date");
     var allPlants = localStorage["plants"];
     if (allPlants) {
       allPlants = JSON.parse(allPlants);
@@ -119,8 +130,24 @@ async function postNewPlantstoDB(imageName) {
     var postNewPlants = await connectToServer(url, body, "POST");
     console.log("create new plant success");
   } catch (err) {
-    console.log(e.responseText);
-    console.log(collectedPlantName);
+    if(err.status == 400){
+      plantModalStatus.innerHTML = `คุณใช้ชื่อพืช '${collectedPlantName.value} แล้ว กรุณาตั้งชื่อใหม่'`
+    }
+    console.log(collectedPlantName.value)
+    console.log(imageName);
+  }
+}//*edit พืช to db
+async function putPlantstoDB(imageName) {
+  try {
+    var url = "/plants/" + plantId;
+    var body = JSON.stringify({
+      name: collectedPlantName.value,
+      cover_image: imageName
+    });
+    var postNewPlants = await connectToServer(url, body, "PUT");
+    console.log("create new plant success");
+  } catch (err) {
+    console.log(err.responseText);
     console.log(imageName);
   }
 }
@@ -209,7 +236,6 @@ async function deletePlant(plantId) {
 }
 //*div plant cover image on modal
 function outputImageUI(canvas, filename) {
-  var output = document.getElementById("result");
   output.innerHTML = "";
   var div = document.createElement("div");
   div.style.display = "inline-block";
@@ -226,7 +252,7 @@ function outputImageUI(canvas, filename) {
   // delete icon
   var deleteBt = document.createElement("img");
   deleteBt.setAttribute("class", "delete-img-btn");
-  deleteBt.setAttribute("src", "build/img/close.png");
+  deleteBt.setAttribute("src", "images/close.png");
   deleteBt.onclick = (function(arg, index) {
     return function() {
       $("#input-plant-image").css("display", "block");
@@ -269,13 +295,15 @@ function createPlanteDetailUI(plant) {
   $("#plant-detail").show(500);
   plantName = plant.name;
   plantObj = plant;
-  extendHeader.innerHTML += `&nbsp;&nbsp;${plantName}`;
+  extendHeader.innerHTML = `&nbsp;&nbsp;${plantName}`;
   $("#header-plant-list").css("display", "none");
   $("#header-plant-detail").css("display", "block");
   for (let i = 0; i < btnHeader.length; i++) {
     textBtnHeader[i].innerHTML = "เพิ่มกิจกรรม";
     btnHeader[i].dataset.target = "#modal-add-acplant";
     delPlantBtn[i].style.display = "block";
+    editPlantBtn[i].style.display = "block"
+
   }
   //--------body-----------
   plantDetailsContent.style.display = "block";
@@ -422,21 +450,39 @@ function getPlantId() {
   var url = window.location.toString();
   var plantIndex = url.indexOf("plant=") + 6;
   var plantId = url.slice(plantIndex, url.length);
+  console.log(plantId)
   return plantId;
 }
 //*init button
 async function initBtn() {
   $("#save-plant-modal-btn").click(async () => {
-    stateModal("form");
-    var name = [collectedPlantName];
-    var pass = checkValidityForm(name, errDivModal[0]);
-    if (pass) {
-      stateModal("loading");
-      var imageName = await fileUpload(("owner=" + ownerId) , pictureArray[0]);
-      await postNewPlantstoDB(imageName);
-      await loadPlantDataAPI(true);
-      stateModal("success");
-      selPage();
+    plantId = getPlantId()
+    if(plantId.length == 24){
+      var name = [collectedPlantName];
+      var pass = checkValidityForm(name, errDivModal[0]);
+      var fileName = plantObj.cover_image ? plantObj.cover_image : `${ownerId}_${plantId}`
+      if (pass) {
+        stateModal("loading");
+        plantModalStatus.innerHTML = `แก้ไข ${collectedPlantName.value} สำเร็จแล้ว`
+        var imageName = await fileUpload(("file_name=" + fileName) , pictureArray[0]);
+        await putPlantstoDB(imageName);
+        await loadPlantDataAPI(true);
+        stateModal("success");
+        selPage();
+      }
+    }else{
+      stateModal("form");
+      var name = [collectedPlantName];
+      var pass = checkValidityForm(name, errDivModal[0]);
+      if (pass) {
+        stateModal("loading");
+        plantModalStatus.innerHTML = `เพิ่มพืชสำเร็จ`
+        var imageName = await fileUpload(("owner=" + ownerId) , pictureArray[0]);
+        await postNewPlantstoDB(imageName);
+        await loadPlantDataAPI(true);
+        stateModal("success");
+        selPage();
+      }
     }
   });
 
@@ -501,6 +547,21 @@ async function initBtn() {
       stateModal("form");
     };
   }
+
+  editPlantBtn.forEach(btn =>{
+    btn.dataset.target = "#modal-add-plant";
+    btn.onclick = () =>{
+      collectedPlantName.value = plantName
+      var filename = plantObj.cover_image;
+      output.innerHTML = "";
+    $("#input-plant-image").css("display", "block");
+
+      if(filename){
+        outputImageUI(headerImage + filename, filename);
+        toImageFile(headerImage + filename, filename);
+      }
+    }
+  })
 }
 //* switch page
 async function selPage() {

@@ -27,17 +27,30 @@
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
-    <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="topnav">
-      <!-- Left navbar links -->
       <ul class="navbar-nav">
-        <li class="nav-item" id="hamburger">
+        <li class="nav-item" id="hamburger" style="display: none;">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item" id="back-report" onclick="window.history.back()" >
+          <a class="nav-link"><i class="fa fa-arrow-left"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">
+            <p id="extend-header"></p>
+          </a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <button id="activity-progress-btn" class="btn bg-olive bt-progressive-nav" onclick="toUpdateProgress()">ความก้าวหน้า</button>
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" aria-expanded="true">
+            <i class="fas fa-th-large"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a id="activity-progress-btn" class="dropdown-item text-success" data-toggle="modal" onclick="toUpdateProgress()">
+              <i class="fas fa-seedling mr-2"></i> <span id="tetx-btn-header">ความก้าวหน้า</span>
+            </a>
+          </div>
         </li>
       </ul>
     </nav>
@@ -149,52 +162,30 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <table id="header-mobile">
-            <tr class="text-success">
-              <td>
-                <a onclick="window.history.back()" class="text-success" style="cursor:pointer">
-                  <i class="fa fa-arrow-left"></i>
-                  &nbsp;&nbsp;
-                </a>
-              </td>
-              <td>
-                <h4 class="h4-header" id="land-header-mobile"></h4>
-              </td>
-            </tr>
-          </table>
-          <div id="bar-header">
-            <table class="table-header">
-              <tr class="text-success">
-                <td>
-                  <table>
-                    <tr>
-                      <td>
-                        <a href="activities.html" class="text-success">
-                          <h4 class="h4-header">กิจกรรมทั้งหมด</h4>
-                        </a>
-                      </td>
-                      <td>
-                        &nbsp;&nbsp;
-                        <i class="fa fa-angle-right"></i>
-                        &nbsp;&nbsp;
-                      </td>
-                      <td>
-                        <h4 class="h4-header" id="land-header"></h4>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td class="tr-bt-add-ac">
-                  <button id="activity-progress-btn" class="btn bg-olive bt-custom-hrader" onclick="toUpdateProgress()">ความก้าวหน้า</button>
-                </td>
-              </tr>
-            </table>
-          </div>
-
-          <hr>
-        </div><!-- /.container-fluid -->
+      <section class="content-header right-header-btn">
+        <nav class="navbar navbar-expand navbar-white navbar-light">
+          <ul class="navbar-nav text-success">
+            <li id="header-activity-detail">
+              <h4>
+                <span class="mobile-v-header" onclick="window.history.back()" style="cursor: pointer;"><i
+                    class="fa fa-arrow-left"></i>&nbsp;&nbsp;</span>
+                <span class="max-v-header" onclick="window.history.back()" style="cursor: pointer;">กิจกรรมทั้งหมด&nbsp;&nbsp;<i
+                    class="fa fa-angle-right"></i>&nbsp;&nbsp;</span>
+              </h4>
+            </li>
+            <li>
+              <h4 id="extend-header">
+              </h4>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto right-header-btn">
+            <li class="nav-item">
+              <button id="activity-progress-btn" class="btn bg-olive" onclick="toUpdateProgress()"><span
+                  id="tetx-btn-header">ความก้าวหน้า</span></button>
+            </li>
+          </ul>
+        </nav>
+        <hr>
       </section>
 
       <!-- Main content -->
@@ -203,7 +194,7 @@
           <div class="row">
             <div class="col-md-8">
               <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #6d9c71; color: white;">
                   รายละเอียด
                 </div>
                 <div class="card-body" id="card-details"></div>
@@ -211,7 +202,7 @@
             </div>
             <div class="col-md-4">
               <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color: #6d9c71; color: white;">
                   รูปภาพ
                 </div>
                 <div class="card-body" id="card-image"></div>
@@ -220,7 +211,7 @@
           </div>
           <!-- /.row -->
         </div><!-- /.container-fluid -->
-        
+
       </section>
       <!-- /.content -->
     </div>
@@ -243,7 +234,7 @@
     style="display: none; top:0 ;background: #ffffff" aria-hidden="true">
     <div class="modal-dialog" style="margin-top:50vh ;">
       <div id="bg-loading" style="display:block;width:100%; height:100%">
-        <div class="loader-wrapper" id="loader-1">
+        <div class="loader-wrapper">
           <div id="loader"></div>
         </div>
       </div>
