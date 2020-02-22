@@ -3,14 +3,18 @@ var googleMapApiKey = 'AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg'
 window.onload = function() {
   //Check File API support
   var url = window.location.toString();
+  var filesInput = document.getElementById("pictureInput");
+  if(!filesInput){
+    return;
+  }
   if (
     window.File &&
     window.FileList &&
     window.FileReader &&
-    url.includes("activi") &&
-    url.includes("plant")
+    !url.includes("manage")&&
+    !url.includes("regist")
+
   ) {
-    var filesInput = document.getElementById("pictureInput");
 
     filesInput.addEventListener("change", function(event) {
       var files = event.target.files; //FileList object
@@ -28,7 +32,7 @@ window.onload = function() {
           var canvas = document.createElement("canvas");
           var ctx = canvas.getContext("2d");
           var img = new Image();
-          img.onload = function() {
+          img.onload = async function() {
             canvas.width = 500;
             canvas.height = canvas.width * (img.height / img.width);
             var controlSize = img.width >= 500 ? 1 : 1;
@@ -59,7 +63,7 @@ window.onload = function() {
               canvas.height
             );
             //img to file
-            var file = toImageFile(canvas.toDataURL(), null);
+            var file = await toImageFile(canvas.toDataURL(), null);
             outputImageUI(canvas.toDataURL(), file.name);
           };
           img.src = picFile.result;
@@ -68,18 +72,16 @@ window.onload = function() {
       }
     });
   } else {
-    // console.log("Your browser does not support File API");
+    console.log("Your browser does not support File API");
   }
 };
 //*แปลง cavvas เป็น image file .png
-function toImageFile(canvas, filename) {
+async function toImageFile(canvas, filename) {
   var timestamp = Date.now();
   var filename = filename != null ? filename : timestamp + ".png";
-  urltoFile(canvas, filename, "image/png").then(function(file) {
-    pictureArray.push(file);
-  });
-
-  return file;
+  var fileImg = await urltoFile(canvas, filename, "image/png")
+  pictureArray.push(fileImg);
+  return fileImg;
 }
 
 //* modal image
@@ -117,7 +119,7 @@ async function deleteImage(filename) {
 
 async function fileUpload(query, file) {
   if (!file) {
-    return false;
+    return null;
   }
   try {
     var url = "/images/upload?" + query;
@@ -231,4 +233,77 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
+}
+
+function setColorActivity(status){
+var setBG , setText,setHex
+  var classColor = {
+    done: "bg-success",
+    over_due: "bg-danger",
+    not_done: "bg-secondary",
+    in_progress: "bg-warning"
+  };
+  var classText = {
+    done: "text-success",
+    over_due: "text-danger",
+    not_done: "text-secondary",
+    in_progress: "text-warning"
+  };
+
+  var hexBGcolors = {
+    done: "#CBE3CA",
+    over_due: "#F2D3CE",
+    not_done: "#EAE8E5",
+    in_progress: "#EFD5BA"
+  }
+  switch (status) {
+    case "ยังไม่ทำ": {
+      setBG = classColor.not_done;
+      setText = classText.not_done;
+      setHex = hexBGcolors.not_done;
+      break;
+    }
+    case "ยังไม่เสร็จ": {
+      setBG = classColor.not_done;
+      setText = classText.not_done;
+      setHex = hexBGcolors.not_done;
+      break;
+    }
+    case "กำลังดำเนินการ": {
+      setBG = classColor.in_progress;
+      setText = classText.in_progress;
+      setHex = hexBGcolors.in_progress;
+      break;
+    }
+    case "เสร็จแล้ว": {
+      setBG = classColor.done;
+      setText = classText.done;
+      setHex = hexBGcolors.done;
+      break;
+    }
+    case "เลยกำหนด": {
+      setBG = classColor.over_due;
+      setText = classText.over_due;
+      setHex = hexBGcolors.over_due;
+      break;
+    }
+  }
+
+  return {setBG, setText,setHex};
+
+}
+
+ async function deleteActivity(land , actvity){
+  localStorage.removeItem("by-name");
+  localStorage.removeItem("lands");
+  localStorage.removeItem("percent-lands");
+  localStorage.removeItem("poly-lands-main")
+  try{
+    var url = `/activities/${land}?activity=${actvity}`
+    var deleteAc = await connectToServer(url , "" , "DELETE");
+    window.location.reload();
+  }catch(err){
+    console.log(err)
+    window.location.reload();
+  }
 }

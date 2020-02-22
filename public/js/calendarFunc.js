@@ -1,8 +1,8 @@
-$(function() {
+$(function () {
   /* initialize the external events
      -----------------------------------------------------------------*/
   function ini_events(ele) {
-    ele.each(function() {
+    ele.each(function () {
       // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
       // it doesn't need to have a start or end
       var eventObject = {
@@ -50,7 +50,7 @@ $(function() {
 
   new Draggable(containerEl, {
     itemSelector: ".external-event",
-    eventData: function(eventEl) {
+    eventData: function (eventEl) {
       console.log(eventEl);
       return {
         title: eventEl.innerText,
@@ -68,48 +68,43 @@ $(function() {
   });
 
   var url = "/activities/" + ownerId;
-  var body = { byDate: 1 };
+  var body = {
+    byDate: 1
+  };
   var typ = "GET";
   var events = [];
   var activities, defultDate;
 
-  if (localStorage["acByDate"]) {
-    activities = JSON.parse(localStorage["acByDate"]);
-    setCalendarDetails(activities);
-  } else {
-    activities = connectToServer(url, body, typ);
-    activities.then(
-      docs => {
-        if(docs.length == 0){
-          createCalendar();
-          var nonActivtiy = document.createElement('center');
-          nonActivtiy.innerHTML = "<h4>ยังไม่มีกิจกรรม</h4>"
-          nonActivtiy.style.color = "gray"
-          document.getElementById("activities-table").appendChild(nonActivtiy);
-          return false;
-        }
-        setCalendarDetails(docs);
-      },
-      e => {
-        console.log(e);
+  var nonActivtiy = document.createElement('center');
+  nonActivtiy.innerHTML = "<h4>ยังไม่มีกิจกรรม</h4>"
+  nonActivtiy.style.color = "gray"
+
+  activities = connectToServer(url, body, typ);
+  activities.then(
+    docs => {
+      if (docs.length == 0) {
         createCalendar();
-        var nonActivtiy = document.createElement('center');
-        nonActivtiy.innerHTML = "<h4>ยังไม่มีกิจกรรม</h4>"
-        nonActivtiy.style.color = "gray"
         document.getElementById("activities-table").appendChild(nonActivtiy);
+        return false;
       }
-    );
-  }
+      setCalendarDetails(docs);
+    },
+    e => {
+      console.log(e);
+      createCalendar();
+      document.getElementById("activities-table").appendChild(nonActivtiy);
+    }
+  );
+
 
   function setCalendarDetails(docs) {
-    localStorage.acByDate = docs;
     activityDetail(docs);
 
     for (let i = 0; i < docs.length; i++) {
       var getDate =
         docs[i].end_date != null ? docs[i].end_date : docs[i].start_date;
       var startDate = new Date(getDate);
-     var formatDate = startDate.toISOString().slice(0, 10);
+      var formatDate = startDate.toISOString().slice(0, 10);
       if (i == 0) {
         defultDate = formatDate;
       }
@@ -135,8 +130,8 @@ $(function() {
 
       var obj = {
         title: docs[i].task,
-        start:formatDate,
-        url: 'activitydetails.html#' + docs[i].activity_id + "&" + docs[i].land_id,
+        start: formatDate,
+        url: 'activitydetails.html?' + docs[i].activity_id + "&" + docs[i].land_id,
         backgroundColor: color,
         borderColor: color
       };
@@ -163,9 +158,9 @@ $(function() {
       events: events,
       editable: false,
       droppable: false, // this allows things to be dropped onto the calendar !!!
-      eventClick: function(info) {
+      eventClick: function (info) {
         var eventObj = info.event;
-        if (eventObj.url) {  
+        if (eventObj.url) {
           window.location = eventObj.url;
           info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
         } else {
@@ -180,7 +175,7 @@ $(function() {
   var currColor = "#3c8dbc"; //Red by default
   //Color chooser button
   var colorChooser = $("#color-chooser-btn");
-  $("#color-chooser > li > a").click(function(e) {
+  $("#color-chooser > li > a").click(function (e) {
     e.preventDefault();
     //Save color
     currColor = $(this).css("color");
@@ -190,7 +185,7 @@ $(function() {
       "border-color": currColor
     });
   });
-  $("#add-new-event").click(function(e) {
+  $("#add-new-event").click(function (e) {
     e.preventDefault();
     //Get value and make sure it is not null
     var val = $("#new-event").val();
@@ -235,11 +230,10 @@ $(function() {
       in_progress: "text-warning"
     };
     var mobileCard = "";
-    var blank = "<tr><td></td><td></td><td></td><td></td><td></td></tr>";
     var row = "";
 
     for (i in docs) {
-      if(docs[i].status == "เสร็จแล้ว") continue;
+      if (docs[i].status == "เสร็จแล้ว") continue;
       var landName = docs[i].land_name;
       var getDate =
         docs[i].end_date != null ? docs[i].end_date : docs[i].start_date;
@@ -249,39 +243,15 @@ $(function() {
         "/" +
         (startDate.getMonth() + 1) +
         "/" +
-        (startDate.getFullYear()+543);
+        (startDate.getFullYear() + 543);
       var task = docs[i].task;
       var status = docs[i].status;
       var activityID = docs[i].activity_id;
       var landID = docs[i].land_id;
+      var activityColors = setColorActivity(status);
+      setBG = activityColors.setHex;
+      setText = activityColors.setText;
 
-      switch (status) {
-        case "ยังไม่ทำ": {
-          setBG = classColor.not_done;
-          setText = classText.not_done;
-          break;
-        }
-        case "ยังไม่เสร็จ":{
-          setBG = classColor.not_done;
-          setText = classText.not_done;
-          break;
-        }
-        case "กำลังดำเนินการ": {
-          setBG = classColor.in_progress;
-          setText = classText.in_progress;
-          break;
-        }
-        case "เสร็จแล้ว": {
-          setBG = classColor.done;
-          setText = classText.done;
-          break;
-        }
-        case "เลยกำหนด": {
-          setBG = classColor.over_due;
-          setText = classText.over_due;
-          break;
-        }
-      }
 
       if (localStorage["role"] == '"owner"') {
         row += setActivityOwnerUI(
@@ -290,7 +260,9 @@ $(function() {
           task,
           status,
           (activityID + "&" + landID),
-          setBG
+          setBG,
+          activityID,
+          landID
         );
         mobileCard =
           mobileCard +
@@ -302,11 +274,13 @@ $(function() {
             task,
             status,
             (activityID + "&" + landID),
-            setText
+            setText,
+            activityID,
+            landID
           ) +
           "</div></div>";
       } else {
-        row += setActivityManagerUI(landName, toDate, task, status,  (activityID + "&" + landID),setBG);
+        row += setActivityManagerUI(landName, toDate, task, status, (activityID + "&" + landID), setBG,activityID,landID);
         mobileCard =
           mobileCard +
           '<div class="card"><div class="card-body">' +
@@ -317,18 +291,17 @@ $(function() {
             task,
             status,
             (activityID + "&" + landID),
-            setText
+            setText,
+            activityID,
+            landID
           ) +
           "</div></div>";
       }
-      if (i != docs.length - 1) {
-        row += blank;
-      }
     }
     var table = document.createElement("table");
-      table.className += "table";
-      table.innerHTML +=
-        "<tr><th>ที่ดิน</th><th>วันที่</th><th>กิจกรรม</th><th>สถานะ</th><th></th></tr>";
+    table.className += "table table-curved";
+    table.innerHTML +=
+      "<tr><th>ที่ดิน</th><th>วันที่</th><th>กิจกรรม</th><th>สถานะ</th><th></th></tr>";
     table.innerHTML = table.innerHTML + row;
     activitiesMobile.innerHTML = activitiesMobile.innerHTML + mobileCard;
     activityTable.appendChild(table);

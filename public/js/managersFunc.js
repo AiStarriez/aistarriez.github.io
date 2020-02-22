@@ -6,6 +6,8 @@ var nameHeader = document.querySelectorAll(".manager-name-header");
 var rowManagerList = document.getElementById("managers-div");
 var id = getmanagerId();
 var managerData, managerImage;
+localStorage.removeItem("managers");
+
 
 async function getManagerData(newerData) {
   var role = localStorage.role;

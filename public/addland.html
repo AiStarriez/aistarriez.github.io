@@ -43,17 +43,36 @@
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="topnav">
-      <form action="" id="search-location-form" class="search-form js-inline ml-3" style="width:50%;">
-        <div class="input-group input-group-sm" style="width:100%">
-          <input id="map_search" autocomplete="off" class="form-control form-control-navbar" type="search"
-            placeholder="ค้นหาสถานที่" aria-label="Search" style="margin-top:0px; font-size: 1.4rem;">
-          <div class="input-group-append" style="background-color: #F2F4F6;">
-            <button id="mapSearchBt" class="btn btn-navbar" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
+      <div class="row" style="width: 100%;">
+        <div class="col-md-6">
+          <form action="" id="search-location-form" class="search-form js-inline ml-3 mr-3">
+            <div class="input-group input-group-sm" style="width:100%; margin-top: 10px;">
+              <input id="map_search" autocomplete="off" class="form-control form-control-navbar" type="search"
+                placeholder="ค้นหาสถานที่" aria-label="Search" style="margin-top:0px; font-size: 1.4rem;">
+              <div class="input-group-append" style="background-color: #F2F4F6;">
+                <button id="mapSearchBt" class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div id="header-mobile" class="col-md-6">
+          <div class="row" >
+            <div class="col-6">
+              <input type="text" autocomplete="off" class="form-control" placeholder="ชื่อที่ดิน"
+                      id="landName-input" style="margin-top:10px">
+            </div>
+            <div class="col-6">
+              <input type="text" autocomplete="off" class="form-control"
+              placeholder="ขนาดที่ดิน (ตารางเมตร)" id="landArea-input" style="margin-top:10px">
+
+            </div>
           </div>
         </div>
-      </form>
+      </div>
+
+
     </nav>
     <!-- /.navbar -->
 

@@ -1,15 +1,14 @@
-var hash = window.location.hash;
-hash = hash.replace("#", "");
-var query = hash.split("&");
+var url = window.location.toString();
+var hash = url.split("?")
+var query = hash[1].split("&");
 var landID;
 var detailsCard = document.getElementById("card-details");
 var imageCard = document.getElementById("card-image");
-var landHeader = document.getElementById("land-header");
-var landHeaderMobile = document.getElementById("land-header-mobile");
 var modalBigImg = document.getElementById("modalImage");
 var modalImg = document.getElementById("img01");
 var thisActivity;
 var activityDetails, toDate;
+$("#loader").html(loadingDiv())
 
 $("#modalImage").click(function() {
   modalBigImg.style.display = "none";
@@ -54,33 +53,29 @@ function setActivityData(activitiesArr) {
       activityDetails.end_date != null
         ? activityDetails.end_date
         : activityDetails.start_date;
+        console.log(getDate)
     toDate = new Date(getDate);
-    var date =
-      toDate.getDate() +
-      "/" +
-      (toDate.getMonth() + 1) +
-      "/" +
-      (toDate.getFullYear() + 543);
-    landHeader.innerHTML =
-      date +
+    var date =  dateThai(toDate.toLocaleString(),false,true);
+
+    document.querySelectorAll("#extend-header").forEach(el => {
+      el.innerHTML = date +
       "&nbsp;&nbsp;" +
       activityDetails.land_name +
       "&nbsp;&nbsp;" +
-      activityDetails.task;
-    landHeaderMobile.innerHTML =
-      date +
-      "&nbsp;&nbsp;" +
-      activityDetails.land_name +
-      "&nbsp;&nbsp;" +
-      activityDetails.task;
+      activityDetails.task
+    })
+
   }
   return activityDetails;
 }
 
-function setBodyCardDetails(activityData) {
+async function setBodyCardDetails(activityData) {
   var table = document.createElement("table");
   var getNotes = activityData.notes != null ? activityData.notes : "-";
   var getManager = activityData.manager_id != null ? activityData.manager_id : "-";
+  if(getManager != "-"){
+    getManager = await getManagerName(getManager);
+  }
   var getStatus = activityData.status != null ? activityData.status : "-";
   table.className = "table table-hover ";
   var task = "<tr><td>ประเภท</td><td>" + activityDetails.task + "</td></tr>";
@@ -88,7 +83,7 @@ function setBodyCardDetails(activityData) {
     "<tr><td>ที่ดิน</td><td>" + activityDetails.land_name + "</td></tr>";
   var date =
     "<tr><td>วันที่</td><td>" +
-    dateThai(toDate.toLocaleString()) +
+    dateThai(toDate.toLocaleString(),false,false) +
     "</td></tr>";
   var plantName =
     "<tr><td>พืช</td><td>" + activityDetails.plant_name + "</td></tr>";
@@ -101,6 +96,28 @@ function setBodyCardDetails(activityData) {
   detailsCard.appendChild(table);
   $("#modal-loading").css("display", "none");
   $(".wrapper").css("display", "block");
+}
+
+async function getManagerName(managerId){
+  var managers = localStorage.managers;
+  if(managers){
+    managers = JSON.parse(managers);
+  }else{
+    try {
+      var url = "/managers/all/" + ownerId;
+      var body = "";
+      var typ = "GET";
+      var getManagerAPI = await connectToServer(url, body, typ);
+      managers = getManagerAPI.managers;
+      localStorage.managers = JSON.stringify(getManagerAPI);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  console.log(managers)
+  var findManager  = managers.managers.find(({_id}) => _id === managerId);
+  return findManager.name
+
 }
 
 async function getDetailAPI(apiDetails) {
@@ -146,8 +163,8 @@ async function run() {
   setBodyCardDetails(activityData);
   setBodyCardImages(activityData);
   localStorage.updateActivity = JSON.stringify(activityData);
-  localStorage.landHeader = landHeader.innerHTML;
-}
+   localStorage.landHeader = document.getElementById("extend-header").innerHTML
+  }
 
 run()
   .then(() => {

@@ -12,8 +12,8 @@ var polygonArr = [];
 var province, district;
 var polygonEditLand, landId;
 var latlngResult = document.getElementById("latlngResult");
-var landAreaInput = document.getElementById("landArea-input");
-var landNameInput = document.getElementById("landName-input");
+var landAreaInput = document.querySelectorAll("#landArea-input");
+var landNameInput = document.querySelectorAll("#landName-input");
 
 document.getElementById("search-location-form").onsubmit = function(e) {
   return false;
@@ -30,8 +30,12 @@ document.getElementById("map_search").onkeydown = function(e) {
 };
 $("#mapCleanBt").click(function() {
   localStorage.removeItem("polygonEditLand");
-  document.getElementById("landArea-input").value = "";
-  document.getElementById("landName-input").value = "";
+ landAreaInput.forEach(area =>{
+   area.value = ""
+ })
+  landNameInput.forEach(name =>{
+    name.value = ""
+  })
   document.getElementById("latlngResult").innerHTML = "";
   initMap();
 });
@@ -142,7 +146,9 @@ function onPolygonDrag(polygon) {
   }
   defultLocation = polygonArr[0];
   var area = google.maps.geometry.spherical.computeArea(latLngTocalc);
-  landAreaInput.value = area.toFixed(2);
+  landAreaInput.forEach(areaInput =>{
+    areaInput.value = area.toFixed(2);
+  })
 }
 
 function editSetPolygon(polygonEditLand) {
@@ -168,7 +174,9 @@ function editSetPolygon(polygonEditLand) {
 
   for (let i = 0; i < cacheLands.length; i++) {
     if (cacheLands[i].land._id == polygonEditLand.land_id) {
-      landNameInput.value = cacheLands[i].land.name;
+      landNameInput.forEach(name =>{
+        name.value = cacheLands[i].land.name;
+      })
       landId = cacheLands[i].land._id;
       break;
     }
@@ -243,10 +251,10 @@ function getProvinceDistrict(geocoder, getlatlng) {
 
 function apiAddLands(typ, params) {
   var body = {
-    name: landNameInput.value,
+    name: landNameInput[0].value,
     province: province,
     district: district,
-    area: landAreaInput.value,
+    area: landAreaInput[0].value,
     points: polygonArr
   };
   console.log(body);
@@ -380,5 +388,5 @@ function saveCancelBtn(controlDiv, map){
   controlDiv.innerHTML = '<button class="btn btn-primary" id="cancelBtn" onclick="window.history.back()" type="button">&nbsp; ยกเลิก &nbsp;</button><button id="modalSaveBtn" type="button" class="btn btn-primary" data-toggle="modal"data-target="#modal-default">&nbsp;บันทึก&nbsp;</button>'
   controlDiv.id = "button-div"
   controlDiv.style.fontFamily = "CS ChatThai"
- 
+
 }

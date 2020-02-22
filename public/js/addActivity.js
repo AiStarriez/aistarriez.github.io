@@ -121,7 +121,10 @@ function emergencyAPI() {
   postNewActivity.then(
     docs => {
       console.log("create activity success " + docs);
-      localStorage.removeItem("acByName");
+      localStorage.removeItem("by-name");
+      localStorage.removeItem("lands");
+      localStorage.removeItem("percent-lands");
+      localStorage.removeItem("poly-lands-main")
     },
     function(e) {
       // 404 owner not found
@@ -136,8 +139,9 @@ function emergencyAPI() {
   );
 }
 
-function updateProgressAPI() {
-  var url = "/activities/" + landId + "?activity=" + activityId;
+async function updateProgressAPI() {
+  try{
+    var url = "/activities/" + landId + "?activity=" + activityId;
   console.log("collectedActivityDate" , collectedActivityDate)
   var body = JSON.stringify({
     task: collectedActivityName,
@@ -147,28 +151,35 @@ function updateProgressAPI() {
     notes: collectedAdditionNote,
     manager_id: managerId
   });
-  var postNewActivity = connectToServer(url, body, "POST");
-  postNewActivity.then(
-    docs => {
-      localStorage.removeItem("acByName");
-    },
-    function(e) {
-      localStorage.removeItem("acByName");
-    }
-  );
+
+  var postNewActivity = await connectToServer(url, body, "POST");
+  localStorage.removeItem("by-name");
+  localStorage.removeItem("lands");
+  localStorage.removeItem("percent-lands");
+  localStorage.removeItem("poly-lands-main")
+  window.location =
+    "activitydetails.html?" + activityId + "&" + landId;
+  }catch(err){
+    console.log(err);
+    localStorage.removeItem("by-name");
+    localStorage.removeItem("lands");
+    localStorage.removeItem("percent-lands");
+    localStorage.removeItem("poly-lands-main")
+    window.location =
+    "activitydetails.html?" + activityId + "&" + landId;
+  }
+
 }
 
 
 //! Update progress
 function updateProgressUI() {
-  // sessionStorage.removeItem("landHeader");
-  // sessionStorage.removeItem("updateActivity");
   var rightHeaderText = document.querySelectorAll("#rightHeaderText");
   var leftHeaderText = document.getElementById("leftHeaderText");
   var updateActivity = JSON.parse(localStorage.updateActivity);
   leftHeaderText.innerHTML = localStorage.landHeader;
   for (i in rightHeaderText) {
-    rightHeaderText[i].innerHTML = "ความก้าวหน้า";
+    rightHeaderText[i].innerHTML = '&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;ความก้าวหน้า';
   }
   activityName.value = updateActivity.task;
   activityName.disabled = true;
@@ -176,9 +187,8 @@ function updateProgressUI() {
   ? new Date(updateActivity.end_date)
   : new Date(updateActivity.start_date);
   activityDate.value = (`${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()+543}`)
-    
-  additionNote.value = updateActivity.notes;
 
+  additionNote.value = updateActivity.notes;
   for (i in updateActivity.images) {
     var filename = updateActivity.images[i];
     outputImageUI(headerImage + filename, filename);
@@ -208,7 +218,7 @@ function outputImageUI(canvas, filename) {
   // delete icon
   var deleteBt = document.createElement("img");
   deleteBt.setAttribute("class", "delete-img-btn");
-  deleteBt.setAttribute("src", "build/img/close.png");
+  deleteBt.setAttribute("src", "images/close.png");
   deleteBt.onclick = (function(arg, index) {
     return function() {
       console.log(index);
