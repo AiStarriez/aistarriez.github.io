@@ -1,6 +1,6 @@
 #weatherTodayDiv{
- background-color: rgb(233, 233, 233);
- border-color: rgb(233, 233, 233);
+ /*background-color: rgb(233, 233, 233);
+ border-color: rgb(233, 233, 233);*/
  border-radius: 10px;
  width: 100%
 }
@@ -88,15 +88,12 @@
 }
 
 #currentConditionDiv{
-  background-color: rgb(233, 233, 233);
-  border-color: rgb(233, 233, 233);
+  /*background-color: rgb(233, 233, 233);
+  border-color: rgb(233, 233, 233);*/
   border-radius: 10px;
   width: 100%
  }
 
- #dateDiv{
-
- }
 
  #weatherIcon, #currentIcon{
    padding-top: 1%;
@@ -124,19 +121,49 @@
   padding-bottom: 5%;
  }
 
+ #current-table{
+   text-align: left;
+   width: 100%;
+   margin-left: 1em;
+   margin-top: 1em;
+   margin-right: 1em;
+ }
+
+ #fiveDayWeather{
+  text-align: center;
+  width: 100%;
+  margin-left: 1em;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+#fiveDayWeather tr td{
+  padding-left: 1em;
+  padding-right: 1em;
+}
  #weatherTextDiv{
 
  }
 
- #temperatureDiv{}
+ #temperatureDiv{
 
- #windSpeedDiv{}
+ }
 
- #humidityDiv{}
+ #windSpeedDiv{
 
- #pressureDiv{}
+ }
 
- #cloudCoverDiv{}
+ #humidityDiv{
+
+ }
+
+ #pressureDiv{
+
+ }
+
+ #cloudCoverDiv{
+
+ }
 
  @media screen and (max-width: 992px) {
   #icon{
