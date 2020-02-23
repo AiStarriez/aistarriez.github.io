@@ -106,6 +106,10 @@ function initBtn() {
       $("#err-div-modal").show();
     }
   });
+
+  $("#save-start-cycle").click(async () =>{
+    var plantName = document
+  })
 }
 
 
