@@ -172,14 +172,14 @@ function displayFivesDayWeather(data) {
         "<td>" + weatherWindDirection[i] + "</td>" +
         "</tr>"
     }
-    /*var table = "<table id=\"current-table\" class=\"text-secondary\">" + 
+    /*var table = "<table id=\"current-table\" class=\"text-secondary\">" +
     "<tr><td>" + fullDate + "</td><td></td><td></td></tr>" +
     "<tr><td>" + weatherText[i] + "</td><td></td><td></td></tr>" +
     "<tr><td><i class=\"fas fa-thermometer-quarter\"></i>&nbsp;&nbsp;&nbsp;อุณหภูมิสูงสุด</td> <td>" + maxTemperature[i] + "</td> <td> องศาเซลเซียส</td> </tr>" +
     "<tr><td><i class=\"fas fa-thermometer-quarter\"></i>&nbsp;&nbsp;&nbsp;อุณหภูมิต่ำสุด</td> <td>" +  minTemperature[i] + "</td> <td> องศาเซลเซียส</td> </tr>" +
     "<tr><td><i class=\"fas fa-sun\"></i>&nbsp;&nbsp;&nbsp;จำนวนชั่วโมงที่แดดออก</td> <td>" +  hoursOfSun[i] + "</td> <td> ชั่วโมง</td> </tr>" +
     "<tr><td><i class=\"fas fa-wind\"></i>&nbsp;&nbsp;&nbsp;ความเร็วลม</td> <td>" + weatherWindDirection[i] +" "+ weatherWindSpeedKmPerHour[i] + " </td><td> กิโลเมตร/ชั่วโมง" + " </td></tr>"*/
-    //var table = "<table id=\"current-table\" class=\"text-secondary\">" + 
+    //var table = "<table id=\"current-table\" class=\"text-secondary\">" +
 
 
     //$('#fiveDayWeather').append(forecastTable)
@@ -191,10 +191,10 @@ function displayFivesDayWeather(data) {
   //date formatting based on week days and months
 
 
-  //forecast for #weatherTodayDiv 
+  //forecast for #weatherTodayDiv
   /*var day = weekDays[(new Date(weatherDay[i])).getDay()]
   var date = new Date(weatherDay[i]).getDate()
-  var month = months[new Date(weatherDay[i]).getMonth()] 
+  var month = months[new Date(weatherDay[i]).getMonth()]
   var year = new Date(weatherDay[i]).getFullYear()+543
 
 var fullDate = day + " " + date + " " + month + " " + year*/
@@ -317,7 +317,7 @@ async function run() {
   callFiveDaysWeather(locationKey);
 
   document.getElementById("fiveDaysForecastDiv").style.display = "none";
-  document.getElementById("currentForecastDiv").style.display = "none";
+  document.getElementById("currentForecastDiv").style.display = "block";
 
   var currentDate = new Date().toISOString();
   currentDate = currentDate.substr(0, 10)
