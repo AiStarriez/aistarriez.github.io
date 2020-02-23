@@ -20,19 +20,22 @@ document.getElementById("modal-loading").style.display = "block";
 async function initMap() {
   var landsPercent = localStorage["percent-lands"] || undefined;
   cacheLands = localStorage["lands"] || undefined;
-  if (landsPercent != undefined) {
+
+  if (landsPercent != undefined || cacheLands) {
     await loopCreatePie(landsPercent , cacheLands);
   }
   else {
     cacheLands = await getCacheLands(cacheLands);
     if(cacheLands){
        await getPercentOpCycle(cacheLands);
-       location.reload();
+           location.reload();
     }else{
       blankMap()
+      document.getElementById("widget").style.display = "none";
+      document.getElementById("img-out").style.display = "none";
       document.getElementById("modal-loading").style.display = "none";
+
     }
-    
   }
 }
 
@@ -106,9 +109,7 @@ function blankMap(){
     streetViewControl: false,
     mapTypeId: "satellite"
   });
-  infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
+
 }
 
 async function getLatLngDB() {
@@ -324,6 +325,7 @@ async function toCanvasMarker(divArr , landsPercent) {
     document.getElementById("img-out").style.display = "none";
     cacheLands = await getCacheLands(cacheLands);
     var init = await createMap(cacheLands);
+    // blankMap()
     document.getElementById("modal-loading").style.display = "none";
   }
 }
