@@ -34,7 +34,6 @@ async function initMap() {
       document.getElementById("widget").style.display = "none";
       document.getElementById("img-out").style.display = "none";
       document.getElementById("modal-loading").style.display = "none";
-
     }
   }
 }

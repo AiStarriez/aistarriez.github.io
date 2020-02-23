@@ -50,8 +50,9 @@ $("#modal-success").on("hidden.bs.modal", function() {
 
 $("#saveBtn").click(function() {
   $("#modal-default").modal("hide");
-  document.getElementById("bg-loading").style.display = "block";
-  if (polygonEditLand != null) {
+  $("#loader").html(loadingDiv())
+  document.getElementById("modal-loading").style.display = "block";
+    if (polygonEditLand != null) {
     apiAddLands("PUT", landId);
   } else {
     apiAddLands("POST", ownerId);
@@ -251,7 +252,7 @@ function getProvinceDistrict(geocoder, getlatlng) {
 
 function apiAddLands(typ, params) {
   var body = {
-    name: landNameInput[0].value,
+    name: landNameInput[0].value != "" ? landNameInput[0].value : landNameInput[1].value,
     province: province,
     district: district,
     area: landAreaInput[0].value,
@@ -285,22 +286,8 @@ function setNewSession() {
   localStorage.removeItem("percent-lands");
   localStorage.removeItem("poly-lands-main");
   localStorage.removeItem("lands");
-  document.getElementById("bg-loading").style.display = "none";
+  document.getElementById("modal-loading").style.display = "none";
   $("#modal-success").modal("show");
-  // var url = "/lands/" + ownerId;
-  // var body = "";
-  // var getAllLands = connectToServer(url, body, "GET");
-  // getAllLands.then(
-  //   docs => {
-  //     console.log("setNewSession done")
-  //     setCacheData("lands", docs);
-
-  //   },
-  //   function(e) {
-  //     // 404 owner not found
-  //     console.log(e);
-  //   }
-  // );
 }
 
 // check modal visibility
