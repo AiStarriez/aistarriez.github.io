@@ -27,11 +27,12 @@ async function initMap() {
     cacheLands = await getCacheLands(cacheLands);
     if(cacheLands){
        await getPercentOpCycle(cacheLands);
+       location.reload();
     }else{
       blankMap()
       document.getElementById("modal-loading").style.display = "none";
     }
-    location.reload();
+    
   }
 }
 
