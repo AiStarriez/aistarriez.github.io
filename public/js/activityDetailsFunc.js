@@ -102,6 +102,7 @@ async function getManagerName(managerId){
   var managers = localStorage.managers;
   if(managers){
     managers = JSON.parse(managers);
+    var findManager  = managers.managers.find(({_id}) => _id === managerId);
   }else{
     try {
       var url = "/managers/all/" + ownerId;
@@ -110,12 +111,11 @@ async function getManagerName(managerId){
       var getManagerAPI = await connectToServer(url, body, typ);
       managers = getManagerAPI.managers;
       localStorage.managers = JSON.stringify(getManagerAPI);
+      var findManager  = managers.find(({_id}) => _id === managerId);
     } catch (err) {
       console.log(err);
     }
   }
-  console.log(managers)
-  var findManager  = managers.managers.find(({_id}) => _id === managerId);
   return findManager.name
 
 }

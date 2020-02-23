@@ -277,7 +277,7 @@
             <div id="activityProgress">
               <div id="activityTitle">
                 <p id="activity">กิจกรรม</p>
-                <a id="viewAllActivities" href="#">ดูทั้งหมด</a>
+                <a id="viewAllActivities" href="activities.html">ดูทั้งหมด</a>
               </div>
               <div id="showActivity">
                 <table class="table" id="activityTable">
@@ -376,7 +376,7 @@
                 <div class="form-group">
                   <p style="margin-bottom:0px">ผลผลิต(หน่วย)<span class="sp-require">&nbsp;*</span></p>
                   <div class="input-group">
-                    <input required id="real-product" type="text" class="form-control"
+                    <input required id="real-product" type="text" class="form-control" autocomplete="off"
                       data-inputmask="'mask': ['9','99','999','9999','99999','999999','9999999']" data-mask=""
                       im-insert="true">
                   </div>
@@ -412,18 +412,17 @@
                   <div class="dropdown-menu" role="menu" id="plant-dropdown">
                   </div>
                 </div>
-                <p style="color:red; display: none" id="modal-error-text">*กรุณาเลือกที่ดิน</p>
                 <!-- /.input group -->
               </div>
               <div class="form-group">
                 <p style="margin-bottom:0px">ผลผลิตที่คาดหวัง(หน่วย)<span class="sp-require">&nbsp;*</span></p>
                 <div class="input-group">
-                  <input required id="real-product" type="text" class="form-control"
+                  <input required id="expect-product" type="text" class="form-control"
                     data-inputmask="'mask': ['9','99','999','9999','99999','999999','9999999']" data-mask=""
                     im-insert="true">
                 </div>
               </div>
-              <div id="err-div-modal" class="text-danger"></div>
+              <p style="color:red; display: none" id="modal-error-text">*กรุณากรอกข้อมูลให้ครบถ้วน</p>
             </form>
             <div style="width: 100%; text-align:center;">
               <button id="save-start-cycle" class="btn bg-olive">&nbsp;เริ่มการดูแล&nbsp;</button>

@@ -6,25 +6,25 @@ localStorage.removeItem("landEmergency");
 localStorage.removeItem("by-date");
 localStorage.removeItem("by-name");
 
+$("#loader").html(loadingDiv())
+document.getElementById("modal-loading").style.display = "block";
+
 async function apiGetactivities() {
   var sortBy = window.sortBy
-  var body;
+  var url;
   if (sortBy == "by-date") {
-    body = {
-      byDate: 1
-    };
+    url = `/activities/${ownerId}?byDate=1`
   } else {
-    body = {
-      byLands: 1
-    };
+    url = `/activities/${ownerId}?byLands=1`
   }
   try {
-    var url = "/activities/" + ownerId;
     var typ = "GET";
-    var getActivities = await connectToServer(url, JSON.stringify(body), typ);
+    var getActivities = await connectToServer(url, "", typ);
+    console.log(getActivities)
     localStorage.setItem(sortBy, JSON.stringify(getActivities))
     return getActivities
   } catch (err) {
+    console.log(err)
     return false;
   }
 }
@@ -276,8 +276,11 @@ async function selPageUI() {
 
 async function run() {
   window.sortBy = "by-name";
+  console.log("SEL")
   await selPageUI();
   initBtn();
   getLandName();
+  $("#loader").html(loadingDiv())
+  document.getElementById("modal-loading").style.display = "none";
 }
 run();

@@ -15,7 +15,17 @@ hash = hash.replace("#", "");
 
 run();
 async function getallLands() {
-  var allLands = JSON.parse(localStorage["lands"]);
+  if (localStorage["lands"]) {
+    var allLands = JSON.parse(localStorage["lands"]);
+  } else {
+    try {
+      var url = `/lands/${ownerId}`
+      var allLands = await connectToServer(url, "", "GET");
+      localStorage.lands = JSON.stringify(allLands)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   currentLand = allLands.find(x => x.land._id === hash);
   console.log(currentLand.operation);
 }
@@ -35,7 +45,7 @@ function displayActivity() {
   var lateActivity = 0;
   for (i = 0; i < allActivities.length; i++) {
     var eachActivity = allActivities[i];
-    if (eachActivity.status == "ยังไม่เสร็จ") {
+    if (eachActivity.status.includes("ไม่")) {
       notDoneActivity++;
     } else if (eachActivity.status == "กำลังดำเนินการ") {
       inProgressActivity++;
@@ -56,7 +66,6 @@ function displayActivity() {
 function getPlantName(allPlant) {
   var plantNameDropdown = document.getElementById("plant-dropdown");
   var plantNameFilter = document.getElementById("plant-name-filter");
-
   for (i in allPlant) {
     var fName = document.createElement("a");
     fName.innerHTML = allPlant[i].name
@@ -65,14 +74,34 @@ function getPlantName(allPlant) {
     plantNameDropdown.appendChild(fName);
     fName.onclick = (function (arg) {
       return function () {
+        window.plantSel = null
         $("#modal-error-text").css("display", "none");
-        plantNameFilter.innerHTML = arg;
-        localStorage.landEmergency = landNameArr[arg];
+        plantNameFilter.innerHTML = arg.name;
+        window.plantSel = arg
       };
-    })(allPlant[i].name);
+    })(allPlant[i]);
   }
 }
 
+async function startCycleAPI(plantId, expected_product) {
+  try {
+    var url = `/operations/start/${currentLand.land._id}?id=${ownerId}`;
+    var body = {
+      plant: plantId,
+      start_date: new Date().toISOString(),
+      expected_product: expected_product
+    }
+    console.log(url)
+    var startCycle = await connectToServer(url, JSON.stringify(body), "POST");
+    localStorage.removeItem('lands');
+    run()
+    $("#modal-start").modal('hide')
+  } catch (err) {
+    console.log(err)
+  }
+
+
+}
 
 function selDisplay() {
   if (currentLand.operation.logs.plant_id) {
@@ -100,15 +129,37 @@ function initBtn() {
     var realProduct = document.getElementById("real-product");
     if (harvestedDate.value && realProduct.checkValidity()) {
       $("#err-div-modal").hide();
-      var url = "/"
+      var harvDate = harvestedDate.value.split("/")
+      harvDate[2] -= 543
+      var endDate = new Date(`${harvDate[2]}-${harvDate[1]}-${harvDate[0]}`).toISOString();
+
+      try{
+        var url = "/operations/harvested/" + currentLand.land._id;
+        var body = {end_date : endDate , real_product : parseInt(realProduct.value)}
+        var harvested = await connectToServer(url , JSON.stringify(body) , "POST");
+        console.log("success")
+      }catch(err){
+        console.log(err)
+        if(err.status == 200){
+
+        }
+      }
+
     } else {
       $("#err-div-modal").html("*กรุณากรอกข้อมูลให้ครบถ้วน")
       $("#err-div-modal").show();
     }
   });
 
-  $("#save-start-cycle").click(async () =>{
-    var plantName = document
+  $("#save-start-cycle").click(async () => {
+    var plantSel = window.plantSel
+    var expected_product = document.getElementById("expect-product");
+    if (plantSel && expected_product.checkValidity()) {
+      $("#modal-error-text").css("display", "none");
+      startCycleAPI(plantSel._id, parseInt(expected_product.value))
+    } else {
+      $("#modal-error-text").css("display", "block");
+    }
   })
 }
 
@@ -141,6 +192,6 @@ async function run() {
     $("#no-data-div").show()
     $("#data-div").hide()
   }
-
-
 }
+
+initBtn()
