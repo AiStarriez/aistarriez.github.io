@@ -32,7 +32,7 @@ async function initBtn() {
         var manager = managers.find(({
           _id
         }) => _id == activity.manager_id);
-        var managerName = manager.name
+        var managerName = manager ? manager.name : "-"
         date = dateThai(new Date(date).toLocaleString(), false, true)
         date = activity.status == 'ยังไม่ทำ' ? '-' : date
         var acDetails = [date, activity.task, managerName, activity.status];
