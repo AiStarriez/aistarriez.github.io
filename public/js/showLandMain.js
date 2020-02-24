@@ -14,7 +14,7 @@ localStorage.removeItem("polygonEditLand");
 var contentString =
   '<div><p>ทดสอบ</p><a href="addLandPage.html">แก้ไข</a></div>';
 
-  $("#loader").html(loadingDiv())
+$("#loader").html(loadingDiv())
 document.getElementById("modal-loading").style.display = "block";
 
 async function initMap() {
@@ -22,14 +22,13 @@ async function initMap() {
   cacheLands = localStorage["lands"] || undefined;
 
   if (landsPercent != undefined || cacheLands) {
-    await loopCreatePie(landsPercent , cacheLands);
-  }
-  else {
+    await loopCreatePie(landsPercent, cacheLands);
+  } else {
     cacheLands = await getCacheLands(cacheLands);
-    if(cacheLands){
-       await getPercentOpCycle(cacheLands);
-           location.reload();
-    }else{
+    if (cacheLands) {
+      await getPercentOpCycle(cacheLands);
+      location.reload();
+    } else {
       blankMap()
       document.getElementById("widget").style.display = "none";
       document.getElementById("img-out").style.display = "none";
@@ -38,33 +37,38 @@ async function initMap() {
   }
 }
 
-async function loopCreatePie(landsPercent,cacheLands) {
+async function loopCreatePie(landsPercent, cacheLands) {
   cacheLands = JSON.parse(cacheLands)
   landsPercent = JSON.parse(landsPercent);
-  for (let i = 0; i < landsPercent.length; i++) {
-    var findLand = cacheLands.find(({land}) => land._id == landsPercent[i].land_id)
-    var percent = landsPercent[i].percent || 0;
+  divArr = []
+  console.log(cacheLands)
+
+  for (let i = 0; i < cacheLands.length; i++) {
+    var findLand = landsPercent.find(x => x.land_id == cacheLands[i].land._id)
+    var percent = findLand.percent || 0;
     percent = parseInt(percent)
-    landsPercent[i].land_name = findLand.land.name;
-    landsPercent[i].percent = percent;
-    createPie(landsPercent[i], i%5);
+    findLand.land_name = cacheLands[i].land.name;
+    findLand.percent = percent;
+    createPie(findLand, i % 5);
   }
-  toCanvasMarker(divArr , landsPercent);
+  toCanvasMarker(divArr);
 }
 
 async function getCacheLands() {
-   var cacheLands = await getLatLngDB();
-    if (cacheLands != null) {
-      localStorage.lands = JSON.stringify(cacheLands);
-    }else{
-      return null
-    }
+  var cacheLands = await getLatLngDB();
+  if (cacheLands != null) {
+    localStorage.lands = JSON.stringify(cacheLands);
+  } else {
+    return null
+  }
   return cacheLands;
 }
 
 async function getPercentOpCycle(cacheLands) {
   try {
-    var body = { qland: getLandsID(cacheLands) };
+    var body = {
+      qland: getLandsID(cacheLands)
+    };
     var typ = "POST";
     var url = "/operations/percent";
     var getPercent = await connectToServer(url, JSON.stringify(body), typ);
@@ -74,10 +78,13 @@ async function getPercentOpCycle(cacheLands) {
     console.log(err);
   }
 }
+
 function getLandsID(cacheLands) {
   var landID = [];
   for (var i = 0; i < cacheLands.length; i++) {
-    var id = { land_id: cacheLands[i].land._id };
+    var id = {
+      land_id: cacheLands[i].land._id
+    };
     landID.push(id);
   }
   return landID;
@@ -99,7 +106,7 @@ async function createMap(cacheLands) {
   getPolygonLands(null);
 }
 
-function blankMap(){
+function blankMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: defultLocation,
     zoom: 16,
@@ -135,12 +142,12 @@ async function getPolygonLands(landArr) {
     var body = JSON.stringify(cacheLands);
     var polygonMain = connectToServer(url, body, "POST");
     polygonMain.then(poly => {
-      console.log(poly);
-      setCacheData("poly-lands-main", poly.polygonLands);
-      createMapComponent(poly.polygonLands, cacheLands);
-      drawingPolygonLands(poly.polygonLands, landArr);
-    }),
-      function(e) {
+        console.log(poly);
+        setCacheData("poly-lands-main", poly.polygonLands);
+        createMapComponent(poly.polygonLands, cacheLands);
+        drawingPolygonLands(poly.polygonLands, landArr);
+      }),
+      function (e) {
         console.log(e);
       };
   }
@@ -163,66 +170,67 @@ function getPlantsActivity(cacheLandsIndex, activityID) {
       }
     }
   }
-  return { plantName, task };
+  return {
+    plantName,
+    task
+  };
 }
 
 function createMapComponent(poly, cacheLands) {
   mapPolyPieColor = [];
   var polygonLands = poly;
   var l;
-  for (let i = 0; i < polygonLands.length; i++) {
-    for (let j = 0; j < cacheLands.length; j++) {
-      if (polygonLands[i].land_id == cacheLands[j].land._id) {
-        var activities = cacheLands[j].operation.logs.activities;
-        activities.sort(dynamicSort("status"));
-        var lastActivity = null;
-        try {
-          lastActivity = activities[activities.length - 1].task;
-        } catch (err) {}
 
-        var activityID = activities[activities.length - 1];
+  polygonLands.forEach((polygon, i) => {
+    var land = cacheLands.find(cache => cache.land._id == polygon.land_id);
+    var activities = land.operation.logs.activities;
+    activities.sort(dynamicSort("status"));
+    var lastActivity = null;
+    try {
+      lastActivity = activities[activities.length - 1].task;
+    } catch (err) {}
 
-        plantObj = getPlantsActivity(cacheLands[j], activityID);
-        var plantName = plantObj.plantName || "ยังไม่ปลูกพืช";
-        if (lastActivity == null || lastActivity == undefined) {
-          lastActivity = plantObj.task || "ไม่มีกิจกรรม";
-        } else {
-          lastActivity = activities[activities.length - 1].task;
-        }
+    var activityID = activities[activities.length - 1];
 
-        var latlngInLand = polygonLands[i].lat_lng;
-        l = new google.maps.Polygon({
-          paths: latlngInLand,
-          strokeColor:colorPieArr[i % 5],
-          strokeOpacity: 0.6,
-          strokeWeight: 4,
-          fillColor: colorPieArr[i % 5],
-          fillOpacity: 0.6
-        });
-        var popupMap =
-          "<h5>" +
-          cacheLands[j].land.name +
-          "</h5><p>พืช : " +
-          plantName +
-          "</p><p>กิจกรรมล่าสุด : " +
-          lastActivity +
-          '</p><hr><a href="landDetail.html#' +
-          cacheLands[j].land._id +
-          '">ดูแบบละเอียด</a><br><a href="addland.html#' +
-          cacheLands[j].land._id +
-          '">แก้ไขขนาด</a>';
-        var obj = {
-          land_id: polygonLands[i].land_id,
-          poly: l,
-          pie: canvasArr[polygonLands[i].land_id],
-          position: polygonLands[i].center,
-          popup: popupMap
-        };
-        mapPolyPieColor.push(obj);
-        // }
-      }
+    plantObj = getPlantsActivity(land, activityID);
+    var plantName = plantObj.plantName || "ยังไม่ปลูกพืช";
+    if (lastActivity == null || lastActivity == undefined) {
+      lastActivity = plantObj.task || "ไม่มีกิจกรรม";
+    } else {
+      lastActivity = activities[activities.length - 1].task;
     }
-  }
+
+    var latlngInLand = polygon.lat_lng;
+    l = new google.maps.Polygon({
+      paths: latlngInLand,
+      strokeColor: colorPieArr[i % 5],
+      strokeOpacity: 0.6,
+      strokeWeight: 4,
+      fillColor: colorPieArr[i % 5],
+      fillOpacity: 0.6
+    });
+    var popupMap =
+      "<h5>" +
+      land.land.name +
+      "</h5><p>พืช : " +
+      plantName +
+      "</p><p>กิจกรรมล่าสุด : " +
+      lastActivity +
+      '</p><hr><a href="landDetail.html#' +
+      land.land._id +
+      '">ดูแบบละเอียด</a><br><a href="addland.html#' +
+      land.land._id +
+      '">แก้ไขขนาด</a>';
+    var obj = {
+      land_id: polygon.land_id,
+      poly: l,
+      pie: canvasArr[polygon.land_id],
+      position: polygon.center,
+      popup: popupMap
+    };
+    mapPolyPieColor.push(obj);
+  })
+
 }
 
 async function drawingPolygonLands(poly, landArr) {
@@ -253,8 +261,8 @@ async function drawingPolygonLands(poly, landArr) {
         google.maps.event.addListener(
           marker,
           "click",
-          (function(marker, i) {
-            return function() {
+          (function (marker, i) {
+            return function () {
               var context = "<div>" + mapPolyPieColor[i].popup + "</div>";
               infowindow.setContent(context);
               infowindow.open(map, marker);
@@ -277,7 +285,7 @@ async function drawingPolygonLands(poly, landArr) {
 }
 
 function addListenersOnPolygon(polygon) {
-  google.maps.event.addListener(polygon, "click", function(event) {
+  google.maps.event.addListener(polygon, "click", function (event) {
     alert(polygon.indexID);
   });
 }
@@ -306,25 +314,24 @@ async function createPie(landPercent, color) {
   pie.appendChild(number);
   parent.appendChild(pie);
   widget.appendChild(parent);
-  divArr.push(parent);
+  divArr.push({div:parent , id:landPercent.land_id});
 }
 
-async function toCanvasMarker(divArr , landsPercent) {
+async function toCanvasMarker(divArr) {
   if (couterMarker < divArr.length) {
-    await html2canvas(divArr[couterMarker], {
+     html2canvas(divArr[couterMarker].div, {
       onrendered: function(canvas) {
         $("#img-out").append(canvas);
-        canvasArr[landsPercent[couterMarker].land_id] = canvas.toDataURL();
+        canvasArr[divArr[couterMarker].id] = canvas.toDataURL();
         couterMarker++;
-        toCanvasMarker(divArr , landsPercent);
+        toCanvasMarker(divArr);
       }
-    });
+    })
   } else {
     document.getElementById("widget").style.display = "none";
     document.getElementById("img-out").style.display = "none";
     cacheLands = await getCacheLands(cacheLands);
     var init = await createMap(cacheLands);
-    // blankMap()
     document.getElementById("modal-loading").style.display = "none";
   }
 }

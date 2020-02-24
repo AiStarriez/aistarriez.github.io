@@ -24,7 +24,7 @@ var collectedActivityStatus;
 var collectedAdditionNote;
 var collectedActivityImage = [];
 
-$(window, document).ready(function() {
+$(window, document).ready(function () {
   if (indexLand == 4) {
     window.location = "activities.html";
   }
@@ -33,7 +33,7 @@ $(window, document).ready(function() {
   }
 });
 
-$("#toIndexBtn").click(function() {
+$("#toIndexBtn").click(function () {
   console.log("toIndexBtn clicked");
   window.location = "activitydetails.html#" + activityId + "&" + landId;
 });
@@ -101,32 +101,40 @@ async function fileUpload() {
     if (activityId) {
       updateProgressAPI();
     } else {
-      emergencyAPI();
+      await emergencyAPI();
     }
   }
 }
 
-function emergencyAPI() {
-  var url = "/activities/emergency/" + landId;
-  var body = JSON.stringify({
-    task: collectedActivityName,
-    images: collectedActivityImage,
-    activity_type: "emergency",
-    end_date: collectedActivityDate,
-    status: collectedActivityStatus,
-    notes: collectedAdditionNote,
-    manager_id: managerId
-  });
-  var postNewActivity = connectToServer(url, body, "POST");
+async function emergencyAPI() {
+  try {
+    localStorage.removeItem("by-name");
+    localStorage.removeItem("lands");
+    localStorage.removeItem("percent-lands");
+    localStorage.removeItem("poly-lands-main")
+
+    var url = "/activities/emergency/" + landId;
+    var body = JSON.stringify({
+      task: collectedActivityName,
+      images: collectedActivityImage,
+      activity_type: "emergency",
+      end_date: collectedActivityDate,
+      status: collectedActivityStatus,
+      notes: collectedAdditionNote,
+      manager_id: managerId
+    });
+    var postNewActivity = await connectToServer(url, body, "POST");
+    window.location = "activities.html"
+  } catch (err) {
+    window.location = "activities.html"
+  }
+
   postNewActivity.then(
     docs => {
       console.log("create activity success " + docs);
-      localStorage.removeItem("by-name");
-      localStorage.removeItem("lands");
-      localStorage.removeItem("percent-lands");
-      localStorage.removeItem("poly-lands-main")
+
     },
-    function(e) {
+    function (e) {
       // 404 owner not found
       console.log(managerId);
       console.log(collectedActivityName);
@@ -140,33 +148,33 @@ function emergencyAPI() {
 }
 
 async function updateProgressAPI() {
-  try{
+  try {
     var url = "/activities/" + landId + "?activity=" + activityId;
-  console.log("collectedActivityDate" , collectedActivityDate)
-  var body = JSON.stringify({
-    task: collectedActivityName,
-    images: collectedActivityImage,
-    end_date: collectedActivityDate,
-    status: collectedActivityStatus,
-    notes: collectedAdditionNote,
-    manager_id: managerId
-  });
+    console.log("collectedActivityDate", collectedActivityDate)
+    var body = JSON.stringify({
+      task: collectedActivityName,
+      images: collectedActivityImage,
+      end_date: collectedActivityDate,
+      status: collectedActivityStatus,
+      notes: collectedAdditionNote,
+      manager_id: managerId
+    });
 
-  var postNewActivity = await connectToServer(url, body, "POST");
-  localStorage.removeItem("by-name");
-  localStorage.removeItem("lands");
-  localStorage.removeItem("percent-lands");
-  localStorage.removeItem("poly-lands-main")
-  window.location =
-    "activitydetails.html?" + activityId + "&" + landId;
-  }catch(err){
+    var postNewActivity = await connectToServer(url, body, "POST");
+    localStorage.removeItem("by-name");
+    localStorage.removeItem("lands");
+    localStorage.removeItem("percent-lands");
+    localStorage.removeItem("poly-lands-main")
+    window.location =
+      "activitydetails.html?" + activityId + "&" + landId;
+  } catch (err) {
     console.log(err);
     localStorage.removeItem("by-name");
     localStorage.removeItem("lands");
     localStorage.removeItem("percent-lands");
     localStorage.removeItem("poly-lands-main")
     window.location =
-    "activitydetails.html?" + activityId + "&" + landId;
+      "activitydetails.html?" + activityId + "&" + landId;
   }
 
 }
@@ -183,9 +191,9 @@ function updateProgressUI() {
   }
   activityName.value = updateActivity.task;
   activityName.disabled = true;
-  dbDate = updateActivity.end_date != null
-  ? new Date(updateActivity.end_date)
-  : new Date(updateActivity.start_date);
+  dbDate = updateActivity.end_date != null ?
+    new Date(updateActivity.end_date) :
+    new Date(updateActivity.start_date);
   activityDate.value = (`${dbDate.getDate()}/${dbDate.getMonth() + 1}/${dbDate.getFullYear()+543}`)
 
   additionNote.value = updateActivity.notes;
@@ -209,7 +217,7 @@ function outputImageUI(canvas, filename) {
   imageShow.setAttribute("class", "myImg");
   imageShow.setAttribute("src", canvas);
   imageShow.setAttribute("alt", filename);
-  imageShow.onclick = function() {
+  imageShow.onclick = function () {
     modal.style.display = "block";
     modalImg.src = this.src;
     captionText.innerHTML = this.alt;
@@ -219,8 +227,8 @@ function outputImageUI(canvas, filename) {
   var deleteBt = document.createElement("img");
   deleteBt.setAttribute("class", "delete-img-btn");
   deleteBt.setAttribute("src", "images/close.png");
-  deleteBt.onclick = (function(arg, index) {
-    return function() {
+  deleteBt.onclick = (function (arg, index) {
+    return function () {
       console.log(index);
       for (i in pictureArray) {
         if (pictureArray[i].name == index) {
@@ -237,4 +245,3 @@ function outputImageUI(canvas, filename) {
   div.appendChild(children);
   plantListContent.insertBefore(div, null);
 }
-
