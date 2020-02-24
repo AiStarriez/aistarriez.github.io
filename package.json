@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/AiStarriez/aistarriez.github.io#readme",
   "dependencies": {
-    "admin-lte": "^3.0.2",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "express-session": "^1.17.0",

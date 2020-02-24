@@ -142,7 +142,7 @@ function checkUserDB(email) {
   var loginDB = connectToServer(u, JSON.stringify(body), typ);
   loginDB.then(
     docs => {
-      setCacheData("role", "owner");
+      localStorage.role = "owner"
       localStorage.email = docs.email;
       localStorage.user = JSON.stringify(docs);
       localStorage.ownerId = docs._id;
@@ -179,7 +179,7 @@ function checkManagerDB(managerId) {
       localStorage.user = JSON.stringify(docs);
       localStorage.ownerId = docs.owner_id;
       localStorage.managerId = managerId;
-      setCacheData("role", "manager");
+      localStorage.role = "manager"
       onSignInSubmit();
     },
     function(e) {

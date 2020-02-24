@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  web:
+    container_name: pp-font
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pp-font:latest
+    ports:
+      - '3000:3000'
+    environment:
+      - TZ=Asia/Bangkok
