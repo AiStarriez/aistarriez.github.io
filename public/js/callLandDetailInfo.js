@@ -132,16 +132,22 @@ function initBtn() {
       var harvDate = harvestedDate.value.split("/")
       harvDate[2] -= 543
       var endDate = new Date(`${harvDate[2]}-${harvDate[1]}-${harvDate[0]}`).toISOString();
-
-      try{
+      localStorage.removeItem("lands");
+      localStorage.removeItem("percent-lands")
+      try {
         var url = "/operations/harvested/" + currentLand.land._id;
-        var body = {end_date : endDate , real_product : parseInt(realProduct.value)}
-        var harvested = await connectToServer(url , JSON.stringify(body) , "POST");
+        var body = {
+          end_date: endDate,
+          real_product: parseInt(realProduct.value)
+        }
+        var harvested = await connectToServer(url, JSON.stringify(body), "POST");
         console.log("success")
-      }catch(err){
-        console.log(err)
-        if(err.status == 200){
+        window.location = `reportPerLand.html?land=${currentLand.land._id}`
 
+      } catch (err) {
+        console.log(err)
+        if (err.status == 200) {
+          window.location = `reportPerLand.html?land=${currentLand.land._id}`
         }
       }
 

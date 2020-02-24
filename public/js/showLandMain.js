@@ -23,6 +23,7 @@ async function initMap() {
 
   if (landsPercent != undefined || cacheLands) {
     await loopCreatePie(landsPercent, cacheLands);
+    cacheLands = JSON.parse(cacheLands)
   } else {
     cacheLands = await getCacheLands(cacheLands);
     if (cacheLands) {
@@ -38,10 +39,10 @@ async function initMap() {
 }
 
 async function loopCreatePie(landsPercent, cacheLands) {
+  couterMarker = 0
   cacheLands = JSON.parse(cacheLands)
   landsPercent = JSON.parse(landsPercent);
   divArr = []
-  console.log(cacheLands)
 
   for (let i = 0; i < cacheLands.length; i++) {
     var findLand = landsPercent.find(x => x.land_id == cacheLands[i].land._id)
@@ -321,6 +322,7 @@ async function toCanvasMarker(divArr) {
   if (couterMarker < divArr.length) {
      html2canvas(divArr[couterMarker].div, {
       onrendered: function(canvas) {
+        console.log("success")
         $("#img-out").append(canvas);
         canvasArr[divArr[couterMarker].id] = canvas.toDataURL();
         couterMarker++;
@@ -328,9 +330,9 @@ async function toCanvasMarker(divArr) {
       }
     })
   } else {
+    console.log(cacheLands)
     document.getElementById("widget").style.display = "none";
     document.getElementById("img-out").style.display = "none";
-    cacheLands = await getCacheLands(cacheLands);
     var init = await createMap(cacheLands);
     document.getElementById("modal-loading").style.display = "none";
   }
