@@ -128,23 +128,6 @@ async function emergencyAPI() {
   } catch (err) {
     window.location = "activities.html"
   }
-
-  postNewActivity.then(
-    docs => {
-      console.log("create activity success " + docs);
-
-    },
-    function (e) {
-      // 404 owner not found
-      console.log(managerId);
-      console.log(collectedActivityName);
-      console.log(collectedActivityDate);
-      console.log(collectedActivityStatus);
-      console.log(collectedAdditionNote);
-      console.log(collectedActivityImage);
-      console.log(e);
-    }
-  );
 }
 
 async function updateProgressAPI() {
