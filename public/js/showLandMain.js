@@ -22,8 +22,8 @@ async function initMap() {
   cacheLands = localStorage["lands"] || undefined;
 
   if (landsPercent != undefined || cacheLands) {
-    await loopCreatePie(landsPercent, cacheLands);
     cacheLands = JSON.parse(cacheLands)
+    await loopCreatePie(landsPercent, cacheLands);
   } else {
     cacheLands = await getCacheLands(cacheLands);
     if (cacheLands) {
@@ -40,7 +40,6 @@ async function initMap() {
 
 async function loopCreatePie(landsPercent, cacheLands) {
   couterMarker = 0
-  cacheLands = JSON.parse(cacheLands)
   landsPercent = JSON.parse(landsPercent);
   divArr = []
 
@@ -104,7 +103,10 @@ async function createMap(cacheLands) {
   infowindow = new google.maps.InfoWindow({
     content: contentString
   });
-  getPolygonLands(null);
+
+ var getpolyDB = await getPolygonLands(cacheLands);
+ createMapComponent(getpolyDB, cacheLands);
+ drawingPolygonLands(getpolyDB, null);
 }
 
 function blankMap() {
@@ -132,26 +134,19 @@ async function getLatLngDB() {
   }
 }
 
-async function getPolygonLands(landArr) {
-  var getCachePoly = localStorage["poly-lands-main"] || undefined;
-  if (getCachePoly !== undefined) {
-    getCachePoly = JSON.parse(getCachePoly);
-    createMapComponent(getCachePoly, cacheLands);
-    drawingPolygonLands(getCachePoly, landArr);
-  } else {
-    var url = "/sec/lands/polygon/main";
-    var body = JSON.stringify(cacheLands);
-    var polygonMain = connectToServer(url, body, "POST");
-    polygonMain.then(poly => {
-        console.log(poly);
-        setCacheData("poly-lands-main", poly.polygonLands);
-        createMapComponent(poly.polygonLands, cacheLands);
-        drawingPolygonLands(poly.polygonLands, landArr);
-      }),
-      function (e) {
-        console.log(e);
-      };
-  }
+async function getPolygonLands(cacheLands) {
+
+    try {
+      var url = "/sec/lands/polygon/main";
+      var body = JSON.stringify(cacheLands);
+      var getPoly = await connectToServer(url, body, "POST");
+      poly = getPoly.polygonLands
+      localStorage["poly-lands-main"] = JSON.stringify(poly)
+    } catch (err) {
+      console.log(err)
+    }
+
+  return poly
 }
 
 function getPlantsActivity(cacheLandsIndex, activityID) {
@@ -181,6 +176,9 @@ function createMapComponent(poly, cacheLands) {
   mapPolyPieColor = [];
   var polygonLands = poly;
   var l;
+  try {
+    cacheLands = JSON.parse(cacheLands)
+  } catch (err) {}
 
   polygonLands.forEach((polygon, i) => {
     var land = cacheLands.find(cache => cache.land._id == polygon.land_id);
@@ -244,6 +242,7 @@ async function drawingPolygonLands(poly, landArr) {
       landArr.push(polygonLands[i].land_id);
     }
   }
+
   for (let i = 0; i < mapPolyPieColor.length; i++) {
     var latlngInLand = polygonLands[i].lat_lng;
     for (let j = 0; j < landArr.length; j++) {
@@ -252,7 +251,6 @@ async function drawingPolygonLands(poly, landArr) {
         l.setMap(map);
         var marker = new google.maps.Marker({
           position: mapPolyPieColor[i].position,
-          title: "Hello World!",
           description: polygonLands[i],
           icon: mapPolyPieColor[i].pie,
           map: map
@@ -315,14 +313,16 @@ async function createPie(landPercent, color) {
   pie.appendChild(number);
   parent.appendChild(pie);
   widget.appendChild(parent);
-  divArr.push({div:parent , id:landPercent.land_id});
+  divArr.push({
+    div: parent,
+    id: landPercent.land_id
+  });
 }
 
 async function toCanvasMarker(divArr) {
   if (couterMarker < divArr.length) {
-     html2canvas(divArr[couterMarker].div, {
-      onrendered: function(canvas) {
-        console.log("success")
+    html2canvas(divArr[couterMarker].div, {
+      onrendered: function (canvas) {
         $("#img-out").append(canvas);
         canvasArr[divArr[couterMarker].id] = canvas.toDataURL();
         couterMarker++;
@@ -330,7 +330,6 @@ async function toCanvasMarker(divArr) {
       }
     })
   } else {
-    console.log(cacheLands)
     document.getElementById("widget").style.display = "none";
     document.getElementById("img-out").style.display = "none";
     var init = await createMap(cacheLands);

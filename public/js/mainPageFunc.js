@@ -7,10 +7,10 @@ var landNameFilter = document.getElementById("land-name-filter");
 var plantDropdown = document.getElementById("plant-dropdown");
 var plantFilter = document.getElementById("plant-filter");
 
-window.province = "all";
-window.district = "all";
-window.land = "all";
-window.plant = "all";
+window.province = "ทั้งหมด";
+window.district = "ทั้งหมด";
+window.land = "ทั้งหมด";
+window.plant = "ทั้งหมด";
 
 
 async function apiGetPlant() {
@@ -51,8 +51,9 @@ async function filterLands() {
     var landName = getFilters.land_name;
     var plantName = getFilters.plant;
 
+    provinceDropdown.innerHTML = ""
+    setDropdownItem("province" , "ทั้งหมด" , provinceDropdown )
     address.forEach(add => {
-      var district = add.district;
       var fName = document.createElement("a");
       fName.innerHTML = add.province;
       fName.setAttribute("class", "dropdown-item");
@@ -72,10 +73,13 @@ async function filterLands() {
         };
       })(add);
     })
+    landNameDropdown.innerHTML = ""
+    setDropdownItem("land" , "ทั้งหมด" , landNameDropdown )
     landName.forEach(name => {
       setDropdownItem("land", name, landNameDropdown)
     });
-
+    plantDropdown.innerHTML = ""
+    setDropdownItem("plant" , "ทั้งหมด" , plantDropdown )
     plantName.forEach(plant => {
       setDropdownItem("plant", plant, plantDropdown)
     })
@@ -87,7 +91,7 @@ async function filterLands() {
 
 function onFilterChange(lands){
   landNameDropdown.innerHTML = ""
-  setDropdownItem("land" , "ทั้งหมด" , landNameDropdown )
+  setDropdownItem("land" , "ทั้งหมด" , landNameDropdown)
 
   lands.forEach(land =>{
     setDropdownItem("land", land.land.name, landNameDropdown)
@@ -95,26 +99,24 @@ function onFilterChange(lands){
 }
 
 function setFilterValueOnclick(type, value) {
-  window.land = "all"
+  window.land = "ทั้งหมด"
   if (type == "land") {
     landNameFilter.innerHTML = value;
-    if (value == "all" || value == "ทั้งหมด") {
-      value = "all"
+    if (value == "ทั้งหมด") {
+      value = "ทั้งหมด"
       plantFilter.disabled = false
-      landNameFilter.innerHTML = "ทั้งหมด";
-      window.plant = "all"
+      window.plant = "ทั้งหมด"
     } else {
       plantFilter.disabled = true
       districtFilter.disabled = true
       plantFilter.innerHTML = "พืช"
-      window.plant = "all"
+      window.plant = "ทั้งหมด"
     }
     window.land = value;
   } else if (type == "plant") {
     plantFilter.innerHTML = value;
-    if (value == "all") {
+    if (value == "ทั้งหมด") {
       landNameFilter.disabled = false
-      plantFilter.innerHTML = "ทั้งหมด";
     } else {
       landNameFilter.disabled = true
 
@@ -124,13 +126,12 @@ function setFilterValueOnclick(type, value) {
   } else if (type == "province") {
     provinceFilter.innerHTML = value
     window.province = value
-    window.district = "all"
+    window.district = "ทั้งหมด"
 
     landNameFilter.innerHTML = "ที่ดิน"
 
-    if (value == "all") {
+    if (value == "ทั้งหมด") {
       districtFilter.disabled = true
-      provinceFilter.innerHTML = "ทั้งหมด"
       districtFilter.innerHTML = "อำเภอ"
     } else {
       districtFilter.disabled = false
@@ -138,24 +139,16 @@ function setFilterValueOnclick(type, value) {
   } else if (type == "district") {
     districtFilter.innerHTML = value
     window.district = value
-    if (value == "all" || value == "ทั้งหมด") {
-      districtFilter.innerHTML = "ทั้งหมด"
-      window.district = "all"
+    if (value == "ทั้งหมด" ) {
+      window.district = "ทั้งหมด"
     }
   }
-  console.log({
-    province: window.province,
-    district: window.district,
-    land: window.land,
-    plant: window.plant
-  })
   findLands(window.province, window.district, window.land, window.plant);
 }
 
 async function findLands(province, district, landName, plant) {
   var landsData = JSON.parse(localStorage["lands"]) || undefined;
   var plantData = JSON.parse(localStorage["plants"]) || undefined;
-
   try {
     var url =
       "/sec/lands/filter?province=" +
@@ -173,10 +166,13 @@ async function findLands(province, district, landName, plant) {
     });
     var filterLand = await connectToServer(url, body, "POST");
     onFilterChange(filterLand)
-
-    var landsPercent = localStorage["percent-lands"] || undefined;
-      await loopCreatePie(landsPercent , JSON.stringify(filterLand));
-
+    if(filterLand.length == 0){
+      var cacheLand = JSON.parse(localStorage.lands)
+      createMap(cacheLand)
+      alert("ไม่พบที่ดินที่คุณต้องการ")
+    }else{
+      createMap(filterLand)
+    }
   } catch (err) {
     console.log(err)
   }

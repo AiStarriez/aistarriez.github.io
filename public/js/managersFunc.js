@@ -370,7 +370,7 @@ function logsManagerUI(landLogs) {
 
 function selectShowBtn(id) {
   var role = localStorage.role;
-  if (role == '"owner"') {
+  if (role == 'owner') {
     if (id.length == 8) {
       document.querySelectorAll("#edit-manager-btn").forEach(el => {
         el.style.display = "none";
@@ -443,7 +443,7 @@ async function run() {
   var managersArr = await getManagerData(false);
   var regisManager = managersArr.filter(({ active }) => active == true);
   selectShowBtn(id);
-  if (localStorage.role == '"manager"') {
+  if (localStorage.role == 'manager') {
     var userData = JSON.parse(localStorage.user);
     managerData = userData[0].manager;
     var landLogs = await loadActivity(managerData._id);
