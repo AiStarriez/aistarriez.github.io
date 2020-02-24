@@ -19,17 +19,18 @@ app.use(
   })
 );
 
-app.use('/:file',(req,res)=>{
-    if(req.params.file == "login"){
-        return   res.sendFile(path.join(__dirname+"/public/"+ req.params.file+".html"));
-    }
-   else  res.sendFile(path.join(__dirname+"/public/"+ req.params.file));
-});
+// app.use('/:file',(req,res)=>{
+//   console.log(req.)
+//     if(req.params.file == "login"){
+//         return   res.sendFile(path.join(__dirname+"/public/"+ req.params.file+".html"));
+//     }
+//    else  res.sendFile(path.join(__dirname+"/public/"+ req.params.file));
+// });
 
-router.get('/',function(req,res){
-    console.log(path.join(__dirname+'/public/'+req))
-  res.sendFile(path.join(__dirname+'/public/'+req));
-});
+// router.get('/',function(req,res){
+//     console.log(path.join(__dirname+'/public/'+req))
+//   res.sendFile(path.join(__dirname+'/public/'+req));
+// });
 
 app.use('/', router);
 app.listen(process.env.port || 3000);
