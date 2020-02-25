@@ -720,6 +720,8 @@
 			}
 			if (element) {
 				element.change();
+				this.hide();
+
 				if (this.o.autoclose && (!which || which == 'date')) {
 					this.hide();
 				}

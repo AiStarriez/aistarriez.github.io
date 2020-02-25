@@ -10,7 +10,7 @@
 
   font-size:1.2rem;
   background-color: #408214;
-  
+
 }
 #exportReportFull{
   display: inline-block;
@@ -30,30 +30,4 @@
   margin-left: 5%;
   border-collapse: separate;
   border-spacing: 50px 0;
-}
-
-.perLand{
-
-}
-@media screen and (max-width: 992px) {
-  #topnav {
-    display: block;
-  }
-  #exportReportFull{
-    display: none;
-  }
-  #forButton{
-    float: right;
-    width: max-content;
-    right: 5%;
-    vertical-align: middle;
-    position: absolute;
-  }
-  .reportTable{
-    
-      font-size: 1.3rem;
-      border-collapse: none;
-      border-spacing: 10px 0;
-    
-  }
 }

@@ -35,6 +35,14 @@
         <li class="nav-item" id="hamburger">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
+        <li class="nav-item" id="back-nav" onclick="history.back()" style="display: none;">
+          <a class="nav-link"><i class="fa fa-arrow-left"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">
+            <p id="extend-header"></p>
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
@@ -140,7 +148,7 @@
             </li>
           </ul>
         </nav>
-        <nav class="mt-2" style="position: absolute; bottom:50px">
+        <nav class="mt-2" style="position: absolute; bottom:1vh">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item " id="nav-signout" onclick="signOut()">
               <a href="#logout" class="nav-link text-danger" id="nav-signout">

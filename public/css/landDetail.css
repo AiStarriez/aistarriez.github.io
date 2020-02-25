@@ -68,8 +68,7 @@
   font-size: 1.4rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 20px;
-  margin-top: 10px;
+
 }
 @media screen and (max-width: 992px) {
   #activityTable{

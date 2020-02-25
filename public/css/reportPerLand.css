@@ -12,6 +12,10 @@
   display:none
 }
 
+tr{
+  cursor: pointer;
+}
+
 @media screen and (max-width: 992px) {
   .content-header{
     display: none;

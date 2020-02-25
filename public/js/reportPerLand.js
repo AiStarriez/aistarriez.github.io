@@ -44,6 +44,7 @@ async function initBtn() {
 }
 
 function selectPage(landId, cycleId) {
+  $("#dd-menu").hide()
 
   if (landId.length == 24) {
     $("#container-report-list").hide(500);
@@ -53,13 +54,13 @@ function selectPage(landId, cycleId) {
     $("#container-report-cycle").hide(500);
     $("#back-report").hide()
     $("#hamburger").show()
-    $(".content-header").show()
     $("#back-report").show()
     $("#hamburger").hide()
     document.querySelectorAll("#export-csv-btn").forEach(el => {
       el.style.display = "none";
     });
     if (cycleId.length == 24) {
+      $("#dd-menu").show()
       $("#container-report-perland").hide(500);
       $("#container-report-cycle").show(500);
       document.querySelectorAll("#export-csv-btn").forEach(el => {
@@ -74,14 +75,11 @@ function selectPage(landId, cycleId) {
     $("#container-report-cycle").hide(500);
     $("#back-report").hide()
     $("#hamburger").show()
-    $(".content-header").show()
     document.querySelectorAll("#export-csv-btn").forEach(el => {
       el.style.display = "none";
     });
   }
-  if (screen.width < 992) {
-    $(".content-header").hide()
-  }
+
 }
 async function getLandDetail() {
   var lands = localStorage.lands;

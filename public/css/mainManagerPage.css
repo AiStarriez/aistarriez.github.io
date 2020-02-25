@@ -2,9 +2,21 @@
     background-color:#ECECEC;
 }
 
-/* .manager-img{
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-} */
+@media screen and (max-width: 992px) {
+    .content-header{
+      display: none;
+    }
+    .total-small{
+      display: block
+    }
+    .total-big{
+      display:none
+    }
+    .activities-big{
+      display:none
+    }
+    .activities-small{
+      display:block
+    }
+
+  }

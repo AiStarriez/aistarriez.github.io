@@ -32,7 +32,7 @@
         <li class="nav-item" id="hamburger" style="display: none;">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item" id="back-report" onclick="window.history.back()" >
+        <li class="nav-item" id="back-report" onclick="window.history.back()">
           <a class="nav-link"><i class="fa fa-arrow-left"></i></a>
         </li>
         <li class="nav-item">
@@ -47,8 +47,9 @@
             <i class="fas fa-th-large"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a id="activity-progress-btn" class="dropdown-item text-success" data-toggle="modal" onclick="toUpdateProgress()">
-              <i class="fas fa-seedling mr-2"></i> <span id="tetx-btn-header">ความก้าวหน้า</span>
+            <a id="activity-progress-btn" class="dropdown-item text-success" data-toggle="modal"
+              onclick="toUpdateProgress()">
+              <i class="fas fa-chart-line"></i> <span id="tetx-btn-header">ความก้าวหน้า</span>
             </a>
           </div>
         </li>
@@ -105,7 +106,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="activities.html" class="nav-link active" id="navBarActivity">
+              <a href="#" class="nav-link active" id="navBarActivity">
                 <i class="fas fa-list-alt"></i>
                 <p>
                   &nbsp;&nbsp; กิจกรรมทั้งหมด
@@ -121,7 +122,6 @@
               </a>
             </li>
             <li class="nav-item">
-
               <a href="#" class="nav-link" id="navBarManager">
 
                 <i class="fas fa-users"></i>
@@ -131,7 +131,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarPlant">
+              <a href="#" class="nav-link " id="navBarPlant">
                 <i class="fas fa-leaf"></i>
                 <p>
                   &nbsp;&nbsp; จัดการพืช
@@ -140,7 +140,7 @@
             </li>
           </ul>
         </nav>
-        <nav class="mt-2" style="position: absolute; bottom:50px">
+        <nav class="mt-2" style="position: absolute; bottom:1vh">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item " id="nav-signout" onclick="signOut()">
               <a href="#logout" class="nav-link text-danger" id="nav-signout">
@@ -150,14 +150,13 @@
                 </p>
               </a>
             </li>
-
           </ul>
-
         </nav>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
     </aside>
+
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -166,12 +165,14 @@
         <nav class="navbar navbar-expand navbar-white navbar-light">
           <ul class="navbar-nav text-success">
             <li id="header-activity-detail">
-              <h4>
-                <span class="mobile-v-header" onclick="window.history.back()" style="cursor: pointer;"><i
-                    class="fa fa-arrow-left"></i>&nbsp;&nbsp;</span>
-                <span class="max-v-header" onclick="window.history.back()" style="cursor: pointer;">กิจกรรมทั้งหมด&nbsp;&nbsp;<i
-                    class="fa fa-angle-right"></i>&nbsp;&nbsp;</span>
-              </h4>
+              <a href="activities.html" class="text-success">
+                <h4>
+                  <span class="mobile-v-header" style="cursor: pointer;"><i
+                      class="fa fa-arrow-left"></i>&nbsp;&nbsp;</span>
+                  <span class="max-v-header" style="cursor: pointer;">กิจกรรมทั้งหมด&nbsp;&nbsp;<i
+                      class="fa fa-angle-right"></i>&nbsp;&nbsp;</span>
+                </h4>
+              </a>
             </li>
             <li>
               <h4 id="extend-header">

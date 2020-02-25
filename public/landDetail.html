@@ -6,29 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Proplante</title>
   <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css" />
+  <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <link rel="stylesheet" href="admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
-  <!-- iCheck -->
-  <link rel="stylesheet" href="admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="admin-lte/plugins/jqvmap/jqvmap.min.css" />
-  <!-- Theme style -->
-  <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css" />
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
+  <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
    <!-- Daterange picker -->
    <link href="css/datepicker.css" rel="stylesheet" media="screen">
    <link href="//getbootstrap.com/2.3.2/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
    <link href="//getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet">
-  <!-- summernote -->
-  <link rel="stylesheet" href="admin-lte/plugins/summernote/summernote-bs4.css" />
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -110,7 +101,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="calendar.html" class="nav-link" id="navBarSchedule">
+              <a href="calendar.html" class="nav-link " id="navBarSchedule">
                 <i class="fas fa-calendar-alt"></i>
                 <p>
                   &nbsp;&nbsp; ตารางงาน
@@ -118,7 +109,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarActivity">
+              <a href="#" class="nav-link " id="navBarActivity">
                 <i class="fas fa-list-alt"></i>
                 <p>
                   &nbsp;&nbsp; กิจกรรมทั้งหมด
@@ -143,7 +134,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarPlant">
+              <a href="#" class="nav-link " id="navBarPlant">
                 <i class="fas fa-leaf"></i>
                 <p>
                   &nbsp;&nbsp; จัดการพืช
@@ -152,7 +143,7 @@
             </li>
           </ul>
         </nav>
-        <nav class="mt-2" style="position: absolute; bottom:50px">
+        <nav class="mt-2" style="position: absolute; bottom:1vh">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item " id="nav-signout" onclick="signOut()">
               <a href="#logout" class="nav-link text-danger" id="nav-signout">
@@ -162,9 +153,7 @@
                 </p>
               </a>
             </li>
-
           </ul>
-
         </nav>
         <!-- /.sidebar-menu -->
       </div>
@@ -368,7 +357,7 @@
                         <i class="far fa-calendar-alt"></i>
                       </span>
                     </div>
-                    <input require type="text" class="form-control float-right input-medium" id="harvested-date"
+                    <input required type="text" class="form-control float-right input-medium" id="harvested-date"
                       data-provide="datepicker" data-date-language="th-th">
                   </div>
                   <!-- /.input group -->
@@ -416,9 +405,22 @@
                 <!-- /.input group -->
               </div>
               <div class="form-group">
+                <label>วันที่เริ่ม <span class="sp-require">&nbsp;*</span></label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="far fa-calendar-alt"></i>
+                    </span>
+                  </div>
+                  <input required type="text" class="form-control float-right input-medium" id="start-date"
+                    data-provide="datepicker" data-date-language="th-th">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <div class="form-group">
                 <p style="margin-bottom:0px">ผลผลิตที่คาดหวัง(หน่วย)<span class="sp-require">&nbsp;*</span></p>
                 <div class="input-group">
-                  <input required id="expect-product" type="text" class="form-control"
+                  <input required id="expect-product" type="text" class="form-control" autocomplete="off"
                     data-inputmask="'mask': ['9','99','999','9999','99999','999999','9999999']" data-mask=""
                     im-insert="true">
                 </div>
@@ -446,39 +448,22 @@
   <script src="js/CallWeather.js"></script>
   <script src="js/callLandDetailInfo.js"></script>
   <script src="js/navBarLinks.js"></script>
-
   <!-- jQuery -->
-  <script src="admin-lte/plugins/jquery/jquery.min.js"></script>
-  <!-- jQuery UI 1.11.4 -->
-  <script src="admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
-  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-  <script>
-    $.widget.bridge("uibutton", $.ui.button);
-  </script>
-  <!-- Bootstrap 4 -->
-  <script src="admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- ChartJS -->
-  <!-- Sparkline -->
-  <script src="admin-lte/plugins/sparklines/sparkline.js"></script>
-  <!-- JQVMap -->
-  <script src="admin-lte/plugins/jqvmap/jquery.vmap.min.js"></script>
-  <!-- jQuery Knob Chart -->
-  <script src="admin-lte/plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="admin-lte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="admin-lte/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="admin-lte/dist/js/demo.js"></script>
+
+
+  <!-- AdminLTE for demo purposes -->
+  <script src="admin-lte/dist/js/demo.js"></script>
   <!-- daterangepicker -->
   <script src="admin-lte/plugins/moment/moment.min.js"></script>
   <script src="admin-lte/plugins/daterangepicker/daterangepicker.js"></script>
-  <!-- Tempusdominus Bootstrap 4 -->
-  <script src="admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <!-- Summernote -->
-  <script src="admin-lte/plugins/summernote/summernote-bs4.min.js"></script>
-  <!-- overlayScrollbars -->
-  <script src="admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="admin-lte/dist/js/adminlte.js"></script>
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="admin-lte/dist/js/pages/dashboard.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="admin-lte/dist/js/demo.js"></script>
+
   <!-- InputMask -->
   <script src="admin-lte/plugins/moment/moment.min.js"></script>
   <script src="admin-lte/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>

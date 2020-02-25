@@ -42,6 +42,10 @@
   height: 30%;
 }
 
+#add-can-mobil-div{
+  display: none;
+}
+
 @media screen and (max-width: 992px) {
   #topnav {
     display: block;
@@ -57,6 +61,10 @@
 
   #buttonDivFull {
     display: none;
+  }
+
+  #add-can-mobil-div{
+    display: block;
   }
 }
 
@@ -103,18 +111,10 @@
   height: 30px;
   cursor: pointer;
   position: absolute;
+
 }
 
-/* !Date picker */
-.datepicker-days {
-  padding:18px;
-}
 
-.table-condensed tr td,th{
-  font-size: 1.4rem;
-}
-
-/* !Date picker*/
 /*! for modal image */
 .myImg {
   border-radius: 10px;

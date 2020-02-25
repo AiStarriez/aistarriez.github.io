@@ -41,14 +41,14 @@
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto" id="dd-menu">
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" aria-expanded="true">
             <i class="fas fa-th-large"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a id="export-csv-btn" class="dropdown-item text-success" data-toggle="modal">
-              <i class="fas fa-seedling mr-2"></i> <span id="tetx-btn-header">ส่งออกรายงาน .csv</span>
+            <a id="export-csv-btn" class="dropdown-item text-primary" data-toggle="modal">
+              <i class="fas fa-file-csv "></i> <span id="tetx-btn-header">ส่งออกรายงาน .csv</span>
             </a>
           </div>
         </li>
@@ -86,7 +86,7 @@
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="index.html" class="nav-link" id="navBarLand">
+              <a href="index.html" class="nav-link " id="navBarLand">
                 <i class="fas fa-map-marked-alt"></i>
                 <p>
                   &nbsp;&nbsp; ที่ดิน
@@ -94,7 +94,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="calendar.html" class="nav-link" id="navBarSchedule">
+              <a href="calendar.html" class="nav-link " id="navBarSchedule">
                 <i class="fas fa-calendar-alt"></i>
                 <p>
                   &nbsp;&nbsp; ตารางงาน
@@ -102,7 +102,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarActivity">
+              <a href="#" class="nav-link " id="navBarActivity">
                 <i class="fas fa-list-alt"></i>
                 <p>
                   &nbsp;&nbsp; กิจกรรมทั้งหมด
@@ -118,7 +118,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarManager">
+              <a href="#" class="nav-link " id="navBarManager">
 
                 <i class="fas fa-users"></i>
                 <p>
@@ -127,7 +127,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="navBarPlant">
+              <a href="#" class="nav-link " id="navBarPlant">
                 <i class="fas fa-leaf"></i>
                 <p>
                   &nbsp;&nbsp; จัดการพืช
@@ -136,7 +136,7 @@
             </li>
           </ul>
         </nav>
-        <nav class="mt-2" style="position: absolute; bottom:50px">
+        <nav class="mt-2" style="position: absolute; bottom:1vh">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item " id="nav-signout" onclick="signOut()">
               <a href="#logout" class="nav-link text-danger" id="nav-signout">
