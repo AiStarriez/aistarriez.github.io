@@ -1,10 +1,8 @@
 var ownerId;
 var managerId;
 
-
-  var apiURL = "http://68.183.230.159:8080";
+var apiURL = "http://68.183.230.159:8080";
 //var apiURL = "http://localhost:8080";
-
 
 var headerImage = apiURL + "/images/display/";
 
@@ -22,8 +20,6 @@ var config = {
 firebase.initializeApp(config);
 checkSessionLogin();
 uiOnloadPage();
-
-
 
 
 function connectToServer(u, body, typ) {
@@ -69,6 +65,14 @@ function checkSessionLogin() {
     ) {
       signOut();
     }
+    try{
+      var o = user[0].owner_id
+      localStorage.role = "manager"
+
+    }catch(err){
+      localStorage.role = "owner"
+    }
+
   }
 }
 

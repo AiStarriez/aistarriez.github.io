@@ -1,9 +1,3 @@
-/*id="navBarLand"
-id="navBarSchedule"
-id="navBarActivity"
-id="navBarReport"
-id="navBarManager"
-id="navBarPlant"*/
 
   var landLinks = document.getElementById("navBarLand")
   landLinks.href = "index.html"
