@@ -308,33 +308,6 @@ observer.observe($div[0], {
   attributes: true
 });
 // check modal visibility
-function findCurrentLocation() {
-  clearMarker(countMarker)
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        var marker = new google.maps.Marker({
-          position: pos,
-          title: "ที่อยู่ของคุณ",
-          map: map
-        });
-        countMarker.push(marker);
-        map.setCenter(pos);
-      },
-      function() {
-        handleLocationError(true, infowindow, map.getCenter());
-      }
-    );
-  } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infowindow, map.getCenter());
-  }
-}
 
 function clearMarker(countMarker) {
   for (i in countMarker) {
@@ -343,32 +316,7 @@ function clearMarker(countMarker) {
   countMarker = [];
 }
 
-function currentLocationBtn(controlDiv, map) {
 
-  // Set CSS for the control border.
-  var controlUI = document.createElement('div');
-  controlUI.style.backgroundColor = '#fff';
-  controlUI.style.border = '2px solid #fff';
-  controlUI.style.borderRadius = '3px';
-  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-  controlUI.style.cursor = 'pointer';
-  controlUI.style.margin = '10px';
-  controlUI.style.textAlign = 'center';
-  controlUI.title = 'Click to recenter the map';
-  controlDiv.appendChild(controlUI);
-  var image = document.createElement('img');
-  image.src = "images/target.png"
-  image.style.width = '30px';
-  image.style.height = '30px';
-  image.style.margin = '4px'
-  // Set CSS for the control interior.
-  controlUI.appendChild(image);
-  // Setup the click event listeners: simply set the map to Chicago.
-  controlUI.addEventListener('click', function() {
-    findCurrentLocation()
-  });
-
-}
 
 function saveCancelBtn(controlDiv, map){
 

@@ -103,6 +103,14 @@ async function createMap(cacheLands) {
   infowindow = new google.maps.InfoWindow({
     content: contentString
   });
+  geocoder = new google.maps.Geocoder();
+
+
+  var centerControlDiv = document.createElement('div');
+  var centerControl = new currentLocationBtn(centerControlDiv, map);
+
+  centerControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
 
  var getpolyDB = await getPolygonLands(cacheLands);
  createMapComponent(getpolyDB, cacheLands);

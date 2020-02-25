@@ -104,6 +104,19 @@ async function startCycleAPI(plantId, expected_product) {
 }
 
 function selDisplay() {
+  if(localStorage.role == "manager"){
+    harvestedBtn.forEach(btn => {
+      btn.style.display = "none";
+    })
+    startOpBtn.forEach(btn => {
+      btn.style.display = "none";
+    })
+    if (currentLand.operation.logs.plant_id){
+      return true
+    }else{
+      return false
+    }
+  }
   if (currentLand.operation.logs.plant_id) {
     harvestedBtn.forEach(btn => {
       btn.style.display = "block";

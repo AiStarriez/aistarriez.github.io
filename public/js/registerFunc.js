@@ -1,5 +1,5 @@
 var errorMessage = document.getElementById("error-regis");
-
+var agreeTerms = document.getElementById("agreeTerms")
 var nameOwner = document.getElementById("name-owner-input");
 var emailOwner = document.getElementById("email-owner-input");
 var passOwner = document.getElementById("pass-owner-input");
@@ -9,11 +9,20 @@ var codeManage = document.getElementById("code-manager-input");
 var nameManage = document.getElementById("name-manager-input");
 var phoneManage = document.getElementById("phone-manager-input");
 var addressManage = document.getElementById("addres-manager-input");
+var regisBtn = document.getElementById("manager-regis-bt")
 var managerImage;
 selectRoleUI();
 
-$("#manager-login-bt").click(function() {
+$("#manager-regis-bt").click(function () {
   checkValidation(localStorage.role);
+});
+$('#agreeTerms').change(function () {
+  if (this.checked) {
+    regisBtn.disabled = false
+  } else {
+    regisBtn.disabled = true
+
+  }
 });
 
 document
@@ -34,7 +43,9 @@ function selectRoleUI() {
   }
 }
 
-function checkValidation(role) {
+async function checkValidation(role) {
+  errorMessage.innerHTML = "**กรุณากรอกข้อมูลให้ครบถ้วนและยืนยันรหัสผ่านให้ถูกต้อง"
+
   if (role == "owner") {
     if (
       nameOwner.checkValidity() &&
@@ -46,6 +57,7 @@ function checkValidation(role) {
       errorMessage.style.display = "none";
       createAccountOwner(emailOwner.value, passOwner.value, nameOwner.value);
     } else {
+
       errorMessage.style.display = "block";
     }
   } else if (role == "owner-gg") {
@@ -62,49 +74,56 @@ function checkValidation(role) {
       codeManage.checkValidity() &&
       nameManage.checkValidity() &&
       phoneManage.checkValidity() &&
-      addressManage.checkValidity() &&
-      window.managerimg
+      addressManage.checkValidity()
     ) {
-      localStorage.authenEvent = "manager-register";
-      errorMessage.style.display = "none";
-      var managerID = codeManage.value;
-      var getOwner = connectToServer(
-        "/managers/findowner/" + managerID,
-        "",
-        "GET"
-      );
-      getOwner.then(owner => {
-        var ownerID = owner.owner_id;
-        var url = "/aws/image?m=" + managerID + "&o=" + ownerID;
-        var formdata = new FormData();
-        formdata.append("file", managerImage);
-        var typ = "POST";
-        var uploadImage = uploadMongoImage(url, formdata, typ);
-        uploadImage.then(
-          docs => {
-            var managerDetail = {
-              name: nameManage.value,
-              image: docs,
-              contact_info: {
-                address: addressManage.value,
-                phone: phoneManage.value
-              }
-            };
-            localStorage.mDetail = JSON.stringify(managerDetail);
-          },
-          err => {
-            console.log(err);
-          }
-        );
-      },err =>{
-        errorMessage.innerHTML = "**รหัสผู้ดูแลไม่ถูกต้อง"
-        errorMessage.style.display = "block";
-      });
+
+     await postRegisManagerData()
+     document.getElementById("manager-login-bt").click()
+
     } else {
-      errorMessage.innerHTML = "**กรุณากรอกข้อมูลให้ครบถ้วนและยืนยันรหัสผ่านให้ถูกต้อง"
+      errorMessage.innerHTML = "**กรุณากรอกข้อมูลให้ครบถ้วน"
       errorMessage.style.display = "block";
     }
   }
+}
+
+async function postRegisManagerData() {
+  try {
+    localStorage.authenEvent = "manager-register";
+    errorMessage.style.display = "none";
+    var managerID = codeManage.value;
+    var owner = await connectToServer("/managers/findowner/" + managerID, "", "GET");
+    await uploadManagerImg(managerID, owner.owner_id)
+  } catch (err) {
+    errorMessage.innerHTML = "**รหัสผู้ดูแลไม่ถูกต้อง"
+    errorMessage.style.display = "block";
+  }
+}
+
+async function uploadManagerImg(managerID, ownerID) {
+  if (managerImage) {
+    try {
+      var url = "/images/upload?manager=" + managerID + "&owner=" + ownerID;
+      var formdata = new FormData();
+      formdata.append("file", managerImage);
+      var typ = "POST";
+      var uploadImage = await uploadMongoImage(url, formdata, typ);
+      console.log(uploadImage)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  var managerDetail = {
+    id: managerID,
+    name: nameManage.value,
+    image: uploadImage || null,
+    contact_info: {
+      address: addressManage.value,
+      phone: phoneManage.value
+    }
+  };
+  console.log(managerDetail)
+  localStorage.mDetail = JSON.stringify(managerDetail);
 }
 
 function checkConfirmPassword() {
@@ -123,6 +142,13 @@ function checkConfirmPassword() {
     emojiConPass.style.color = "#777777";
   }
 }
+
+
+$("#manager-verify-bt").click(function() {
+  console.log("verify")
+  onVerifyCodeSubmit();
+});
+
 
 function toastErrorPhone() {
   toastr.options = {
@@ -143,7 +169,7 @@ function toastErrorPhone() {
     hideMethod: "fadeOut"
   };
   toastr.error(
-    "รูปแบบหมายเลขโทรศัพท์ไม่ถูกต้อง (ตัวอย่าง : 0812312345)",
+    "กรุณาลองใหม่อีกครั้งในภายหลัง",
     "เกิดข้อผิดพลาด"
   );
 }
