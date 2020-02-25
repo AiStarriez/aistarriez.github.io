@@ -443,7 +443,7 @@ async function run() {
   var managersArr = await getManagerData(false);
   var regisManager = managersArr.filter(({ active }) => active == true);
   selectShowBtn(id);
-  if (localStorage.role == '"manager"') {
+  if (localStorage.role == 'manager') {
     var userData = JSON.parse(localStorage.user);
     managerData = userData[0].manager;
     var landLogs = await loadActivity(managerData._id);
