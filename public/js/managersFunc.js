@@ -15,7 +15,7 @@ async function getManagerData(newerData) {
   if (newerData) {
     localStorage.removeItem("managers");
   }
-  if (role == '"owner"') {
+  if (role == 'owner') {
     var sessionManager = localStorage.managers;
     if (sessionManager) {
       managersArr = JSON.parse(sessionManager);
