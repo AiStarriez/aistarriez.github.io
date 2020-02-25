@@ -48,16 +48,18 @@ function registeredManager(managersArr) {
 }
 
 function setManagerCard(regisManager) {
-  history.pushState({ page: 1 }, "main", "");
-  if(regisManager.length == 0){
+  history.pushState({
+    page: 1
+  }, "main", "");
+  if (regisManager.length == 0) {
     $("#managers-div").html('<center style="color:grey"><h2>ยังไม่มีผู้ดูแล</h2><h3>กดปุ่ม "เพิ่มผู้ดูแล" เพื่อรับรหัสสำหรับผู้ดูแลใหม่</h3></center>')
     return false
   }
   for (i in regisManager) {
     var img =
-      regisManager[i].image.length != 0
-        ? headerImage + regisManager[i].image
-        : "images/farmer.png";
+      regisManager[i].image.length != 0 ?
+      headerImage + regisManager[i].image :
+      "images/farmer.png";
     var name = regisManager[i].name;
     var id = regisManager[i]._id;
     var div = document.createElement("div");
@@ -80,9 +82,11 @@ function setManagerCard(regisManager) {
     var managerName = document.createElement("p");
     managerName.innerHTML = name;
     managerName.style.marginTop = "10px";
-    div.onclick = (function(arg) {
-      return function() {
-        history.pushState({ page: 2 }, arg.name, "?mg-id=" + arg);
+    div.onclick = (function (arg) {
+      return function () {
+        history.pushState({
+          page: 2
+        }, arg.name, "?mg-id=" + arg);
         run();
       };
     })(id);
@@ -93,7 +97,7 @@ function setManagerCard(regisManager) {
   }
 }
 
-window.onpopstate = function() {
+window.onpopstate = function () {
   run();
 };
 
@@ -127,10 +131,10 @@ function managerDetailUI(managerDetail) {
   var phone = managerDetail.contact_info.phone;
   var address = managerDetail.contact_info.address;
   var img =
-    managerDetail.image != ""
-      ? headerImage + managerDetail.image
-      : "images/farmer.png";
-      console.log(img)
+    managerDetail.image != "" ?
+    headerImage + managerDetail.image :
+    "images/farmer.png";
+  console.log(img)
   for (i in nameHeader) {
     var tdName =
       '<td>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</td><td></td><h4 class="text-success">' +
@@ -230,7 +234,9 @@ async function initButton() {
   };
   document.querySelectorAll("#edit-manager-btn").forEach(el => {
     el.onclick = () => {
-      history.pushState({ page: 2 }, 1, "?edit=" + managerData._id);
+      history.pushState({
+        page: 2
+      }, 1, "?edit=" + managerData._id);
       editManagerDetail(managerData);
     };
   });
@@ -239,11 +245,13 @@ async function initButton() {
     if (updateStatus) {
       var getNewdata = await connectToServer(
         "/managers/login",
-        JSON.stringify({ id: managerId }),
+        JSON.stringify({
+          id: managerId
+        }),
         "POST"
       );
       localStorage.user = JSON.stringify(getNewdata);
-     window.location = "managers.html"
+      window.location = "managers.html"
     }
   });
 }
@@ -287,8 +295,8 @@ async function updateManagerDataDB(managerData) {
   ) {
     try {
       if (managerImage && ownerId.length == 24 && managerId.length == 8) {
-          var query = `owner=${ownerId}&manager=${managerId}`;
-          fileName = await fileUpload(query, managerImage);
+        var query = `owner=${ownerId}&manager=${managerId}`;
+        fileName = await fileUpload(query, managerImage);
       }
       var url = `/managers/${managerId}?owner=${ownerId}`;
       var body = JSON.stringify({
@@ -324,7 +332,7 @@ async function deleteManager(id) {
     if (err.status != 200) {
       $("#moda-response").html(
         "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง" +
-          '<div style="width: 100%; text-align:right;"><button id="close-gencode-modal-btn" class="btn bg-olive" data-dismiss="modal">&nbsp;ปิด&nbsp;</button></div>'
+        '<div style="width: 100%; text-align:right;"><button id="close-gencode-modal-btn" class="btn bg-olive" data-dismiss="modal">&nbsp;ปิด&nbsp;</button></div>'
       );
       return false;
     } else {
@@ -404,7 +412,7 @@ function selectShowBtn(id) {
     });
   }
 }
-window.onpopstate = function() {
+window.onpopstate = function () {
   run();
 };
 
@@ -432,7 +440,7 @@ function editManagerDetail(managerData) {
   if (managerData.image != "" && managerData.image != null) {
     var profile = document.getElementById("profile")
     profile.style.backgroundImage =
-    'url("' + headerImage + managerData.image + '")';
+      'url("' + headerImage + managerData.image + '")';
   }
 }
 
@@ -441,7 +449,9 @@ async function run() {
   rowManagerList.innerHTML = "";
   contentmamagerUI.innerHTML = "";
   var managersArr = await getManagerData(false);
-  var regisManager = managersArr.filter(({ active }) => active == true);
+  var regisManager = managersArr.filter(({
+    active
+  }) => active == true);
   selectShowBtn(id);
   if (localStorage.role == 'manager') {
     var userData = JSON.parse(localStorage.user);
@@ -463,7 +473,9 @@ async function run() {
     return true;
   }
   if (id.length == 8) {
-    var managerDetail = regisManager.find(({ _id }) => _id === id);
+    var managerDetail = regisManager.find(({
+      _id
+    }) => _id === id);
     var landLogs = await loadActivity(id);
     $("#header-managers-list").css("display", "none");
     $("#header-manager-detail").css("display", "block");

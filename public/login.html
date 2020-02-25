@@ -115,7 +115,10 @@
         <div id="manager-login-ui" style="display:none;">
           <form id="manager-login-form">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์" id="phone-manager-input">
+                <input id="phone-manager-input" required type="text" class="form-control"
+                  data-inputmask="'mask': ['0999999999']" data-mask=""
+                  im-insert="true">
+              <!-- <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์" id="phone-manager-input"> -->
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-phone"></span>
@@ -178,6 +181,14 @@
   <script src="admin-lte/plugins/jquery/jquery.min.js"></script>
   <script src="admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="admin-lte/dist/js/adminlte.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="admin-lte/plugins/moment/moment.min.js"></script>
+    <script src="admin-lte/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+
+    <script>
+      $('[data-mask]').inputmask()
+    </script>
 
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>

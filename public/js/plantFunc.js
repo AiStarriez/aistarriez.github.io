@@ -29,29 +29,33 @@ localStorage.removeItem("lands");
 
 //*สร้าง card พืชที่มีอยู่
 async function createExitingPalntUI(allPlants) {
+  if(allPlants.length == 0){
+    document.getElementById("noPlant").innerHTML = '<h2>ยังไม่มีพืช</h2><h3>กดปุ่ม "เพิ่มพืชใหม่" เพื่อเริ่มบันทึก</h3>'
+    document.getElementById("noPlant").style.display = "block"
+
+  }else{
+    document.getElementById("noPlant").style.display = "none"
+  }
   $("#plant-list").show(500);
   extendHeader.innerHTML = "";
   output.innerHTML = "";
   collectedPlantName.value = ""
+  plantListContent.innerHTML = "";
   $("#input-plant-image").css("display", "block");
   $("#header-plant-list").css("display", "block");
   $("#header-plant-detail").css("display", "none");
-  if(allPlants.length == 0){
-    var noplant = document.createElement("center");
-    noplant.style.color = "grey"
-    noplant.innerHTML = '<h2>ยังไม่มีพืช</h2><h3>กดปุ่ม "เพิ่มพืชใหม่" เพื่อเริ่มบันทึก</h3>'
-    document.getElementById('plant-list').parentNode.appendChild(noplant)
-  }
+
+
   for (let j = 0; j < btnHeader.length; j++) {
     btnHeader[j].dataset.target = "#modal-add-plant";
     textBtnHeader[j].innerHTML = "เพิ่มพืชใหม่";
     delPlantBtn[j].style.display = "none";
     editPlantBtn[j].style.display = "none"
   }
+  $("#menu-dropdown").css("display" , "none")
   plantDetailsContent.style.display = "none";
   plantListContent.style.display = "block";
 
-  plantListContent.innerHTML = "";
   for (var i = 0; i < allPlants.length; i++) {
     plant = allPlants[i];
     var coverImage =
@@ -450,7 +454,6 @@ function getPlantId() {
   var url = window.location.toString();
   var plantIndex = url.indexOf("plant=") + 6;
   var plantId = url.slice(plantIndex, url.length);
-  console.log(plantId)
   return plantId;
 }
 //*init button
@@ -501,6 +504,8 @@ async function initBtn() {
         await postNewActivity(plantId);
       }
       await loadPlantDataAPI(true);
+      collectedActivity.value = ""
+      collectedDuration.value = ""
       stateModal("success");
       run();
     }
@@ -582,9 +587,7 @@ async function selPage() {
 //*ทำตอนโหลดหน้า
 async function run() {
   selPage();
-  initBtn();
 }
-
 run()
-  .then(() => {})
-  .catch(err => console.log(err));
+initBtn();
+

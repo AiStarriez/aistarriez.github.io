@@ -128,7 +128,10 @@
                 </div>
               </div>
               <div class="input-group mb-3">
-                <input required id="phone-manager-input" type="text" class="form-control" placeholder="เบอร์โทรศัพท์" />
+                <!-- <input required id="phone-manager-input" type="text" class="form-control" placeholder="เบอร์โทรศัพท์" /> -->
+                <input id="phone-manager-input" required type="text" class="form-control"
+                  data-inputmask="'mask': ['0999999999']" data-mask=""
+                  im-insert="true">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <span class="fas fa-phone"></span>
@@ -153,7 +156,10 @@
               </div>
               <!-- /.col -->
               <div class="col-5">
-                <button id="manager-login-bt" type="button" class="btn btn-primary btn-block">
+                <button disabled id="manager-regis-bt" type="button" class="btn btn-primary btn-block">
+                  ลงทะเบียน
+                </button>
+                <button id="manager-login-bt" type="button" class="btn btn-primary btn-block" style="display: none;">
                   ลงทะเบียน
                 </button>
               </div>
@@ -220,6 +226,14 @@
 
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
   <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+
+    <!-- InputMask -->
+    <script src="admin-lte/plugins/moment/moment.min.js"></script>
+    <script src="admin-lte/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+
+    <script>
+      $('[data-mask]').inputmask()
+    </script>
 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="js/connectServer.js"></script>

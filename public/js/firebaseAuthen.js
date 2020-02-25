@@ -52,6 +52,14 @@ $("#owner-login-bt").click(function() {
   $("#modal-loading").css("display", "block");
   firebaseAuthenByEmail();
 });
+document.getElementById("phone-manager-input").onkeydown = function(e) {
+  if (e.keyCode == 13) {
+  }
+};
+document.getElementById("verify-manager-input").onkeydown = function(e) {
+  if (e.keyCode == 13) {
+  }
+};
 document.getElementById("pass-input-owner").onkeydown = function(e) {
   if (e.keyCode == 13) {
     $("#loader").html(loadingDiv())
@@ -67,6 +75,7 @@ $("#owner-gg-login-bt").click(function() {
 $("#forget-password-bt").click(function() {});
 
 $("#manager-verify-bt").click(function() {
+  console.log("verify")
   onVerifyCodeSubmit();
 });
 
@@ -177,14 +186,13 @@ function checkManagerDB(managerId) {
       $("#error-phone").css("display", "none");
       window.user = docs;
       localStorage.user = JSON.stringify(docs);
-      localStorage.ownerId = docs.owner_id;
-      localStorage.managerId = managerId;
+      localStorage.ownerId = docs[0].owner_id;
+      localStorage.managerId = docs[0].manager._id;
       localStorage.role = "manager"
       onSignInSubmit();
     },
     function(e) {
       $("#error-phone").css("display", "block");
-      console.log(window.user);
       window.user = false;
     }
   );
@@ -213,13 +221,8 @@ function registerOwnerDB(email, name) {
 
 //manager register
 function registerManagerDB() {
-  var codeManager = document.getElementById("code-manager-input");
-  var name = document.getElementById("name-manager-input");
-  var img = $("#profile").css("background-image");
-  var phone = document.getElementById("phone-manager-input");
-  var addrress = document.getElementById("addres-manager-input");
-  var base64IMG = img.slice(4, -1).replace(/"/g, "");
-  var url = "/managers/register/" + "eV5F9JZB";
+  var mDetail = JSON.parse(localStorage.mDetail)
+  var url = "/managers/register/" + mDetail.id;
   var body = localStorage.mDetail;
   console.log(body);
   var typ = "POST";
@@ -278,23 +281,22 @@ function onVerifyCodeSubmit() {
       .confirm(code)
       .then(function(result) {
         var user = result.user;
-        console.log(user);
         window.verifyingCode = false;
         $("#loader").html(loadingDiv())
         $("#modal-loading").css("display", "block");
         if (localStorage.authenEvent == "manager-register") {
           registerManagerDB();
+        }else{
+          window.location = "index.html";
         }
       })
       .catch(function(error) {
         console.error("error while chacking verification code", error);
         window.alert(
-          "error while chacking verification code: \n\n" +
-            error.code +
-            "\n\n" +
-            error.message
+          "รหัสยืนยันไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง"
         );
         window.verifyingCode = false;
+        $("#verify-manager-input").html("")
       });
   }
 }
