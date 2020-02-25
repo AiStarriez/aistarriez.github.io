@@ -33,9 +33,7 @@
    padding-right:3rem;
  }
  .content-wrapper {
-  /* min-height: unset; */
   background:#ffff;
-  /* min-height: calc(100% - 2rem); */
   overflow-y: scroll;
 }
 .card-title{
@@ -43,7 +41,6 @@
 }
 
 .content-header{
-  margin-top: 3vh;
   margin-left: 3vw;
   margin-right: 3vw;
 
@@ -88,7 +85,7 @@
    margin-left: 5%;
    float: left;
    bottom: 0;
-   margin-bottom: 5vh;
+   margin-bottom: 10vh;
    position: absolute;
  }
 
@@ -181,11 +178,28 @@
 .max-v-header{
   display: block
 }
+/* !Date picker */
+.datepicker-days {
+  padding:18px;
+}
+
+.table-condensed tr td,th{
+  font-size: 1.4rem;
+}
+
+/* !Date picker*/
 
 @media screen and (max-width: 992px){
  body,a{
-   font-size:1.3rem
+   font-size:1.3rem;
  }
+ body{
+   overflow-y: hidden;
+ }
+ .content{
+   margin-bottom: 30vh;
+ }
+
  h4{
    font-size:1.6rem
  }

@@ -4,6 +4,7 @@
 var contentmamagerUI = document.querySelector(".content-manager-detail");
 var nameHeader = document.querySelectorAll(".manager-name-header");
 var rowManagerList = document.getElementById("managers-div");
+var extendHeader = document.querySelectorAll("#extend-header")
 var id = getmanagerId();
 var managerData, managerImage;
 localStorage.removeItem("managers");
@@ -462,7 +463,10 @@ async function run() {
     $("#manager-register-ui").hide(500);
     $(".content-manager-detail").show(500);
     $("#dd-header").css("display", "none");
-    $("#extend-header").html("ข้อมูลส่วนตัว");
+    extendHeader.forEach(el =>{
+      el.innerHTML = "ข้อมูลส่วนตัว"
+    })
+    // $("#extend-header").html("ข้อมูลส่วนตัว");
 
     if (id.includes("?edit=")) {
       editManagerDetail(managerData);
@@ -480,14 +484,22 @@ async function run() {
     $("#header-managers-list").css("display", "none");
     $("#header-manager-detail").css("display", "block");
     $("#dd-header").css("display", "block");
-    $("#extend-header").html(`&nbsp;&nbsp;${managerDetail.name}`);
+    $("#back-nav").css("display" , "block")
+    $("#hamburger").css("display" , "none")
+    extendHeader.forEach(el =>{
+      el.innerHTML = (`&nbsp;&nbsp;${managerDetail.name}`)
+    })
+    // $("#extend-header").html(`&nbsp;&nbsp;${managerDetail.name}`);
     managerDetailUI(managerDetail);
     logsManagerUI(landLogs);
   } else {
     $("#header-managers-list").css("display", "block");
     $("#header-manager-detail").css("display", "none");
     $("#dd-header").css("display", "none");
-    $("#extend-header").html("");
+    $("#back-nav").css("display" , "none")
+    $("#hamburger").css("display" , "block")
+    extendHeader[0].innerHTML = "ผู้ดูแล"
+    extendHeader[1].innerHTML = ""
     setManagerCard(regisManager);
   }
 }

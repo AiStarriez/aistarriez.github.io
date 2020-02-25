@@ -83,12 +83,12 @@ function getPlantName(allPlant) {
   }
 }
 
-async function startCycleAPI(plantId, expected_product) {
+async function startCycleAPI(plantId, expected_product,startDate) {
   try {
     var url = `/operations/start/${currentLand.land._id}?id=${ownerId}`;
     var body = {
       plant: plantId,
-      start_date: new Date().toISOString(),
+      start_date: startDate,
       expected_product: expected_product
     }
     console.log(url)
@@ -173,9 +173,14 @@ function initBtn() {
   $("#save-start-cycle").click(async () => {
     var plantSel = window.plantSel
     var expected_product = document.getElementById("expect-product");
-    if (plantSel && expected_product.checkValidity()) {
+    var startDate = document.getElementById("start-date");
+
+    if (plantSel && expected_product.checkValidity()&& startDate.checkValidity()) {
       $("#modal-error-text").css("display", "none");
-      startCycleAPI(plantSel._id, parseInt(expected_product.value))
+      var thaiDate = startDate.value.split("/");
+      thaiDate[2] = thaiDate[2] - 543
+      var isoDate = new Date(`${thaiDate[2]}-${thaiDate[1]}-${thaiDate[0]}`).toISOString();
+      startCycleAPI(plantSel._id, parseInt(expected_product.value),isoDate)
     } else {
       $("#modal-error-text").css("display", "block");
     }

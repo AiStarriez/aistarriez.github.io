@@ -21,7 +21,7 @@ async function initMap() {
   var landsPercent = localStorage["percent-lands"] || undefined;
   cacheLands = localStorage["lands"] || undefined;
 
-  if (landsPercent != undefined || cacheLands) {
+  if (landsPercent != undefined && cacheLands) {
     cacheLands = JSON.parse(cacheLands)
     await loopCreatePie(landsPercent, cacheLands);
   } else {

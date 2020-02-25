@@ -36,7 +36,7 @@
 #addLandBtn {
   background-color: #FF7E9D;
   border-color: #FF7E9D;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 .content-wrapper {
@@ -49,6 +49,7 @@
   .dropdown {
     width: 100%;
   }
+
 }
 
 .pie-chart {
