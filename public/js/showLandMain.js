@@ -336,8 +336,7 @@ async function toCanvasMarker(divArr) {
           canvasArr[divArr[couterMarker].id] = canvas.toDataURL();
           couterMarker++;
           toCanvasMarker(divArr);
-        }
-      },{
+        },
         onerror: function(){
           localStorage.removeItem("percent-lands")
           location.reload();
