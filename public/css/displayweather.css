@@ -4,48 +4,6 @@
  border-radius: 10px;
  width: 100%
 }
-/* choosing style for today each div*/
-/*#dateDiv:first-child{
-  
-  text-align: left;
-  padding-left: 2%;
-  position:absolute;
-  
-}*/
-#weatherTextDiv:nth-child(2){
-  
-  /*text-align: left;
-  padding-left: 2%;
-  position:absolute;*/
-  
-}
-#temperatureDiv:nth-child(3){
-  
-  /*text-align: right;
-  left: 67%;
-  padding-left: 2%;
-  position:relative;*/
-  
-}
-#windSpeedDiv{
-  
-}
-#totalSunHoursDiv{
- 
- 
-}
-#sunHoursDiv{
-
-  
-}
-#weatherTodayDiv{
-  padding-left: 2%;
-}
-#forecastDiv{
-  margin: auto;
-  padding-left: 2%;
-  /*width: 700px;*/
-}
 
 .icon {
   position: relative;
@@ -98,7 +56,7 @@
  #weatherIcon, #currentIcon{
    padding-top: 1%;
    width: 20%;
-  
+
    float: left;
 
  }
@@ -115,11 +73,6 @@
   float: right;
  }
 
- #weatherForecastInfo{
-  padding-left: 10%;
-  padding-right: 10%;
-  padding-bottom: 5%;
- }
 
  #current-table{
    text-align: left;

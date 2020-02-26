@@ -65,11 +65,12 @@ function checkSessionLogin() {
     ) {
       signOut();
     }
-
-    if (user[0].owner_id) {
+    user = JSON.parse(user)
+    try{
+      var o = user[0].owner_id
       localStorage.role = "manager"
 
-    } else {
+    }catch(err){
       localStorage.role = "owner"
 
     }

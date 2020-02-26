@@ -284,6 +284,7 @@ async function createReportCycleUI(landId, cycleId) {
   endDate = dateThai(new Date(cycle.end_date).toLocaleString(), false, true)
   haederText[0].innerHTML = ""
   haederText[1].innerHTML = (land.land.name + "&nbsp;&nbsp;" + startDate + "&nbsp;&nbsp; - &nbsp;&nbsp;" + endDate)
+  cycle.performance = parseInt(cycle.performance)
   var performanceBig = cycle.performance >= 100 ? `<h4 class="text-success">${cycle.performance} %</h4>` : `<h4 class="text-danger">${cycle.performance} %</h4>`
   var performanceSm = cycle.performance >= 100 ? `<td class="text-success" style="padding-right:0px">${cycle.performance} %</td>` : `<td class="text-danger" style="padding-right:0px">${cycle.performance} %</td>`
   // --------------big screen total table--------------------- //

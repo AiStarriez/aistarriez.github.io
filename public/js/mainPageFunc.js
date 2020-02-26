@@ -50,7 +50,6 @@ async function filterLands() {
     var address = getFilters.address
     var landName = getFilters.land_name;
     var plantName = getFilters.plant;
-
     provinceDropdown.innerHTML = ""
     setDropdownItem("province" , "ทั้งหมด" , provinceDropdown )
     address.forEach(add => {
@@ -176,7 +175,61 @@ async function findLands(province, district, landName, plant) {
   } catch (err) {
     console.log(err)
   }
+}
 
+function toggleFilter(){
+ var filterMobile = document.querySelector(".filter-mobile")
+  $(".filter-mobile").toggle()
+  if($(".filter-mobile").css('display') !== 'none' && filterMobile.innerHTML == ""){
+    $("#filterMainPageDiv").html("")
+    filterMobile.innerHTML = ` <div class="dropdown" id="dropdown-main">
+    <button id="provice-filter" class="btn btn-primary dropdown-toggle land-filter" data-toggle="dropdown"
+      aria-expanded="false">
+      จังหวัด
+    </button>
+    <div class="dropdown-menu" role="menu" id="provice-dropdown">
+      <a class="dropdown-item" role="presentation"
+        onClick="setFilterValueOnclick('province','all')">ทั้งหมด</a>
+    </div>
+  </div>
+  <div class="dropdown" id="dropdown-main">
+    <button disabled id="district-filter" class="btn btn-primary dropdown-toggle land-filter"
+      data-toggle="dropdown" aria-expanded="false">
+      อำเภอ
+    </button>
+    <div class="dropdown-menu" role="menu" id="district-dropdown">
+      <a class="dropdown-item" role="presentation"
+        onClick="setFilterValueOnclick('district','all')">ทั้งหมด</a>
+    </div>
+  </div>
+  <div class="dropdown" id="dropdown-main">
+    <button id="land-name-filter" class="btn btn-primary dropdown-toggle land-filter" data-toggle="dropdown"
+      aria-expanded="false">
+      ที่ดิน
+    </button>
+    <div class="dropdown-menu" role="menu" id="land-dropdown">
+      <a class="dropdown-item" role="presentation" onClick="setFilterValueOnclick('land','all')">ทั้งหมด</a>
+    </div>
+  </div>
+  <div class="dropdown" id="dropdown-main">
+    <button id="plant-filter" class="btn btn-primary dropdown-toggle land-filter" data-toggle="dropdown"
+      aria-expanded="false">
+      พืช
+    </button>
+    <div class="dropdown-menu" role="menu" id="plant-dropdown">
+      <a class="dropdown-item" role="presentation" onClick="setFilterValueOnclick('plant','all')">ทั้งหมด</a>
+    </div>
+  </div>`
+   provinceFilter = document.getElementById("provice-filter");
+ provinceDropdown = document.getElementById("provice-dropdown")
+ districtFilter = document.getElementById("district-filter")
+ districtDropdown = document.getElementById("district-dropdown")
+ landNameDropdown = document.getElementById("land-dropdown");
+ landNameFilter = document.getElementById("land-name-filter");
+ plantDropdown = document.getElementById("plant-dropdown");
+ plantFilter = document.getElementById("plant-filter");
+  filterLands()
+  }
 
 }
 
@@ -204,11 +257,6 @@ function initBtn() {
     window.location = "addland.html";
   });
 }
-
-$("#provice-dropdown").on('classChange', function () {
-  console.log("DD menu")
-  // do stuff
-});
 
 async function run() {
   localStorage.removeItem("authenEvent")

@@ -36,7 +36,6 @@
 #addLandBtn {
   background-color: #FF7E9D;
   border-color: #FF7E9D;
-  font-size: 1.6rem;
 }
 
 .content-wrapper>.content {
@@ -63,6 +62,10 @@
 
   .col-3 {
     text-align: center;
+  }
+  .dropdown,.dropdown button{
+    margin-top: 2vh;
+    width: 100%;
   }
 }
 

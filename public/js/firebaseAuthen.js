@@ -139,7 +139,7 @@ function createAccountOwner(email, password, name) {
 
 //sign out
 function signOut() {
-  localStorage.removeItem("email");
+
   firebase.auth().signOut();
 }
 //------------------------------------
@@ -163,8 +163,8 @@ function checkUserDB(email) {
       }
     },
     function(e) {
-      if (localStorage.authenEvent == "loginGoogle") {
-        localStorage.email = window.user.email;
+      if (localStorage.authenEvent == "loginGoogle" && !window.location.href.includes("register.html")) {
+        localStorage.email = email;
         window.location = "register.html";
       } else {
         signOut();
@@ -234,6 +234,10 @@ function registerManagerDB() {
     },
     function(e) {
       console.log(e);
+      if(e.status == 201){
+        $("#regis-manager-success").css("display", "block");
+        $("#manager-verify-ui").css("display", "none");
+      }
     }
   );
 }

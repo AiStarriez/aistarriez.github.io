@@ -130,7 +130,7 @@ function displayFivesDayWeather(data) {
   $('#fiveDaysForecastDiv').append('<div id="weatherTodayDiv"></div>');
   //looping through the days and storing them in a specific arrays
 
-  var titleTable = "<table id = \"fiveDayWeather\" > <tr style = \"background-color: #62EAD3; color: #fff\"><td></td>" +
+  var titleTable = "<table class=\"table\" id = \"fiveDayWeather\" > <tr style = \"background-color: #62EAD3; color: #fff\"><td></td>" +
     "<td><i class=\"fas fa-temperature-high\"></i>&nbsp;&nbsp;อุณหภูมิสูงสุด</td>" +
     "<td><i class=\"fas fa-temperature-low\"></i>&nbsp;&nbsp;อุณหภูมิต่ำสุด</td>" +
     "<td><i class=\"fas fa-sun\"></i>&nbsp;&nbsp;จำนวนชั่วโมงที่แดดออก</td>" +

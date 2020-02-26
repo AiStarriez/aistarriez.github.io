@@ -224,9 +224,10 @@ function createMapComponent(poly, cacheLands) {
       lastActivity +
       '</p><hr><a href="landDetail.html#' +
       land.land._id +
-      '">ดูแบบละเอียด</a><br><a href="addland.html#' +
+      '">ดูแบบละเอียด</a><br>';
+      popupMap += localStorage.role == "owner"? ('<a href="addland.html#' +
       land.land._id +
-      '">แก้ไขขนาด</a>';
+      '">แก้ไขขนาด</a>') : '<br>'
     var obj = {
       land_id: polygon.land_id,
       poly: l,

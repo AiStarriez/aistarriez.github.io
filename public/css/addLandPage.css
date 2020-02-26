@@ -10,11 +10,7 @@
 #topnav{
   display: flex;
 }
-#saveBtn,
-#cancelBtn,
-#modalSaveBtn {
-  font-size: 1.4rem;
-}
+
 
 #line {
   color: gray;
