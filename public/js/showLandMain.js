@@ -337,6 +337,11 @@ async function toCanvasMarker(divArr) {
           couterMarker++;
           toCanvasMarker(divArr);
         }
+      },{
+        onerror: function(){
+          localStorage.removeItem("percent-lands")
+          location.reload();
+        }
       })
     } else {
       document.getElementById("widget").style.display = "none";
