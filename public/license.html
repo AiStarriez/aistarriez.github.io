@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Proreporte | รายงาน</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- PROreportE -->
+  <link rel="stylesheet" href="css/reportPerLand.css">
+  <link rel="stylesheet" href="css/addActivityPage.css">
+  <link rel="stylesheet" href="css/allelements.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="topnav">
+      <ul class="navbar-nav">
+        <li class="nav-item" id="back" onclick="history.back()" >
+          <a class="nav-link"><i class="fas fa-arrow-left"></i></a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link">
+            <p id="extend-header">รายงานสิทธิ์การใช้งาน</p>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      </ul>
+    </nav>
+    
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content-header">
+        <nav class="navbar navbar-expand navbar-white navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item" id="back" onclick="history.back()" >
+              <a class="nav-link"><i class="fas fa-arrow-left"></i></a>
+            </li>
+            
+          </ul>
+          <br>
+          <ul class="navbar-nav text-success">
+            <li id="header-report-list">
+              <h4>
+                รายงานสิทธิ์การใช้งาน
+              </h4>
+            </li>
+            <li id="header-report-detail">
+              <!-- <h4>
+                <span class="mobile-v-header" onclick="history.back()" style="cursor: pointer;"><i
+                    class="fa fa-arrow-left"></i>&nbsp;&nbsp;</span>
+                <span class="max-v-header" onclick="history.back()" style="cursor: pointer;">รายงานที่ดิน&nbsp;&nbsp;<i
+                    class="fa fa-angle-right"></i>&nbsp;&nbsp;</span>
+              </h4> -->
+            </li>
+            <li>
+              <h4 id="extend-header">
+              </h4>
+            </li>
+          </ul>
+          <!-- <ul class="navbar-nav ml-auto right-header-btn">
+            <li class="nav-item">
+              <button id="export-csv-btn" class="btn bg-olive" data-toggle="modal"><span
+                  id="tetx-btn-header">ส่งออกรายงาน .csv</span></button>
+            </li>
+          </ul> -->
+        </nav>
+        <hr>
+        <!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div id="license-announce" style="text-align: center;">
+            <h5>เว็บแอปพลิเคชั่นเพื่อจัดการไร่สวนและดูแลพืชสวน (Proplante)</h5>
+            <h5>เป็นโครงการที่จัดทำขึ้นในวิชา 198499 โครงงานวิศวกรรมคอมพิวเตอร์ สาขาวิชาวิศวกรรมคอมพิวเตอร์
+              คณะวิศวกรรมศาสตร์ มหาวิทยาลัยขอนแก่น</h5>
+            <h5>โดย นางสาวบุญญาภรณ์ มีแก้ว และ นางสาวบุณยาพร สุดจันฮาม นักเรียนชั้นปีที่ 4 สาขาวิชาวิศวกรรมคอมพิวเตอร์
+            </h5>
+            <br>
+            <h5>อนุญาตบุคคลภายนอกให้นำไปใช้งานและเผยแพร่ต่อได้ ไม่อนุญาตให้นำไปใช้งานในเชิงพาณิชย์</h5>
+            <h5>โดยลิขสิทธิ์ของผลงานชิ้นนี้จะเป็นของคณะผู้จัดทำ ไม่อนุญาตให้นำเป็นดัดแปลง ทำซ้ำ
+              หรือนำไปหารายได้ในเชิงพาณิชย์</h5>
+          </div>
+
+
+          <!-- <div id="container-report-list"></div>
+          <div id="container-report-perland"></div>
+          <div id="container-report-cycle"></div> -->
+          <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center=16.475000202974, 102.832854364312&zoom=17&path=color:0xff0000ff%7Cweight:0%7Cfillcolor:0x0000ff80%7C16.475000202974,102.832854364312%7C16.4750207796696,102.833927247918%7C16.4741514123777,102.83394870559%7C16.4740742494118,102.832870457566&size=300x300&maptype=satellite&key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg">            /.container-fluid -->
+        </div>
+      </section>
+      <!-- /.content -->
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- PROreportE -->
+  <!-- firebase -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+  <!-- firebase -->
+  <script src="js/connectServer.js"></script>
+  <script src="js/mutilplePageunction.js"></script>
+  <script src="js/reportPerLand.js"></script>
+  <script src="js/navBarLinks.js"></script>
+
+  <script src="admin-lte/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="admin-lte/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="admin-lte/dist/js/demo.js"></script>
+
+
+</body>
+
+</html>
