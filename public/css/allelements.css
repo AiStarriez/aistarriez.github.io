@@ -1,159 +1,167 @@
 
- body {
-   font-family: 'CS ChatThai';
-   background-size: cover;
-   overflow-x: hidden;
-   font-size: 1.4rem;
+body {
+  font-family: 'Sarabun' ;
+  background-size: cover;
+  overflow-x: hidden;
+  font-size: 1.2rem;
 
- }
+}
 
- .btn{
+
+.btn {
   font-size: 1.4rem;
 }
 
- button {
-   font-size: 1.4rem;
- }
+button {
+  font-size: 1.4rem;
+}
 
- #map {
-   flex: 1;
- }
+#map {
+  flex: 1;
+}
 
- #topnav{
-   height: calc(100% - 2rem);
-   margin-bottom: 1.4rem;
- }
- .sp-require{
-   color:red
- }
+#topnav {
+  height: calc(100% - 2rem);
+  margin-bottom: 1.4rem;
+}
 
- .modal-body{
-   padding-top:2rem;
-   padding-bottom:2rem;
-   padding-left:3rem;
-   padding-right:3rem;
- }
- .content-wrapper {
-  background:#ffff;
+.sp-require {
+  color: red
+}
+
+.modal-body {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.content-wrapper {
+  background: #ffff;
   overflow-y: scroll;
 }
-.card-title{
+
+.card-title {
   font-size: 1.4rem;
 }
 
-.content-header{
+.content-header {
   margin-left: 3vw;
   margin-right: 3vw;
 
 }
 
-.content{
+.content {
   margin-left: 3vw;
   margin-right: 3vw;
 }
 
- :not(.layout-fixed) .main-sidebar{
+:not(.layout-fixed) .main-sidebar {
   height: 100vh;
   min-height: unset;
 }
 
 
- #filterButton {
-   display: none;
- }
+#filterButton {
+  display: none;
+}
 
- #filterMainPageDiv {
-   margin-right: 15px;
-   float: right;
+#filterMainPageDiv {
+  margin-right: 15px;
+  float: right;
 
- }
+}
 
- #filterContainerDiv {
-   display: none;
- }
+#filterContainerDiv {
+  display: none;
+}
 
- #nav-user-name{
-   margin-top:0;
-   margin-bottom:0;
- }
+#nav-user-name {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
- .dropdown {
-   display: inline;
+.dropdown {
+  display: inline;
 
- }
- #button-div {
-   margin-right: 5%;
-   margin-left: 5%;
-   float: left;
-   bottom: 0;
-   margin-bottom: 10vh;
-   position: absolute;
- }
+}
 
- #signOutBtn {
-   background-color: red;
- }
+#button-div {
+  margin-right: 5%;
+  margin-left: 5%;
+  float: left;
+  bottom: 0;
+  margin-bottom: 2vh;
+  position: absolute;
+}
 
- .signout {
-   bottom: 0;
-   margin-bottom: 5vh;
-   margin-left: 5%;
-   float: left;
- }
- a{
-   cursor: pointer;
-   font-size: 1.4rem;
- }
+#signOutBtn {
+  background-color: red;
+}
+
+.signout {
+  bottom: 0;
+  margin-bottom: 5vh;
+  margin-left: 5%;
+  float: left;
+}
+
+a {
+  cursor: pointer;
+  font-size: 1.4rem;
+}
 
 
- #sidebar-brand-logo{
-   padding:10%;
-   color:green;
- }
- .brand-link .brand-image{
-   margin-top: 0px;
- }
-#band-name{
+#sidebar-brand-logo {
+  padding: 10%;
+  color: green;
+}
+
+.brand-link .brand-image {
+  margin-top: 0px;
+}
+
+#band-name {
   font-size: 1.8rem;
   font-weight: bold;
 }
 
- .modal{
-   top:20%
- }
+.modal {
+  top: 20%
+}
 
 .bt-progressive-nav {
   display: none;
   margin-right: 2vw;
 }
 
- .gm-style .gm-style-iw-d {
-   font-family: 'CS ChatThai';
-   margin-left: 20px;
-   margin-right: 20px;
-   margin-top: 10px;
-   margin-bottom: 10px;
-   font-size: 1.4rem;
- }
-
- .gm-style .gm-style-iw-d h5 {
+.gm-style .gm-style-iw-d {
+  font-family: 'CS ChatThai';
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 1.4rem;
-   text-align: center;
- }
+}
 
- .form-control{
-   font-size:1.4rem;
- }
+.gm-style .gm-style-iw-d h5 {
+  font-size: 1.4rem;
+  text-align: center;
+}
 
- h4{
-   font-size: 1.8rem;
- }
+.form-control {
+  font-size: 1.4rem;
+}
 
- #bar-header {
+h4 {
+  font-size: 1.8rem;
+}
+
+#bar-header {
   display: block;
 }
 
-#bar-header{
+#bar-header {
   content: "";
   display: table;
   clear: both;
@@ -164,61 +172,71 @@
   display: none;
 }
 
-.bar-col-header{
+.bar-col-header {
   width: 50%;
   float: left;
 }
 
-#topnav{
+#topnav {
   display: none;
 }
 
-.mobile-v-header{
+.mobile-v-header {
   display: none
 }
-.max-v-header{
+
+.max-v-header {
   display: block
 }
+
 /* !Date picker */
 .datepicker-days {
-  padding:18px;
+  padding: 18px;
 }
 
-.table-condensed tr td,th{
+.table-condensed tr td,
+th {
   font-size: 1.4rem;
 }
 
 /* !Date picker*/
 
-@media screen and (max-width: 992px){
- body,a{
-   font-size:1.3rem;
- }
- body{
-   overflow-y: hidden;
- }
- .content{
-   margin-bottom: 30vh;
- }
+@media screen and (max-width: 992px) {
 
- h4{
-   font-size:1.6rem
- }
+  body,
+  a {
+    font-size: 1.2rem;
+  }
+
+  body {
+    overflow-y: hidden;
+  }
+
+  .content {
+    margin-bottom: 30vh;
+  }
+
+  h4 {
+    font-size: 1.5rem
+  }
 
 
-  #topnav{
+  #topnav {
     display: flex;
   }
 
-  #topnav{
+  #topnav {
     color: white;
   }
+
   .bt-custom-hrader {
     display: none;
   }
+
   #header-mobile {
     display: block;
   }
+
   #bar-header {
     display: none;
   }
@@ -248,31 +266,28 @@
     top: 0;
   }
 
-  #dd-button,
-  #land-name-filter,#plant-filter {
-    width: 100%;
-    margin-top: 5%;
-    font-size: 1.4rem;
+  .right-header-btn {
+    display: none;
   }
 
-  /* #button-div {
-    display: none;
-  } */
-  .right-header-btn{
-    display: none;
-  }
-  .mobile-v-header{
+  .mobile-v-header {
     display: block
   }
-  .max-v-header{
+
+  .max-v-header {
     display: none
+  }
+
+  .btn {
+    font-size: 1.2rem;
   }
 }
 
-.table td, .table th{
+.table td,
+.table th {
   border-top: unset;
-  padding:.4rem;
-  vertical-align:unset;
+  padding: .4rem;
+  vertical-align: unset;
 }
 
 .table-curved {

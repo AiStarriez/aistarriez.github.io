@@ -17,59 +17,69 @@ window.onload = function() {
   ) {
 
     filesInput.addEventListener("change", function(event) {
-      var files = event.target.files; //FileList object
-      for (var i = 0; i < files.length; i++) {
-        file = files[i];
+      var loadingImage = loadImage(
+        event.target.files[0],
+        function(img) {
+          document.body.appendChild(img);
+        },
+        { maxWidth: 600 }
+      );
+      loadingImage.onload = loadingImage.onerror = null;
 
-        //Only pics
-        if (!file.type.match("image")) continue;
+      // var files = event.target.files; //FileList object
+      // for (var i = 0; i < files.length; i++) {
+      //   file = files[i];
 
-        var picReader = new FileReader();
-        console.log("onload image");
+      //   //Only pics
+      //   if (!file.type.match("image")) continue;
 
-        picReader.addEventListener("load", function(event) {
-          var picFile = event.target;
-          var canvas = document.createElement("canvas");
-          var ctx = canvas.getContext("2d");
-          var img = new Image();
-          img.onload = async function() {
-            canvas.width = 500;
-            canvas.height = canvas.width * (img.height / img.width);
-            var controlSize = img.width >= 500 ? 1 : 1;
-            // step 1 - resize to 50%
-            var oc = document.createElement("canvas"),
-              octx = oc.getContext("2d");
-            oc.width = img.width * controlSize;
-            oc.height = img.height * controlSize;
-            octx.drawImage(img, 0, 0, oc.width, oc.height);
-            // step 2
-            octx.drawImage(
-              oc,
-              0,
-              0,
-              oc.width * controlSize,
-              oc.height * controlSize
-            );
-            // step 3, resize to final size
-            ctx.drawImage(
-              oc,
-              0,
-              0,
-              oc.width * controlSize,
-              oc.height * controlSize,
-              0,
-              0,
-              canvas.width,
-              canvas.height
-            );
-            //img to file
-            var file = await toImageFile(canvas.toDataURL(), null);
-            outputImageUI(canvas.toDataURL(), file.name);
-          };
-          img.src = picFile.result;
-        });
-        picReader.readAsDataURL(file);
-      }
+      //   var picReader = new FileReader();
+      //   console.log("onload image");
+
+      //   picReader.addEventListener("load", function(event) {
+      //     var picFile = event.target;
+      //     var canvas = document.createElement("canvas");
+      //     var ctx = canvas.getContext("2d");
+      //     var img = new Image();
+      //     img.onload = async function() {
+      //       console.log(`w : ${img.width}  h : ${img.height}`)
+      //       canvas.width = 500;
+      //       canvas.height = canvas.width * (img.height / img.width);
+      //       var controlSize = img.width >= 500 ? 1 : 1;
+      //       // step 1 - resize to 50%
+      //       var oc = document.createElement("canvas"),
+      //         octx = oc.getContext("2d");
+      //       oc.width = img.width * controlSize;
+      //       oc.height = img.height * controlSize;
+      //       octx.drawImage(img, 0, 0, oc.width, oc.height);
+      //       // step 2
+      //       octx.drawImage(
+      //         oc,
+      //         0,
+      //         0,
+      //         oc.width * controlSize,
+      //         oc.height * controlSize
+      //       );
+      //       // step 3, resize to final size
+      //       ctx.drawImage(
+      //         oc,
+      //         0,
+      //         0,
+      //         oc.width * controlSize,
+      //         oc.height * controlSize,
+      //         0,
+      //         0,
+      //         canvas.width,
+      //         canvas.height
+      //       );
+      //       //img to file
+      //       var file = await toImageFile(canvas.toDataURL(), null);
+      //       outputImageUI(canvas.toDataURL(), file.name);
+      //     };
+      //     img.src = picFile.result;
+      //   });
+      //   picReader.readAsDataURL(file);
+      // }
     });
   } else {
     console.log("Your browser does not support File API");

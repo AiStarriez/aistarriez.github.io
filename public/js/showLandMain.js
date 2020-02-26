@@ -112,9 +112,9 @@ async function createMap(cacheLands) {
   centerControlDiv.index = 1;
   map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
 
- var getpolyDB = await getPolygonLands(cacheLands);
- createMapComponent(getpolyDB, cacheLands);
- drawingPolygonLands(getpolyDB, null);
+  var getpolyDB = await getPolygonLands(cacheLands);
+  createMapComponent(getpolyDB, cacheLands);
+  drawingPolygonLands(getpolyDB, null);
 }
 
 function blankMap() {
@@ -138,21 +138,20 @@ async function getLatLngDB() {
   } catch (err) {
     console.log(err);
     return null;
-
   }
 }
 
 async function getPolygonLands(cacheLands) {
 
-    try {
-      var url = "/sec/lands/polygon/main";
-      var body = JSON.stringify(cacheLands);
-      var getPoly = await connectToServer(url, body, "POST");
-      poly = getPoly.polygonLands
-      localStorage["poly-lands-main"] = JSON.stringify(poly)
-    } catch (err) {
-      console.log(err)
-    }
+  try {
+    var url = "/sec/lands/polygon/main";
+    var body = JSON.stringify(cacheLands);
+    var getPoly = await connectToServer(url, body, "POST");
+    poly = getPoly.polygonLands
+    localStorage["poly-lands-main"] = JSON.stringify(poly)
+  } catch (err) {
+    console.log(err)
+  }
 
   return poly
 }
@@ -328,19 +327,24 @@ async function createPie(landPercent, color) {
 }
 
 async function toCanvasMarker(divArr) {
-  if (couterMarker < divArr.length) {
-    html2canvas(divArr[couterMarker].div, {
-      onrendered: function (canvas) {
-        $("#img-out").append(canvas);
-        canvasArr[divArr[couterMarker].id] = canvas.toDataURL();
-        couterMarker++;
-        toCanvasMarker(divArr);
-      }
-    })
-  } else {
-    document.getElementById("widget").style.display = "none";
-    document.getElementById("img-out").style.display = "none";
-    var init = await createMap(cacheLands);
-    document.getElementById("modal-loading").style.display = "none";
+  try {
+    if (couterMarker < divArr.length) {
+      html2canvas(divArr[couterMarker].div, {
+        onrendered: function (canvas) {
+          $("#img-out").append(canvas);
+          canvasArr[divArr[couterMarker].id] = canvas.toDataURL();
+          couterMarker++;
+          toCanvasMarker(divArr);
+        }
+      })
+    } else {
+      document.getElementById("widget").style.display = "none";
+      document.getElementById("img-out").style.display = "none";
+      var init = await createMap(cacheLands);
+      document.getElementById("modal-loading").style.display = "none";
+    }
+  } catch (err) {
+    location.reload();
   }
+
 }
