@@ -8,10 +8,10 @@
   display: inline-block;
 }
 
- .btn-primary.disabled, .btn-primary:disabled {
+.btn-primary.disabled,
+.btn-primary:disabled {
   background-color: rgb(211, 211, 211);
   border-color: rgb(211, 211, 211);
-  font-size: 1.4rem;
   color: gray;
 
 }
@@ -23,7 +23,7 @@
   color: gray;
 }
 
-.land-filter{
+.land-filter {
   background-color: #EFEFEF;
   border-color: #EFEFEF;
   color: rgb(75, 75, 75);
@@ -39,17 +39,31 @@
   font-size: 1.6rem;
 }
 
-.content-wrapper {
+.content-wrapper>.content {
+  padding: 0px;
+}
+
+.content {
   display: -ms-flex;
   display: -webkit-flex;
   display: flex;
+  margin: 0px;
+  padding: 0px;
 }
 
 @media screen and (max-width: 992px) {
-  .dropdown {
-    width: 100%;
+
+  #button-div {
+    margin-bottom: 2vh;
   }
 
+  .btn {
+    font-size: 1.0rem;
+  }
+
+  .col-3 {
+    text-align: center;
+  }
 }
 
 .pie-chart {

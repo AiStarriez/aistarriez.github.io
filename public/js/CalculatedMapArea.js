@@ -1,15 +1,13 @@
 var map = document.getElementById("map");
-var navbar = document.getElementById("topnav");
+var navbar = document.querySelector(".main-header");
+var contentWrapper = document.querySelector(".content-wrapper")
 
-$(window, document).ready(function() {
-
+function setMapHeigth(){
   var navbarHeigth = navbar.offsetHeight;
   var screenHeigth = $(window).height();
-  // mapHeigth = screenH1eigth - navbarHeigth;
-
-  // map.style.height = mapHeigth;
-
     var mapHeigth = screenHeigth - navbarHeigth;
     $("#map").height(mapHeigth);
+    $(".content-wrapper").height(mapHeigth)
+}
 
-});
+setMapHeigth()

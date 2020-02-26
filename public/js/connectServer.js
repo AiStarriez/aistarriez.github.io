@@ -65,12 +65,13 @@ function checkSessionLogin() {
     ) {
       signOut();
     }
-    try{
-      var o = user[0].owner_id
+
+    if (user[0].owner_id) {
       localStorage.role = "manager"
 
-    }catch(err){
+    } else {
       localStorage.role = "owner"
+
     }
 
   }
@@ -103,7 +104,7 @@ function setSessionData(name, data) {
   //window.location.href = "detailland.html";
 }
 
-function dateThai(strDate, withTime ,shortVersion) {
+function dateThai(strDate, withTime, shortVersion) {
   var date_time = strDate.split(",");
   var date = date_time[0];
   var time = date_time[1];
@@ -127,7 +128,7 @@ function dateThai(strDate, withTime ,shortVersion) {
     "ธันวาคม"
   );
   var strMonthThai = strMonthCut[strMonth];
-  if(shortVersion){
+  if (shortVersion) {
     return strDay + "/" + strMonth + "/" + strYear
   }
   if (!withTime) {
@@ -151,9 +152,9 @@ function urltoFile(url, filename, mimeType) {
 
 
 document.querySelector(".content-wrapper").style.height =
-$(window).height() + "px";
+  $(window).height() + "px";
 
-function loadingDiv(){
+function loadingDiv() {
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#fff;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
   <g transform="translate(50,50)"><g>
     <g transform="translate(-50,-50)"><path fill="#e15b64" d="M47.8,44.7L28.1,25l0,0c-2.8-2.8-4-6.7-3.2-10.6c0.8-3.8,3.3-6.9,6.9-8.4L32,5.8C33.4,5.3,34.8,5,36.2,5 c2.2,0,4.4,0.7,6.4,2c3.3,2.2,5.2,5.8,5.2,9.8v0V44.7z"></path></g>
