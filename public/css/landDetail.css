@@ -1,7 +1,6 @@
 
 #harvestBtn{
 
-  font-size:1.4rem;
   background-color: #408214;
 
 }
@@ -65,14 +64,12 @@
   background-color: #EFEFEF;
   border-color: #EFEFEF;
   color: gray;
-  font-size: 1.4rem;
   width: 100%;
   text-align: left;
 
 }
 @media screen and (max-width: 992px) {
   #activityTable{
-    font-size: 1.4rem;
     border-collapse: none;
     border-spacing: 10px 0;
   }

@@ -311,6 +311,8 @@ function createPlanteDetailUI(plant) {
   // extendHeader.innerHTML = `&nbsp;&nbsp;${plantName}`;
   $("#header-plant-list").css("display", "none");
   $("#header-plant-detail").css("display", "block");
+  $("#menu-dropdown").css("display", "block")
+
   for (let i = 0; i < btnHeader.length; i++) {
     textBtnHeader[i].innerHTML = "เพิ่มกิจกรรม";
     btnHeader[i].dataset.target = "#modal-add-acplant";

@@ -2,13 +2,6 @@ html {
   background-color: #F4F6F9;
 }
 
-body {
-  font-family: 'CS ChatThai';
-  background-size: cover;
-  overflow-x: hidden;
-  font-size: 1.4rem;
-}
-
 label:not(.form-check-label):not(.custom-file-label) {
   font-weight: normal;
 }

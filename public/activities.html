@@ -7,6 +7,8 @@
   <title>Proplante | กิจกรรมทั้งหมด</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="images/icon.png" type="image/icon type">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -16,6 +18,8 @@
   <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/activitiesStyle.css">
   <link rel="stylesheet" href="css/loader-1.css">
   <link rel="stylesheet" href="css/allelements.css">
@@ -42,7 +46,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a id="new-activity-btn" class="dropdown-item text-success" data-toggle="modal"
-            data-target="#modal-add-activity">
+              data-target="#modal-add-activity">
               <i class="fas fa-plus"></i> <span id="tetx-btn-header">เพิ่มกิจกรรมใหม่</span>
             </a>
           </div>
@@ -144,6 +148,14 @@
                 </p>
               </a>
             </li>
+            <li>
+              <a href="license.html" class="nav-link" style="color: lightgrey;">
+                <i class="fas fa-copyright" id="nav-signout"></i>
+                <p>
+                  proplante
+                </p>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -165,7 +177,8 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <button id="new-activity-btn" class="btn bg-olive" data-toggle="modal" data-target="#modal-add-activity"><span>เพิ่มกิจกรรม</span></button>
+              <button id="new-activity-btn" class="btn bg-olive" data-toggle="modal"
+                data-target="#modal-add-activity"><span>เพิ่มกิจกรรม</span></button>
             </li>
           </ul>
         </nav>
@@ -197,6 +210,11 @@
               </table>
             </div>
 
+          </div>
+          <div id="no-activty" class="text-gray">
+            <center>
+            <h3>ยังไม่มีกิจกรรมที่กำลังดำเนินการอยู่ขณะนี้</h3>
+            </center>
           </div>
           <div id="activities-show" class="timeline">
           </div>

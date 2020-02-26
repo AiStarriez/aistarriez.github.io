@@ -64,7 +64,13 @@ async function checkValidation(role) {
     if (nameOwner.checkValidity()) {
       console.log("check pass");
       errorMessage.style.display = "none";
-      registerOwnerDB(localStorage.email, nameOwner.value);
+      if(localStorage.email){
+        registerOwnerDB(localStorage.email, nameOwner.value);
+      }else{
+        alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง')
+        signOut();
+        window.location = "index.html"
+      }
       localStorage.removeItem("email");
     } else {
       errorMessage.style.display = "block";

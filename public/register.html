@@ -7,6 +7,8 @@
   <title>ยินดีต้อนรับ | Proplante</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="images/icon.png" type="image/icon type">
+
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="admin-lte/plugins/fontawesome-free/css/all.min.css" />
@@ -18,6 +20,8 @@
   <link rel="stylesheet" href="admin-lte/dist/css/adminlte.min.css" />
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Sarabun&display=swap" rel="stylesheet">
+
 
   <link rel="stylesheet" href="admin-lte/plugins/toastr/toastr.min.css">
 
@@ -60,6 +64,7 @@
       <div class="card-body register-card-body">
         <div id="regis-form">
           <p class="login-box-msg">สมัครสมาชิก</p>
+
           <form>
             <!--!owner regis  -->
             <div id="owner-register-ui" style="display:none;">
@@ -150,7 +155,8 @@
                 <div class="icheck-primary">
                   <input required type="checkbox" id="agreeTerms" name="terms" value="agree" />
                   <label for="agreeTerms">
-                    ฉันยอมรับ <a href="#">ข้อตกลง</a>
+                    <small>ฉันยอมรับ <a href="#"><small>ข้อตกลง</small></a></small>
+
                   </label>
                 </div>
               </div>
@@ -166,6 +172,7 @@
               <!-- /.col -->
             </div>
           </form>
+          <br><br>
           <a href="#" onclick="window.history.back()" class="text-center">ฉันเป็นสมาชิกอยู่แล้ว</a>
         </div>
         <!-- regis form -->

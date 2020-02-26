@@ -139,7 +139,7 @@ function setActivitiesCard(hashActivities) {
       setBG = activityColors.setHex;
       setText = activityColors.setText;
 
-      if (localStorage["role"] == '"owner"') {
+      if (localStorage["role"] == 'owner') {
         rowActivity += setActivityOwnerUI(
           obj.land_name,
           date,
@@ -203,7 +203,6 @@ function setActivitiesCard(hashActivities) {
 }
 
 function getLandName() {
-  console.log("landNameArr", landNameArr)
   var landNameDropdown = document.getElementById("land-dropdown");
   var landNameFilter = document.getElementById("land-name-filter");
   var landNameHash = Object.keys(landNameArr)
@@ -266,6 +265,12 @@ async function selPageUI() {
     activities = JSON.parse(activities)
   } else {
     activities = await apiGetactivities();
+  }
+  if(activities.length == 0){
+    $("#no-activty").show()
+  }else{
+    $("#no-activty").hide()
+
   }
   createHeaderActivitiesUI(activities);
   var hashActivities = sortActivities(activities);

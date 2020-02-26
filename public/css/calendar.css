@@ -1,11 +1,6 @@
-body,html {
-    font-family: 'CS ChatThai';
-    background-size: cover;
-    overflow-x: hidden;
-     font-size: 1.6rem;
-  }
+
 #calendar{
-    font-family: 'CS ChatThai';
+    font-family: 'Sarabun' ;
 }
 .card-title{
     font-size: 1.6rem;

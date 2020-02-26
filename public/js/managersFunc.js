@@ -357,9 +357,9 @@ function logsManagerUI(landLogs) {
       '</td><td class="text-danger">' +
       landLogs[i].over_due +
       '</td></tr><tr><td>ทั้งหมด</td><td class="text-warning">กำลังดำเนินการ</td><td class="text-success">เสร็จแล้ว</td><td class="text-danger">เลยกำหนด</td></tr></table>';
-    if (i != 0) {
+
       byLands += "<hr>";
-    }
+
   }
   var col = document.createElement("div");
   var card = document.createElement("card");
