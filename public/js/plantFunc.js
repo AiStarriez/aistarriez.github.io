@@ -196,14 +196,17 @@ async function putEditActivity(plantId, activityId) {
     });
     var editActivity = await connectToServer(url, body, "PUT");
     $("#text-modal-response").html(`แก้ไขกิจกรรมสำเร็จ`);
-    console.log("edit plant activity success");
   } catch (err) {
-    $("#text-modal-response").html(
-      `เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง`
-    );
-    console.log(err.responseText);
-    console.log(collectedPlantName);
-    console.log(imageName);
+    if(err.status == 200){
+      $("#text-modal-response").html(`แก้ไขกิจกรรมสำเร็จ`);
+    }else{
+      $("#text-modal-response").html(
+        `เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง`
+      );
+      console.log(err.responseText);
+
+    }
+
   }
 }
 //* delete activity
