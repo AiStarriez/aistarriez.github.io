@@ -83,12 +83,13 @@ function getPlantName(allPlant) {
   }
 }
 
-async function startCycleAPI(plantId, expected_product,startDate) {
+async function startCycleAPI(plantId, expected_product, startDate, endDate) {
   try {
     var url = `/operations/start/${currentLand.land._id}?id=${ownerId}`;
     var body = {
       plant: plantId,
       start_date: startDate,
+      end_date: endDate,
       expected_product: expected_product
     }
     console.log(url)
@@ -104,16 +105,16 @@ async function startCycleAPI(plantId, expected_product,startDate) {
 }
 
 function selDisplay() {
-  if(localStorage.role == "manager"){
+  if (localStorage.role == "manager") {
     harvestedBtn.forEach(btn => {
       btn.style.display = "none";
     })
     startOpBtn.forEach(btn => {
       btn.style.display = "none";
     })
-    if (currentLand.operation.logs.plant_id){
+    if (currentLand.operation.logs.plant_id) {
       return true
-    }else{
+    } else {
       return false
     }
   }
@@ -174,16 +175,30 @@ function initBtn() {
     var plantSel = window.plantSel
     var expected_product = document.getElementById("expect-product");
     var startDate = document.getElementById("start-date");
+    var endDate = document.getElementById("end-date")
 
-    if (plantSel && expected_product.checkValidity()&& startDate.checkValidity()) {
+    if (plantSel && expected_product.checkValidity() && startDate.checkValidity()) {
       $("#modal-error-text").css("display", "none");
-      var thaiDate = startDate.value.split("/");
-      thaiDate[2] = thaiDate[2] - 543
-      var isoDate = new Date(`${thaiDate[2]}-${thaiDate[1]}-${thaiDate[0]}`).toISOString();
-      startCycleAPI(plantSel._id, parseInt(expected_product.value),isoDate)
+      var stThaiDate = startDate.value.split("/");
+      stThaiDate[2] = stThaiDate[2] - 543
+      var stIsoDate = new Date(`${stThaiDate[2]}-${stThaiDate[1]}-${stThaiDate[0]}`);
+
+      var endThaiDate = endDate.value.split("/");
+      endThaiDate[2] = endThaiDate[2] - 543
+      var endIsoDate = new Date(`${endThaiDate[2]}-${endThaiDate[1]}-${endThaiDate[0]}`);
+      if (stIsoDate < endIsoDate) {
+        $("#date-error").hide()
+        startCycleAPI(plantSel._id, parseInt(expected_product.value), stIsoDate.toISOString(), endIsoDate.toISOString())
+      } else {
+        $("#date-error").show()
+      }
     } else {
       $("#modal-error-text").css("display", "block");
     }
+  })
+
+  $("#end-date").change(() => {
+    console.log("end date change")
   })
 }
 

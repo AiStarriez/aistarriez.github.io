@@ -1,6 +1,9 @@
 var collectedPlantName = document.getElementById("inputPlantName");
 var collectedActivity = document.getElementById("inputPlantAc");
 var collectedDuration = document.getElementById("inputPlantDura");
+var collectedNumOfDate = document.getElementById("inputNumOfDate");
+var collectedRepeat = document.getElementById("input-repeat-check");
+var collectedRepeatIn = document.getElementById("input-repeat-in")
 var errDivModal = document.querySelectorAll("#err-div-modal");
 var extendHeader = document.querySelectorAll("#extend-header");
 var btnHeader = document.querySelectorAll("#new-activity-btn");
@@ -122,7 +125,7 @@ async function loadPlantDataAPI(newerData) {
     setCacheData("plants", getAllPlant);
     return getAllPlant;
   } catch (err) {
-    console.log(e);
+    console.log(err);
   }
 }
 //*upload ภาพปกพืช | retuen file name
@@ -165,7 +168,11 @@ async function postNewActivity(plantId) {
     var url = "/plants/activity/" + plantId;
     var body = JSON.stringify({
       tasks: collectedActivity.value,
-      duration: collectedDuration.value
+      duration: collectedDuration.value,
+      start_date:collectedDuration.value,
+      repeat: collectedRepeat.checked,
+      repeat_in: collectedRepeatIn.value,
+      num_of_date:collectedNumOfDate.value
     });
     var newPlantActivity = await connectToServer(url, body, "POST");
     $("#text-modal-response").html(
@@ -192,14 +199,18 @@ async function putEditActivity(plantId, activityId) {
     var url = `/plants/activity/${plantId}?activity=${activityId}`;
     var body = JSON.stringify({
       tasks: collectedActivity.value,
-      duration: collectedDuration.value
+      duration: collectedDuration.value,
+      start_date:collectedDuration.value,
+      repeat: collectedRepeat.checked,
+      repeat_in: collectedRepeatIn.value,
+      num_of_date:collectedNumOfDate.value
     });
     var editActivity = await connectToServer(url, body, "PUT");
     $("#text-modal-response").html(`แก้ไขกิจกรรมสำเร็จ`);
   } catch (err) {
-    if(err.status == 200){
+    if (err.status == 200) {
       $("#text-modal-response").html(`แก้ไขกิจกรรมสำเร็จ`);
-    }else{
+    } else {
       $("#text-modal-response").html(
         `เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง`
       );
@@ -308,7 +319,7 @@ function createPlanteDetailUI(plant) {
   $("#back-nav").show()
   plantName = plant.name;
   plantObj = plant;
-  extendHeader.forEach(el =>{
+  extendHeader.forEach(el => {
     el.innerHTML = `&nbsp;&nbsp;${plantName}`;
   })
   // extendHeader.innerHTML = `&nbsp;&nbsp;${plantName}`;
@@ -343,34 +354,50 @@ function createPlanteDetailUI(plant) {
     row.setAttribute("class", "row");
     plantDetailsContent.appendChild(row);
     var activities = plant.activities;
-    activities.sort(dynamicSort("duration"));
+    activities.sort(dynamicSort("start_date"));
+    var table = document.createElement("table");
+    table.className = "table table-curved"
+    plantDetailsContent.appendChild(table);
+
+    var header = `<tr><td>กิจกรรมที่</td><td>วันที่ทำ</td><td>จำนวนวัน</td><td>กิจกรรม</td><td>ทำซ้ำใน</td><td></td></tr>`
+    table.innerHTML = header
+
     for (i in plant.activities) {
       var activity = plant.activities[i];
-      var col = document.createElement("div");
-      var card = document.createElement("div");
-      var cardBody = document.createElement("div");
-      var table = document.createElement("table");
+
       var tr = document.createElement("tr");
       var duration = document.createElement("td");
+      var date = document.createElement("td")
+      var repeat = document.createElement("td")
+      var numOfDate = document.createElement("td")
       var task = document.createElement("td");
       var ddMenu = document.createElement("td");
       var ulMenu = document.createElement("ul");
       var liEdit = document.createElement("li");
       var liDel = document.createElement("li");
 
-      col.setAttribute("class", "col-md-12");
-      card.setAttribute("class", "card");
-      cardBody.setAttribute("class", "card-body");
-      table.setAttribute("class", "table");
-
-      duration.innerHTML = `สัปดาห์ที่ ${activity.duration}`;
+      duration.innerHTML = ` ${parseInt(i) + 1}`;
       duration.style.color = "green";
-      duration.style.width = "33.33%";
+      duration.style.width = "16.66%";
+
+      date.innerHTML = `${activity.start_date}  วัน`
+      date.style.textAlign = "center";
+      date.style.width = "16.66%";
+
+      numOfDate.innerHTML = activity.num_of_date + "  วัน"
+      numOfDate.style.width = "16.66%";
+      numOfDate.style.textAlign = "center";
+
       task.innerHTML = activity.tasks;
-      task.style.width = "33.33%";
+      task.style.width = "16.66%";
       task.style.textAlign = "center";
+
+      repeat.innerHTML = activity.repeat ? activity.repeat_in + "  วัน": "ทำครั้งเดียว"
+      repeat.style.width = "16.66%";
+      repeat.style.textAlign = "center";
+
       ddMenu.style.textAlign = "right";
-      ddMenu.style.width = "33.33%";
+      ddMenu.style.width = "16.66%";
       ddMenu.innerHTML =
         '<button type="button" class="btn" data-toggle="dropdown" aria-expanded="false"><i style="font-size:1.2rem;color:#8e8580" class="fas fa-ellipsis-h"></i></button>';
       ulMenu.setAttribute("class", "dropdown-menu");
@@ -408,13 +435,13 @@ function createPlanteDetailUI(plant) {
       ulMenu.appendChild(liDel);
       ddMenu.appendChild(ulMenu);
       tr.appendChild(duration);
+      tr.appendChild(date)
+      tr.appendChild(numOfDate)
       tr.appendChild(task);
+      tr.appendChild(repeat)
       tr.appendChild(ddMenu);
       table.appendChild(tr);
-      cardBody.appendChild(table);
-      card.appendChild(cardBody);
-      col.appendChild(card);
-      row.appendChild(col);
+
     }
   }
 }
@@ -505,11 +532,24 @@ async function initBtn() {
 
   $("#save-plant-ac-btn").click(async () => {
     stateModal("form");
-    var inputArr = [collectedActivity, collectedDuration];
-    var pass = checkValidityForm(inputArr, errDivModal[1]);
+    var pass;
+
+    var inputArr = [collectedActivity, collectedDuration, collectedNumOfDate];
+     pass = checkValidityForm(inputArr, errDivModal[1]);
     plantId = getPlantId();
-    console.log(new Date());
-    console.log(plantId);
+
+    if(collectedRepeat.checked){
+      if(collectedRepeatIn.value == "" || collectedRepeatIn.value == "0"){
+        pass = false
+        var textErr = document.createElement("p");
+        textErr.innerHTML = "*กรุณากรอกข้อมูลให้ครบถ้วน";
+        textErr.style.color = "red";
+        errDivModal[1].innerHTML = textErr.outerHTML;
+      }
+    }else{
+      collectedRepeatIn.value = 0
+    }
+
     if (pass) {
       stateModal("loading");
       if (window.plantAcId) {
@@ -581,6 +621,16 @@ async function initBtn() {
       }
     }
   })
+
+  $("#input-repeat-check").change(()=>{
+    if(collectedRepeat.checked){
+      $("#input-repeat-in-div").show(200)
+    }else{
+      $("#input-repeat-in-div").hide(200)
+
+    }
+  })
+
 }
 //* switch page
 async function selPage() {

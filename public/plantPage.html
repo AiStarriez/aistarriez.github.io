@@ -307,14 +307,36 @@
                 </div>
                 </div>
               <div class="form-group">
-                <p style="margin-bottom:0px">สัปดาห์ที่<span class="sp-require">&nbsp;*</span></p>
+                <p style="margin-bottom:0px">วันที่เริ่มทำ(นับจากวันที่เริ่มการดูแล)<span class="sp-require">&nbsp;*</span></p>
               <div class="input-group">
                 <input autocomplete="off" id="inputPlantDura" required type="text" class="form-control"
                   data-inputmask="'mask': ['9','99','999']" data-mask=""
                   im-insert="true">
               </div>
               </div>
+              <div class="form-group">
+                <p style="margin-bottom:0px">จำนวนวันที่ทำ<span class="sp-require">&nbsp;*</span></p>
+              <div class="input-group">
+                <input autocomplete="off" id="inputNumOfDate" required type="text" class="form-control"
+                  data-inputmask="'mask': ['9','99','999']" data-mask=""
+                  im-insert="true">
+              </div>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input type="checkbox" autocomplete="off" class="form-check-input" id="input-repeat-check">
+                  <label class="form-check-label" for="exampleCheck1">ทำซ้ำ</label>
+                </div>
+              </div>
 
+              <div class="form-group" id="input-repeat-in-div" style="display:none">
+                <p style="margin-bottom:0px">ทำซ้ำใน (วัน)<span class="sp-require">&nbsp;*</span></p>
+              <div class="input-group">
+                <input autocomplete="off" required type="text" class="form-control" id="input-repeat-in"
+                  data-inputmask="'mask': ['9','99','999']" data-mask=""
+                  im-insert="true">
+              </div>
+              </div>
               <div id="err-div-modal"></div>
             </form>
             <div style="width: 100%; text-align:center;">

@@ -7,7 +7,6 @@ body {
 
 }
 
-
 .btn {
   font-size: 1.1rem;
 }
@@ -33,7 +32,7 @@ body {
 }
 
 .content-wrapper {
-  background: #ffff;
+  background-color: rgb(250, 252, 255);
   overflow-y: scroll;
 }
 
@@ -80,6 +79,15 @@ body {
 .dropdown {
   display: inline;
 
+}
+.navbar {
+  background-color: rgb(250, 252, 255);
+}
+.wrapper{
+  background-color: rgb(250, 252, 255);
+}
+#topnav{
+  background-color: white;
 }
 
 #button-div {
@@ -196,7 +204,10 @@ th {
 }
 
 /* !Date picker*/
-
+.dropdown-item:focus, .dropdown-item:hover{
+  background-color: gray;
+  color: #008CEA;
+}
 @media screen and (max-width: 992px) {
 
   body,
@@ -277,6 +288,10 @@ th {
   .btn {
     font-size: 1.1rem;
   }
+
+.form-control {
+  font-size: 1.0rem;
+}
 }
 
 .table td,
@@ -295,15 +310,16 @@ th {
   padding: 3px 10px;
 }
 
-.table-curved th:first-child {
-  padding: 6px;
+.table-curved tr:first-child td{
+  background-color: #ffffff00;
+
 }
 
 .table-curved td {
   background-color: #f1efef;
   padding: 6px 10px;
-  border-bottom: 10px solid white;
-  border-top: 10px solid white;
+  border-bottom: 10px solid #fafcff;
+  border-top: 10px solid #fafcff;
 }
 
 .table-curved td:first-child {
@@ -316,12 +332,13 @@ th {
   border-radius: 0 18px 18px 0;
 }
 
+.table-curved .next-ac-col td{
+  background-color: #ffffff;
+}
 /* .table-curved tr:hover td:not(:first-child) {
     background-color: #c5c5c5;
   } */
-.table-curved tr:hover td {
-  background-color: #d4d4d4;
-}
+
 
 .table-curved tr.blue td:first-child {
   background-color: cornflowerblue;
@@ -329,8 +346,32 @@ th {
 
 .table-curved tr.green td:first-child {
   background-color: forestgreen;
+
 }
 
 .table tbody+tbody {
   border-top: none
+}
+
+.sub-header-row tr td{
+  padding-right: 20px;
+
+}
+.btn-block{
+width: auto;
+}
+.btn-block.btn-danger{
+  background-color: #FFDDDF;
+  border-color: #FFDDDF;
+  color: #FF4760;
+}
+.btn-block.btn-info{
+  background-color: #CFEBFF;
+  border-color: #CFEBFF;
+  color: #008CEA;
+}
+
+.table-ac-header tr td{
+  padding: 0px;
+  padding-right: 18px;
 }

@@ -52,7 +52,7 @@
           <form action="" id="search-location-form" class="search-form js-inline ml-3 mr-3">
             <div class="input-group input-group-sm" style="width:100%; margin-top: 10px;">
               <input id="map_search" autocomplete="off" class="form-control form-control-navbar" type="search"
-                placeholder="ค้นหาสถานที่" aria-label="Search" style="margin-top:0px; ">
+                placeholder="ค้นหาสถานที่" aria-label="Search" style="margin-top:0px; font-size: 1.0rem;">
               <div class="input-group-append" style="background-color: #F2F4F6;">
                 <button id="mapSearchBt" class="btn btn-navbar" type="submit">
                   <i class="fas fa-search"></i>
@@ -69,7 +69,7 @@
             </div>
             <div class="col-6">
               <input type="text" autocomplete="off" class="form-control"
-              placeholder="ขนาดที่ดิน (ตารางเมตร)" id="landArea-input" style="margin-top:10px">
+              placeholder="ขนาดที่ดิน (ไร่-งาน-ตารางวา)" id="landArea-input" style="margin-top:10px">
 
             </div>
           </div>
@@ -110,14 +110,19 @@
                  with font-awesome or any other icon font library -->
 
             <div class="input-group mb-3">
-              <li class="nav-item"> <input type="text" autocomplete="off" class="form-control" placeholder="ชื่อที่ดิน"
+
+              <li class="nav-item">
+                <p>ชื่อที่ดิน</p>
+                <input type="text" autocomplete="off" class="form-control" placeholder="ชื่อที่ดิน"
                   id="landName-input">
                 <div class="input-group-append">
 
                 </div>
               </li>
-              <li class="nav-item"><input type="text" autocomplete="off" class="form-control"
-                  placeholder="ขนาดที่ดิน (ตารางเมตร)" id="landArea-input">
+              <li class="nav-item">
+                <p style="margin-top: 10px;margin-bottom: 10px;">ขนาดที่ดิน</p>
+                <input type="text" autocomplete="off" class="form-control"
+                  placeholder="(ไร่-งาน-ตารางวา)" id="landArea-input">
                 <div class="input-group-append">
 
                 </div>
@@ -203,6 +208,7 @@
   <script src="js/connectServer.js"></script>
   <script src="js/addLandMap.js"></script>
   <script src="js/mutilplePageunction.js"></script>
+  <script src="js/CalculatedMapArea.js"></script>
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGwWZK_bbs0Q4fdGToSaVaymJbKz9bWWg&libraries=drawing,places,geometry&callback=initMap"
     async defer></script>
@@ -239,6 +245,12 @@
   <script src="admin-lte/dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="admin-lte/dist/js/demo.js"></script>
+  <!-- InputMask -->
+  <script src="admin-lte/plugins/moment/moment.min.js"></script>
+  <script src="admin-lte/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+  <script>
+    $('[data-mask]').inputmask()
+    </script>
 </body>
 
 </html>

@@ -142,14 +142,23 @@ function onPolygonDrag(polygon) {
       lat +
       "</td></tr><tr><td>ลองจิจูด</td><td>" +
       lng +
-      "</td></tr></table>";
+      "</td></tr></table><hr>";
     latLngTocalc.push(new google.maps.LatLng(lat, lng));
   }
   defultLocation = polygonArr[0];
   var area = google.maps.geometry.spherical.computeArea(latLngTocalc);
+  var areaThai = computeAreaThai(area)
   landAreaInput.forEach(areaInput =>{
-    areaInput.value = area.toFixed(2);
+    areaInput.value = areaThai
   })
+}
+
+function computeAreaThai(sqMeter){
+  var rai = parseInt(sqMeter / 1600)
+  var ngan = parseInt((sqMeter % 1600) / 400)
+  var sqWa = parseInt(((sqMeter % 1600) % 400) / 4)
+
+  return `${rai}-${ngan}-${sqWa}`
 }
 
 function editSetPolygon(polygonEditLand) {

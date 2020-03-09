@@ -416,18 +416,36 @@
                 </div>
                 <!-- /.input group -->
               </div>
-              <div class="form-group">
-                <label>วันที่เริ่ม <span class="sp-require">&nbsp;*</span></label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="far fa-calendar-alt"></i>
-                    </span>
+              <p id="date-error" style="display: none;" class="text-danger">* วันที่เริ่มต้องเป็นวันก่อนวันสิ้นสุด</p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>วันที่เริ่ม <span class="sp-require">&nbsp;*</span></label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="far fa-calendar-alt"></i>
+                        </span>
+                      </div>
+                      <input required type="text" class="form-control float-right input-medium" id="start-date"
+                        data-provide="datepicker" data-date-language="th-th" onfocus="blur();">
+                    </div>
                   </div>
-                  <input required type="text" class="form-control float-right input-medium" id="start-date"
-                    data-provide="datepicker" data-date-language="th-th" onfocus="blur();">
                 </div>
-                <!-- /.input group -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>วันสิ้นสุด <span class="sp-require">&nbsp;*</span></label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="far fa-calendar-alt"></i>
+                        </span>
+                      </div>
+                      <input required type="text" class="form-control float-right input-medium" id="end-date"
+                        data-provide="datepicker" data-date-language="th-th" onfocus="blur();">
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <p style="margin-bottom:0px">ผลผลิตที่คาดหวัง(หน่วย)<span class="sp-require">&nbsp;*</span></p>
@@ -489,36 +507,13 @@
    <script id="example_script" type="text/javascript">
     function demo() {
       $('.datepicker').datepicker();
-      //$('.select2').select2()
-
-      /*$('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })*/
     }
 
   </script>
 
   <script type="text/javascript">
     $(function () {
-      $('pre[data-source]').each(function () {
-        var $this = $(this),
-          $source = $($this.data('source'));
 
-        var text = [];
-        $source.each(function () {
-          var $s = $(this);
-          if ($s.attr('type') == 'text/javascript') {
-            text.push($s.html().replace(/(\n)*/, ''));
-          } else {
-            text.push($s.clone().wrap('<div>').parent().html()
-              .replace(/(\"(?=[[{]))/g, '\'')
-              .replace(/\]\"/g, ']\'').replace(/\}\"/g, '\'') // javascript not support lookbehind
-              .replace(/\&quot\;/g, '"'));
-          }
-        });
-
-        $this.text(text.join('\n\n').replace(/\t/g, '    '));
-      });
       demo();
     });
 

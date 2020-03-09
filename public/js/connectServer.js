@@ -1,8 +1,8 @@
 var ownerId;
 var managerId;
 
-var apiURL = "http://68.183.230.159:8080";
-// var apiURL = "http://localhost:8080";
+// var apiURL = "http://68.183.230.159:8080";
+var apiURL = "http://localhost:8080";
 
 var headerImage = apiURL + "/images/display/";
 
@@ -66,11 +66,11 @@ function checkSessionLogin() {
       signOut();
     }
     user = JSON.parse(user)
-    try{
+    try {
       var o = user[0].owner_id
       localStorage.role = "manager"
 
-    }catch(err){
+    } catch (err) {
       localStorage.role = "owner"
 
     }
@@ -86,10 +86,13 @@ function signOut() {
 }
 
 function uiOnloadPage() {
-  var userName = document.getElementById("nav-user-name");
-  var userData = JSON.parse(localStorage.user);
-  var name = userData.name || userData[0].manager.name;
-  userName.innerHTML = userName.innerHTML + name;
+  try {
+    var userName = document.getElementById("nav-user-name");
+    var userData = JSON.parse(localStorage.user);
+    var name = userData.name || userData[0].manager.name;
+    userName.innerHTML = userName.innerHTML + name;
+  } catch (err) {}
+
 }
 
 function setCacheData(name, data) {
@@ -151,9 +154,11 @@ function urltoFile(url, filename, mimeType) {
     });
 }
 
+try {
+  document.querySelector(".content-wrapper").style.height =
+    $(window).height() + "px";
+} catch (err) {}
 
-document.querySelector(".content-wrapper").style.height =
-  $(window).height() + "px";
 
 function loadingDiv() {
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#fff;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">

@@ -1,18 +1,10 @@
 $(function () {
-  /* initialize the external events
-     -----------------------------------------------------------------*/
   function ini_events(ele) {
     ele.each(function () {
-      // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-      // it doesn't need to have a start or end
       var eventObject = {
         title: $.trim($(this).text()) // use the element's text as the event title
       };
-
-      // store the Event Object in the DOM element so we can get to it later
       $(this).data("eventObject", eventObject);
-
-      // make the event draggable using jQuery UI
       $(this).draggable({
         zIndex: 1070,
         revert: true, // will cause the event to go back to its
@@ -22,31 +14,21 @@ $(function () {
   }
 
   ini_events($("#external-events div.external-event"));
-
-  /* initialize the calendar
-     -----------------------------------------------------------------*/
-  //Date for the calendar events (dummy data)
-  var date = new Date();
-  var d = date.getDate(),
-    m = date.getMonth() + 1,
-    y = date.getFullYear();
+  $("#loader").html(loadingDiv())
+document.getElementById("modal-loading").style.display = "block";
 
   var Calendar = FullCalendar.Calendar;
   var Draggable = FullCalendarInteraction.Draggable;
 
   var containerEl = document.getElementById("external-events");
-  var checkbox = document.getElementById("drop-remove");
   var calendarEl = document.getElementById("calendar");
 
   var colorActivity = {
-    done: "#00a65a",
-    over_due: "#f56954",
-    not_done: "#A28E87",
-    in_progress: "#f39c12"
+    done: "#64BF36",
+    over_due: "#FF6152",
+    not_done: "#4A4B4B",
+    in_progress: "#FFB646"
   };
-
-  // initialize the external events
-  // -----------------------------------------------------------------
 
   new Draggable(containerEl, {
     itemSelector: ".external-event",
@@ -87,7 +69,13 @@ $(function () {
         document.getElementById("activities-table").appendChild(nonActivtiy);
         return false;
       }
-      setCalendarDetails(docs);
+      var landObj = {};
+      localStorage["by-date"] = JSON.stringify(docs)
+      docs.forEach(land =>{
+        landObj[land.land_id] = land.land_name
+      });
+      addCalendarFilter(landObj)
+      setCalendarDetails(docs[0].land_id);
     },
     e => {
       console.log(e);
@@ -96,18 +84,42 @@ $(function () {
     }
   );
 
+  function addCalendarFilter(landObj){
 
-  function setCalendarDetails(docs) {
-    activityDetail(docs);
+    var filter = document.getElementById("calendar-filter");
+    var dropdown = document.getElementById("calendar-dropdown");
 
+    var id = Object.keys(landObj);
+    filter.innerHTML = "ที่ดิน : " + landObj[id[0]];
+    id.forEach(land_id =>{
+      var fName = document.createElement("a");
+      fName.innerHTML = landObj[land_id];
+      fName.setAttribute("class", "dropdown-item");
+      fName.setAttribute("role", "presentation");
+      dropdown.appendChild(fName);
+      fName.onclick = (function (arg) {
+        return function () {
+          setCalendarDetails(arg);
+          filter.innerHTML = "ที่ดิน : " +  landObj[land_id]
+        };
+      })(land_id);
+    })
+  }
+
+  function setCalendarDetails(landId) {
+    // activityDetail(docs);
+    events = []
+    var docs = JSON.parse(localStorage["by-date"])
     for (let i = 0; i < docs.length; i++) {
-      var getDate =
-        docs[i].end_date != null ? docs[i].end_date : docs[i].start_date;
-      var startDate = new Date(getDate);
-      var formatDate = startDate.toISOString().slice(0, 10);
-      if (i == 0) {
-        defultDate = formatDate;
+      if(docs[i].land_id != landId){
+        continue;
       }
+      var getStDate = docs[i].start_date ? new Date(docs[i].start_date).toLocaleDateString().split("/") : new Date(docs[i].end_date).toLocaleDateString().split("/")
+      var getEdDate = new Date(docs[i].end_date)
+      getEdDate.setDate(getEdDate.getDate() + 1)
+      getEdDate = getEdDate.toLocaleDateString().split("/")
+      getStDate = (`${getStDate[2]}-${getStDate[0].length == 1 ? 0+getStDate[0]:getStDate[0]}-${getStDate[1].length == 1 ?0 + getStDate[1]:getStDate[1]}`)
+      getEdDate = (`${getEdDate[2]}-${getEdDate[0].length == 1 ? 0+getEdDate[0]:getEdDate[0]}-${getEdDate[1].length == 1 ?0 + getEdDate[1]:getEdDate[1]}`)
       var color;
       switch (docs[i].status) {
         case "ยังไม่ทำ": {
@@ -129,8 +141,9 @@ $(function () {
       }
 
       var obj = {
-        title: docs[i].task,
-        start: formatDate,
+        title: `${docs[i].land_name} : ${docs[i].task}`,
+        start: getStDate,
+        end: getEdDate,
         url: 'activitydetails.html?' + docs[i].activity_id + "&" + docs[i].land_id,
         backgroundColor: color,
         borderColor: color
@@ -141,16 +154,17 @@ $(function () {
   }
 
   function createCalendar() {
+    calendarEl.innerHTML = ""
     var calendar = new Calendar(calendarEl, {
       plugins: ["bootstrap", "interaction", "dayGrid", "timeGrid"],
       themeSystem: "bootstrap",
       header: {
-        right: "today prev,next ",
+        right: "prev,next ",
         left: "title"
         // center: "title",
         // right: "dayGridMonth,timeGridWeek , listGridWeek"
       },
-      defaultDate: defultDate,
+      defaultDate: new Date(),
       contentHeight: 600,
       locale: "th",
       timeZone: "local",
@@ -169,6 +183,8 @@ $(function () {
       }
     });
     calendar.render();
+document.getElementById("modal-loading").style.display = "none";
+
   }
 
   /* ADDING EVENTS */
@@ -280,7 +296,7 @@ $(function () {
           ) +
           "</div></div>";
       } else {
-        row += setActivityManagerUI(landName, toDate, task, status, (activityID + "&" + landID), setBG,activityID,landID);
+        row += setActivityManagerUI(landName, toDate, task, status, (activityID + "&" + landID), setBG, activityID, landID);
         mobileCard =
           mobileCard +
           '<div class="card"><div class="card-body">' +

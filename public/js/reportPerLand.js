@@ -3,8 +3,13 @@ async function initBtn() {
     el.onclick = async () => {
       console.log("onclick")
       var csvData = [
-        ['ที่ดิน', 'วันที่เริ่ม', 'วันสิ้นสุด', 'พืชที่ปลูก', '', 'ผลผลิตที่คาดหวัง', 'ผลผลิตจริง', 'ประสิทธิภาพ'],
-
+        ['ที่ดิน', 'วันที่เริ่มดูแล', 'วันเก็บเกี่ยว', 'พืชที่ปลูก', 'ผลผลิตที่คาดหวัง', 'ผลผลิตจริง', 'ประสิทธิภาพ'],
+      ]
+      var notDoneCsv = [
+        [''],
+        [''],
+        ['กิจกรรมที่ยังไม่ทำ'],
+        ['กำหนดเริ่ม', 'กำหนดเสร็จ', 'กิจกรรม']
       ]
       var landId = getLandIdFromURL();
       var cycleId = getopCycleIdFromURL();
@@ -22,23 +27,37 @@ async function initBtn() {
       }) => land._id === landId);
       startDate = dateThai(new Date(cycle.start_date).toLocaleString(), false, true)
       endDate = dateThai(new Date(cycle.end_date).toLocaleString(), false, true)
-      var headerCsv = [land.land.name, startDate, endDate, cycle.plant_name, '', cycle.expected_product, cycle.real_product, cycle.performance]
+      var headerCsv = [land.land.name, startDate, endDate, cycle.plant_name, cycle.expected_product, cycle.real_product, cycle.performance]
       csvData.push(headerCsv);
       csvData.push(['']);
+      csvData.push(['']);
       csvData.push(['บันทึกกิจกรรม'])
-      csvData.push(['วันที่', 'กิจกรรม', 'ผู้ดูแล', 'สถานะ'])
+      csvData.push(['วันที่เริ่ม', 'วันสิ้นสุด', 'กิจกรรม', 'ผู้ดูแล', 'สถานะ', 'บันทึก'])
       cycle.activities.forEach(activity => {
         var date = activity.end_date != null ? activity.end_date : activity.start_date;
+        var startDate = dateThai(new Date(activity.start_date).toLocaleString(), false, true)
+        var endDate = dateThai(new Date(activity.end_date).toLocaleString(), false, true)
         var manager = managers.find(({
           _id
         }) => _id == activity.manager_id);
         var managerName = manager ? manager.name : "-"
         date = dateThai(new Date(date).toLocaleString(), false, true)
         date = activity.status == 'ยังไม่ทำ' ? '-' : date
-        var acDetails = [date, activity.task, managerName, activity.status];
-        csvData.push(acDetails);
+        if (activity.status == "ยังไม่ทำ") {
+          var acDetails = [startDate, endDate, activity.task];
+          notDoneCsv.push(acDetails)
+        } else {
+          var acDetails = [startDate, endDate, activity.task, managerName, activity.status, activity.notes];
+          csvData.push(acDetails);
+        }
       })
-      exportToCsv(`${land.land.name}-${startDate}-${endDate}.csv`, csvData)
+      if (notDoneCsv.length < 5) {
+        exportToCsv(`${land.land.name}-${startDate}-${endDate}.csv`, csvData)
+
+      } else {
+        exportToCsv(`${land.land.name}-${startDate}-${endDate}.csv`, csvData.concat(notDoneCsv))
+
+      }
     }
   })
 }
@@ -122,23 +141,19 @@ async function getManagersDetails() {
 async function getImagePolyLand(lands) {
   var polygonLands = localStorage["poly-lands-main"];
   var imgTagArr = [];
-  if (polygonLands) {
-    polygonLands = JSON.parse(polygonLands);
-  } else {
-    try {
-      var url = "/sec/lands/polygon/main";
-      var body = JSON.stringify(lands);
-      var polygonMain = await connectToServer(url, body, "POST");
-      polygonLands = polygonMain.polygonLands;
-      localStorage["poly-lands-main"] = JSON.stringify(polygonLands);
-    } catch (err) {
-      console.log(err);
-    }
+  try {
+    var url = "/sec/lands/polygon/main";
+    var body = JSON.stringify(lands);
+    var polygonMain = await connectToServer(url, body, "POST");
+    polygonLands = polygonMain.polygonLands;
+    localStorage["poly-lands-main"] = JSON.stringify(polygonLands);
+  } catch (err) {
+    console.log(err);
   }
-
+  console.log(polygonLands.length)
   polygonLands.forEach(polygon => {
     var cardSize = screen.width < 780 ? '80%' : '25vw'
-    var img = `<img class="myImg" style="width:${cardSize};height:${cardSize};" src="https://maps.googleapis.com/maps/api/staticmap?center=${polygon.center.lat}, ${polygon.center.lng}&zoom=18&path=color:0xff0000ff%7Cweight:0%7Cfillcolor:0x0000ff80`;
+    var img = `<img class="myImg" style="width:${cardSize};height:${cardSize};" src="https://maps.googleapis.com/maps/api/staticmap?center=${polygon.center.lat}, ${polygon.center.lng}&zoom=17&path=color:0xff0000ff%7Cweight:0%7Cfillcolor:0x0000ff80`;
     polygon.lat_lng.forEach(position => {
       img += `%7C${position.lat},${position.lng}`;
     });
@@ -236,9 +251,9 @@ async function createReportPerlandListUI(landId, landName) {
   })
   var reportPerLand = await getReportPerLand(landId);
   var logs = reportPerLand.logs;
-  if(logs.length == 0){
-      container.innerHTML =  `<center style="color:grey"><h2>ยังไม่มีรายงานสำหรับที่ดิน '${landName}'</h2></center>`;
-      return false;
+  if (logs.length == 0) {
+    container.innerHTML = `<center style="color:grey"><h2>ยังไม่มีรายงานสำหรับที่ดิน '${landName}'</h2></center>`;
+    return false;
   }
   var table = document.createElement("table");
   var tableHeader = document.createElement("tr");
@@ -308,25 +323,49 @@ async function createReportCycleUI(landId, cycleId) {
   tableTotalSmall.innerHTML += `<tr><td class="text-primary" style="padding-left:0px">${cycle.plant_name}</td><td>${cycle.expected_product}</td><td>${cycle.real_product}</td>${performanceSm}</tr>`
   divTableSmall.appendChild(tableTotalSmall)
   container.appendChild(divTableSmall)
-  container.innerHTML += '<hr><p>รายละเอียดกิจกรรม</p>'
+  container.innerHTML += '<hr><p>รายละเอียดกิจกรรม</p><hr>'
   // -----------------big screen activities------------------- //
   var bdivActivitiesTable = document.createElement('div');
   var btableActivities = document.createElement("table");
+  var bTableNotDoneActivities = document.createElement("table")
   bdivActivitiesTable.className = "activities-big"
   btableActivities.className = "table table-curved"
+  bTableNotDoneActivities.className = "table table-curved"
+  btableActivities.innerHTML = `<tr><td>วันที่ทำเสร็จ</td><td>กิจกรรม</td><td>ผู้ดูแล</td><td>สถานะ</td><td></td></tr>`
+  bTableNotDoneActivities.innerHTML = `<tr><td>กำหนดเริ่ม</td><td>กำหนดเสร็จ</td><td>กิจกรรม</td><td></td><td></td></tr>`
 
   var sdivActivitiesTable = document.createElement('div');
   sdivActivitiesTable.className = "activities-small"
+  var sdivActivitiesNotDone = document.createElement('div');
+  sdivActivitiesNotDone.className = "activities-small"
+  sdivActivitiesNotDone.innerHTML = "<hr><p>กิจกรรมที่ยังไม่ทำ</p><hr>"
+
   cycle.activities.forEach(activity => {
     var date = activity.end_date != null ? activity.end_date : activity.start_date;
+    var stDate = dateThai(new Date(activity.start_date).toLocaleString(), false, true)
+    var endDate = dateThai(new Date(activity.end_date).toLocaleString(), false, true)
+
     var manager = managers.find(({
       _id
     }) => _id == activity.manager_id);
+
     var managerName = manager ? manager.name : '-'
     var activityColors = setColorActivity(activity.status);
     date = dateThai(new Date(date).toLocaleString(), false, true)
     date = activity.status == 'ยังไม่ทำ' ? '-' : date;
-    btableActivities.innerHTML += `<tr"><td style="background-color:${activityColors.setHex}">${date}</td><td style="background-color:${activityColors.setHex}">${activity.task}</td><td style="background-color:${activityColors.setHex}">${managerName}</td><td style="background-color:${activityColors.setHex}">${activity.status}</td></tr">`
+
+    if (activity.status == 'ยังไม่ทำ') {
+      bTableNotDoneActivities.innerHTML += `<tr"><td style="background-color:${activityColors.setHex}">${stDate}</td>
+      <td style="background-color:${activityColors.setHex}">${endDate}</td>
+      <td style="background-color:${activityColors.setHex}">${activity.task}</td>
+      <td style="background-color:${activityColors.setHex}"></td></tr">`
+    } else {
+      btableActivities.innerHTML += `<tr"><td style="background-color:${activityColors.setHex}">${date}</td>
+      <td style="background-color:${activityColors.setHex}">${activity.task}</td>
+      <td style="background-color:${activityColors.setHex}">${managerName}</td>
+      <td style="background-color:${activityColors.setHex}">${activity.status}</td></tr">`
+    }
+
     // -------------- small screen activities ---------------- //
     var card = document.createElement('div')
     var cardBody = document.createElement('div')
@@ -335,16 +374,29 @@ async function createReportCycleUI(landId, cycleId) {
     cardBody.setAttribute("class", "card-body " + activityColors.setText);
     table.className = "table"
     table.innerHTML = `<tr><td>${activity.task}</td><td class="text-gray" style="text-align: right"><small>${managerName}</small></td></tr>`
-    var statusText = `<small><i class="fas fa-calendar-week"></i>&nbsp;&nbsp${date}</small>&nbsp;&nbsp;<small><i class="fas fa-walking"></i>&nbsp;&nbsp;${activity.status}</small>`
-    cardBody.appendChild(table);
-    cardBody.innerHTML += statusText
-    card.appendChild(cardBody);
-    sdivActivitiesTable.appendChild(card);
+    if (activity.status == 'ยังไม่ทำ') {
+      var statusText = `<small>เริ่ม :&nbsp;&nbsp${stDate}</small>&nbsp;&nbsp;<small>สิ้นสุด : ${endDate}</small>`
+      cardBody.appendChild(table);
+      cardBody.innerHTML += statusText
+      card.appendChild(cardBody);
+      sdivActivitiesNotDone.appendChild(card);
+    } else {
+      var statusText = `<small><i class="fas fa-calendar-week"></i>&nbsp;&nbsp${date}</small>&nbsp;&nbsp;<small><i class="fas fa-walking"></i>&nbsp;&nbsp;${activity.status}</small>`
+      cardBody.appendChild(table);
+      cardBody.innerHTML += statusText
+      card.appendChild(cardBody);
+      sdivActivitiesTable.appendChild(card);
+    }
+
 
   })
   bdivActivitiesTable.appendChild(btableActivities)
+  bdivActivitiesTable.innerHTML += '<hr><p>กิจกรรมที่ยังไม่ทำ</p><hr>'
+
+  bdivActivitiesTable.appendChild(bTableNotDoneActivities)
   container.appendChild(bdivActivitiesTable)
   container.appendChild(sdivActivitiesTable)
+  container.appendChild(sdivActivitiesNotDone)
 }
 
 function exportToCsv(fName, rows) {
@@ -355,7 +407,7 @@ function exportToCsv(fName, rows) {
       var val = row[j] === null ? '' : row[j].toString();
       val = val.replace(/\t/gi, " ");
       if (j > 0)
-        csv += '\t';
+        csv += ',';
       csv += val;
     }
     csv += '\n';
