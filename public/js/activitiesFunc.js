@@ -107,7 +107,7 @@ function sortActivities(activitiesArr) {
 
 function setActivitiesCard(hashActivities) {
   var keys = Object.keys(hashActivities)
-  var setBG, setText;
+  var setBG, setText , setCallout;
   var bodyContent = document.getElementById("activities-show");
   bodyContent.innerHTML = "";
   for (i in keys) {
@@ -123,76 +123,100 @@ function setActivitiesCard(hashActivities) {
     var mobileCard = "";
     var cardBody = document.createElement("div");
     cardBody.setAttribute("class", "timeline-body");
-    var responsiveTable = document.createElement("div");
-    responsiveTable.className = "card-body table-responsive p-0";
-    var table = document.createElement("table");
-    table.className += "activities-browser table table-curved";
+    var cardActivity = {};
+    var subCardHeader = {}
 
     for (j in land) {
       var obj = land[j];
 
-      var fullDate = obj.end_date != null ? obj.end_date : obj.start_date;
-      var date = new Date(fullDate);
-      date = dateThai(date.toLocaleString(), false, true);
-      var rowActivity = "";
+      var stDate = obj.start_date ? new Date(obj.start_date) : new Date(obj.end_date);
+      var endDate = new Date(obj.end_date);
+      var compareDate = new Date()
+      compareDate.setDate(compareDate.getDate() + obj.repeat_in)
+      compareDate.setHours(0,0,0);
+      stDate = dateThai(stDate.toLocaleString(), false, true);
+      endDate = dateThai(endDate.toLocaleString(), false, true);
+
       var activityColors = setColorActivity(obj.status);
       setBG = activityColors.setHex;
       setText = activityColors.setText;
+      setCallout = activityColors.setCallout
+      var keys = obj.plant_ac_id || obj.activity_id;
 
-      if (localStorage["role"] == 'owner') {
-        rowActivity += setActivityOwnerUI(
-          obj.land_name,
-          date,
+      if (cardActivity[keys] == null) {
+        var cardAc = document.createElement("div");
+        cardAc.className = "card";
+        var path = obj.activity_id + "&" + obj.land_id
+        subCardHeader[keys] = `<div class="callout ${setCallout}"><table class="table table-ac-header"><tr><td><a class="${setText}" href="activitydetails.html?${path}"><h4 >${obj.task}</h4></a></td>
+          <td><table style="float:right;"><tr><td><button type="button" class="btn btn-block btn-info btn-sm" onclick="window.location.href='addActivity.html?land=${obj.land_id}&activity=${obj.activity_id}'"><i class="fas fa-edit"></i></button></td>
+          <td><button type="button" class="btn btn-block btn-danger btn-sm" onclick="deleteActivity('${obj.land_id}' , '${obj.activity_id}')"><i class="fas fa-trash-alt"></i></button></td></tr></table></td></tr></table>`
+        if(obj.repeat_in == undefined ||obj.repeat_in == 0){
+          subCardHeader[keys] += `<table class="sub-header-row"><tr style="color:gray;"><td><small>วันที่</small></td><td><small>สถานะ</small></td></tr>
+          <tr ><td>${stDate} - ${endDate}</td><td class="${setText}">${obj.status}</td></tr></table>`
+          cardActivity[keys] = "<table>"
+        }else{
+          subCardHeader[keys] +=
+          `<table class="sub-header-row"> <tr style=" color:gray; "><td><small> ทำซ้ำใน<small></td><td><small>ล่าสุด</small></td><td><small>สถานะ</small></td></tr>
+          <tr ><td>${obj.repeat_in} วัน</td><td>${stDate} - ${endDate}</td><td class="${setText}">${obj.status}</td></tr></table>
+          </small><hr><center id="show-hide-ac-${keys}" class="text-primary" onclick="subActivitiesShow('${keys}')" style="cursor:pointer; margin-bottom:10px;">
+          <small>รายละเอียด <i class="fas fa-angle-up"></i></small></center>
+          <div id="ac-detail-${keys}" style="display:none">`
+        cardActivity[keys] = `<table class="table table-curved"><tr><td>วันที่เริ่ม</td><td>วันสิ้นสุด</td><td>กิจกรรม</td><td>สถานะ</td><td></td></tr>`
+        cardActivity[keys] += setActivityFull(
+          stDate,
+          endDate,
+          obj.task,
+          obj.status,
+          path,
+          setBG,
+          obj.activity_id,
+          obj.land_id
+        );
+
+        }
+      } else if (compareDate > new Date(obj.start_date)) {
+        if(cardActivity[keys].includes("ครั้งถัดไป")){
+          continue;
+        }
+        else if (new Date() < new Date(obj.end_date)) {
+          cardActivity[keys] += `</table><hr><p>ครั้งถัดไป</p><table class="table table-curved"><tr><td>วันที่เริ่ม</td><td>วันสิ้นสุด</td><td>กิจกรรม</td><td>สถานะ</td><td></td></tr>`
+        } else {
+          subCardHeader[keys] = `<div class="callout ${setCallout}"><table class="table table-ac-header"><tr><td><a class="${setText}" href="activitydetails.html?${path}"><h4 >${obj.task}</h4></a></td>
+          <td><table style="float:right;"><tr><td><button type="button" class="btn btn-block btn-info btn-sm" onclick="window.location.href='addActivity.html?land=${obj.land_id}&activity=${obj.activity_id}'"><i class="fas fa-edit"></i></button></td>
+          <td><button type="button" class="btn btn-block btn-danger btn-sm" onclick="deleteActivity('${obj.land_id}' , '${obj.activity_id}')"><i class="fas fa-trash-alt"></i></button></td></tr></table></td></tr></table>
+          <table class="sub-header-row"> <tr style=" color:gray; "><td><small> ทำซ้ำใน<small></td><td><small>ล่าสุด</small></td><td><small>สถานะ</small></td></tr>
+          <tr ><td>${obj.repeat_in} วัน</td><td>${stDate} - ${endDate}</td><td class="${setText}">${obj.status}</td></tr></table>
+          </small><hr><center id="show-hide-ac-${keys}" class="text-primary" onclick="subActivitiesShow('${keys}')" style="cursor:pointer; margin-bottom:10px;">
+          <small>รายละเอียด <i class="fas fa-angle-up"></i></small></center>
+          <div id="ac-detail-${keys}" style="display:none">`
+        }
+        cardActivity[keys] += setActivityFull(
+          stDate,
+          endDate,
           obj.task,
           obj.status,
           obj.activity_id + "&" + obj.land_id,
           setBG,
           obj.activity_id,
           obj.land_id
+        );
 
-        );
-        mobileCard =
-          mobileCard +
-          setactivityOwnerMobile(
-            sortBy,
-            obj.land_name,
-            date,
-            obj.task,
-            obj.status,
-            obj.activity_id + "&" + obj.land_id,
-            setText,
-            obj.activity_id,
-            obj.land_id
-          );
-      } else {
-        rowActivity += setActivityManagerUI(
-          obj.land_name,
-          date,
-          obj.task,
-          obj.status,
-          obj.activity_id + "&" + obj.land_id,
-          setBG,
-          obj.activity_id,
-          obj.land_id
-        );
-        mobileCard =
-          mobileCard +
-          setactivityManagerMobile(
-            sortBy,
-            obj.land_name,
-            date,
-            obj.task,
-            obj.status,
-            obj.activity_id + "&" + obj.land_id,
-            setText,
-            obj.activity_id,
-            obj.land_id
-          );
       }
-      table.innerHTML = table.innerHTML + rowActivity;
     }
-    responsiveTable.appendChild(table);
-    cardBody.appendChild(responsiveTable);
+    var activitiesLandKeys = Object.keys(cardActivity)
+    activitiesLandKeys.forEach((landKeys , index)=> {
+      cardActivity[landKeys] += "</table></div></div>"
+      cardActivity[landKeys] = subCardHeader[landKeys] + cardActivity[landKeys]
+      if(index == 1 && activitiesLandKeys.length > 2){
+        cardBody.innerHTML += cardActivity[landKeys]
+        cardBody.innerHTML += `<center class="text-primary all-details-${i}" onclick="activitiesAllShow('${i}')" style="margin:10px;cursor:pointer">ดูทั้งหมด</center>`
+      }else if(index > 1){
+        cardBody.innerHTML += `<div class="all-details-${i}" style="display:none">${cardActivity[landKeys]}</div>`
+      }else{
+        cardBody.innerHTML += cardActivity[landKeys]
+      }
+    })
+    cardBody.innerHTML += `<center class="text-primary all-details-${i}" onclick="activitiesAllShow('${i}')" style="margin:10px; display:none; cursor:pointer">ซ่อน</center>`
     card.appendChild(cardBody);
     bodyContent.innerHTML = bodyContent.innerHTML + landHeader;
     timeline.appendChild(card);
@@ -200,6 +224,21 @@ function setActivitiesCard(hashActivities) {
     bodyContent.innerHTML = bodyContent.innerHTML + mobileCard;
   }
 
+}
+
+function subActivitiesShow(landKeys) {
+  $(`#ac-detail-${landKeys}`).toggle(500)
+  if ($(`#show-hide-ac-${landKeys}`).html() == '<small>รายละเอียด <i class="fas fa-angle-down"></i></small>') {
+    $(`#show-hide-ac-${landKeys}`).html('<small>รายละเอียด <i class="fas fa-angle-up"></i></small>')
+  } else {
+    $(`#show-hide-ac-${landKeys}`).html('<small>รายละเอียด <i class="fas fa-angle-down"></i></small>')
+  }
+}
+
+function activitiesAllShow(landId){
+  $(`.all-details-${landId}`).map(function() {
+    $(this).toggle(500)
+  }).get();
 }
 
 function getLandName() {
@@ -239,14 +278,14 @@ observer.observe($div[0], {
 });
 
 function initBtn() {
-  filterByname.addEventListener("click", () => {
-    window.sortBy = "by-name";
-    selPageUI()
-  });
-  filterBydate.addEventListener("click", () => {
-    window.sortBy = "by-date";
-    selPageUI()
-  })
+  // ! filterByname.addEventListener("click", () => {
+  //   window.sortBy = "by-name";
+  //   selPageUI()
+  // });
+  // filterBydate.addEventListener("click", () => {
+  //   window.sortBy = "by-date";
+  //   selPageUI()
+  // })
   $("#emer-ac-btn").click(function () {
     console.log("emer click");
     var landId = localStorage.landEmergency;
@@ -266,9 +305,9 @@ async function selPageUI() {
   } else {
     activities = await apiGetactivities();
   }
-  if(activities.length == 0){
+  if (activities.length == 0) {
     $("#no-activty").show()
-  }else{
+  } else {
     $("#no-activty").hide()
 
   }

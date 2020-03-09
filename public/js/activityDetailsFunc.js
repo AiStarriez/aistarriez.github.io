@@ -7,10 +7,10 @@ var imageCard = document.getElementById("card-image");
 var modalBigImg = document.getElementById("modalImage");
 var modalImg = document.getElementById("img01");
 var thisActivity;
-var activityDetails, toDate;
+var activityDetails, stDate, endDate;
 $("#loader").html(loadingDiv())
 
-$("#modalImage").click(function() {
+$("#modalImage").click(function () {
   modalBigImg.style.display = "none";
 });
 
@@ -25,7 +25,9 @@ async function findLand(query) {
     return activitiesArr;
   } else {
     try {
-      var body = { byLands: 1 };
+      var body = {
+        byLands: 1
+      };
       var url = "/activities/" + ownerId;
       var typ = "GET";
       var getActivities = await connectToServer(url, body, typ);
@@ -49,20 +51,17 @@ function setActivityData(activitiesArr) {
     }
   }
   if (activityDetails != null) {
-    var getDate =
-      activityDetails.end_date != null
-        ? activityDetails.end_date
-        : activityDetails.start_date;
-        console.log(getDate)
-    toDate = new Date(getDate);
-    var date =  dateThai(toDate.toLocaleString(),false,true);
+    var getStDate = new Date(activityDetails.start_date)
+    var getEndDate = new Date(activityDetails.end_date)
+    stDate = dateThai(getStDate.toLocaleString(), false, false);
+    endDate = dateThai(getEndDate.toLocaleString(), false, false)
 
     document.querySelectorAll("#extend-header").forEach(el => {
-      el.innerHTML = date +
-      "&nbsp;&nbsp;" +
-      activityDetails.land_name +
-      "&nbsp;&nbsp;" +
-      activityDetails.task
+      el.innerHTML = stDate +
+        "&nbsp;&nbsp;" +
+        activityDetails.land_name +
+        "&nbsp;&nbsp;" +
+        activityDetails.task
     })
 
   }
@@ -73,7 +72,7 @@ async function setBodyCardDetails(activityData) {
   var table = document.createElement("table");
   var getNotes = activityData.notes != null ? activityData.notes : "-";
   var getManager = activityData.manager_id != null ? activityData.manager_id : "-";
-  if(getManager != "-"){
+  if (getManager != "-") {
     getManager = await getManagerName(getManager);
   }
   var getStatus = activityData.status != null ? activityData.status : "-";
@@ -82,8 +81,11 @@ async function setBodyCardDetails(activityData) {
   var landName =
     "<tr><td>ที่ดิน</td><td>" + activityDetails.land_name + "</td></tr>";
   var date =
-    "<tr><td>วันที่</td><td>" +
-    dateThai(toDate.toLocaleString(),false,false) +
+    "<tr><td>วันที่เริ่ม</td><td>" +
+    stDate +
+    "</td></tr>";
+  var edDate = "<tr><td>วันสิ้นสุด</td><td>" +
+    endDate +
     "</td></tr>";
   var plantName =
     "<tr><td>พืช</td><td>" + activityDetails.plant_name + "</td></tr>";
@@ -92,18 +94,20 @@ async function setBodyCardDetails(activityData) {
   var manager = "<tr><td>ผู้ดูแล</td><td>" + getManager + "</td></tr>";
   var status = "<tr><td>สถานะ</td><td>" + getStatus + "</td></tr>";
   table.innerHTML =
-    task + landName + date + plantName + notes + manager + status;
+    task + landName + date + edDate + plantName + notes + manager + status;
   detailsCard.appendChild(table);
   $("#modal-loading").css("display", "none");
   $(".wrapper").css("display", "block");
 }
 
-async function getManagerName(managerId){
+async function getManagerName(managerId) {
   var managers = localStorage.managers;
-  if(managers){
+  if (managers) {
     managers = JSON.parse(managers);
-    var findManager  = managers.managers.find(({_id}) => _id === managerId);
-  }else{
+    var findManager = managers.managers.find(({
+      _id
+    }) => _id === managerId);
+  } else {
     try {
       var url = "/managers/all/" + ownerId;
       var body = "";
@@ -111,7 +115,9 @@ async function getManagerName(managerId){
       var getManagerAPI = await connectToServer(url, body, typ);
       managers = getManagerAPI.managers;
       localStorage.managers = JSON.stringify(getManagerAPI);
-      var findManager  = managers.find(({_id}) => _id === managerId);
+      var findManager = managers.find(({
+        _id
+      }) => _id === managerId);
     } catch (err) {
       console.log(err);
     }
@@ -122,7 +128,9 @@ async function getManagerName(managerId){
 
 async function getDetailAPI(apiDetails) {
   try {
-    var body = { activity: query[0] };
+    var body = {
+      activity: query[0]
+    };
     var url = "/activities/detail/" + landID;
     var typ = "GET";
     var apiDetails = await connectToServer(url, body, typ);
@@ -145,7 +153,7 @@ function setBodyCardImages(activityData) {
     var imageShow = document.createElement("img");
     imageShow.setAttribute("class", "myImg");
     imageShow.setAttribute("src", headerImage + imagesArr[i]);
-    imageShow.onclick = function() {
+    imageShow.onclick = function () {
       modalBigImg.style.display = "block";
       modalImg.src = this.src;
     };
@@ -163,8 +171,8 @@ async function run() {
   setBodyCardDetails(activityData);
   setBodyCardImages(activityData);
   localStorage.updateActivity = JSON.stringify(activityData);
-   localStorage.landHeader = document.getElementById("extend-header").innerHTML
-  }
+  localStorage.landHeader = document.getElementById("extend-header").innerHTML
+}
 
 run()
   .then(() => {

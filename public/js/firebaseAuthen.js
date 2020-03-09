@@ -5,7 +5,6 @@ $(window).bind("hashchange", function() {
 firebase.auth().onAuthStateChanged(function(user) {
   var role = localStorage.role;
   window.user = user;
-
   if (
     window.user == null &&
     !window.location.href.includes("login.html") &&
@@ -25,6 +24,9 @@ firebase.auth().onAuthStateChanged(function(user) {
       console.log(user.email);
       checkUserDB(user.email);
     }
+  }else{
+    $("#loader").html(loadingDiv())
+    $("#modal-loading").css("display", "none");
   }
 });
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(

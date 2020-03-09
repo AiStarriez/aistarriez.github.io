@@ -239,7 +239,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 function setColorActivity(status){
-var setBG , setText,setHex
+var setBG , setText,setHex,setCallout
   var classColor = {
     done: "bg-success",
     over_due: "bg-danger",
@@ -252,47 +252,59 @@ var setBG , setText,setHex
     not_done: "text-secondary",
     in_progress: "text-warning"
   };
-
   var hexBGcolors = {
     done: "#CBE3CA",
     over_due: "#F2D3CE",
     not_done: "#EAE8E5",
     in_progress: "#EFD5BA"
   }
+  var callout = {
+    done: "callout-success",
+    over_due: "callout-danger",
+    not_done: "callout-secondary",
+    in_progress: "callout-warning"
+  }
   switch (status) {
     case "ยังไม่ทำ": {
       setBG = classColor.not_done;
       setText = classText.not_done;
       setHex = hexBGcolors.not_done;
+      setCallout = callout.not_done
       break;
     }
     case "ยังไม่เสร็จ": {
       setBG = classColor.not_done;
       setText = classText.not_done;
       setHex = hexBGcolors.not_done;
+      setCallout = callout.not_done
       break;
     }
     case "กำลังดำเนินการ": {
       setBG = classColor.in_progress;
       setText = classText.in_progress;
       setHex = hexBGcolors.in_progress;
+      setCallout = callout.in_progress
       break;
     }
     case "เสร็จแล้ว": {
       setBG = classColor.done;
       setText = classText.done;
       setHex = hexBGcolors.done;
+      setCallout = callout.done
+
       break;
     }
     case "เลยกำหนด": {
       setBG = classColor.over_due;
       setText = classText.over_due;
       setHex = hexBGcolors.over_due;
+      setCallout = callout.over_due
+
       break;
     }
   }
 
-  return {setBG, setText,setHex};
+  return {setBG, setText,setHex,setCallout};
 
 }
 

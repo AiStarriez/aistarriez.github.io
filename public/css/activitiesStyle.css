@@ -79,6 +79,10 @@ label:not(.form-check-label):not(.custom-file-label) {
   float: left;
 }
 
+.activities-full{
+  display: block;
+}
+
 @media screen and (max-width: 992px) {
 
   #header-mobile {
@@ -88,7 +92,8 @@ label:not(.form-check-label):not(.custom-file-label) {
   #bar-header {
     display: none;
   }
-  .activities-browser {
+
+  .activities-full{
     display: none;
   }
 
@@ -98,8 +103,10 @@ label:not(.form-check-label):not(.custom-file-label) {
   }
   .timeline>div>.timeline-item {
     background: white;
-    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+    /* box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2); */
   }
-
+  .timeline > div > .timeline-item > .timeline-body, .timeline > div > .timeline-item > .timeline-footer{
+    padding: 0px;
+  }
 }
 
